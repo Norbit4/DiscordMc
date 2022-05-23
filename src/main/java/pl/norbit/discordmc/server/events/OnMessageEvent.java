@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import pl.norbit.discordmc.bot.utils.ChatUtil;
 import pl.norbit.discordmc.bot.utils.DiscordInfo;
 import pl.norbit.discordmc.server.enums.Channel;
 import pl.norbit.discordmc.server.objects.GamePlayer;
@@ -26,15 +27,10 @@ public class OnMessageEvent implements Listener{
         GamePlayer gamePlayer = GamePlayer.getGamePLayer(sender);
         if (gamePlayer.getChannel().equals(Channel.DISCORD)) {
             String playerNick = gamePlayer.getPlayer().getDisplayName();
-            String formatMessage = playerNick + ": " +  playerMessage;
+            String formatMessage = playerNick + DiscordInfo.getMessageMark() +  playerMessage;
 
             messageChannel.sendMessage(formatMessage).queue();
             e.setCancelled(true);
         }
-//        }else{
-//            GamePlayer.getPlayersList(Channel.GLOBAL).forEach(gamePlayer1 -> {
-//                gamePlayer1.getPlayer().sendMessage("");
-//            });
-//        }
     }
 }
