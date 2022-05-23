@@ -22,13 +22,18 @@ public class OnSendMessageEvent extends ListenerAdapter {
 
             GamePlayer.getPlayersList(Channel.DISCORD).forEach(gamePlayer -> {
                 String formatMessage;
+                String botName = event.getJDA().getSelfUser().getAsTag();
 
-                if(author.getName().equalsIgnoreCase("bedcord")){
+                if(author.getAsTag().equals(botName)){
+                    String messageDiscord = message.getContentDisplay();
+                    String[] spiltMessage = messageDiscord.split(":");
+                    String nickName = spiltMessage[0];
+                    String playerMessage = spiltMessage[1];
 
-                    formatMessage = ChatUtil.format(DiscordInfo.mcPrefix + " &7" + message.getContentDisplay());
+                    formatMessage = ChatUtil.format(DiscordInfo.mcPrefix + " &f" + nickName + "&7:"+ playerMessage);
                 }else {
-                    formatMessage = ChatUtil.format(DiscordInfo.discordPrefix + " &7"
-                            + author.getAsTag() + ": " + message.getContentDisplay());
+                    formatMessage = ChatUtil.format(DiscordInfo.discordPrefix + " &f"
+                            + author.getAsTag() + "&7: " + message.getContentDisplay());
                 }
                 gamePlayer.getPlayer().sendMessage(formatMessage);
             });

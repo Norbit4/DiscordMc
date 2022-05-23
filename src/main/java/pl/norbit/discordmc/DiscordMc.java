@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.DiscordBot;
 import pl.norbit.discordmc.bot.utils.DiscordInfo;
 import pl.norbit.discordmc.server.commands.ChangeChannel;
+import pl.norbit.discordmc.server.config.ConfigManager;
 import pl.norbit.discordmc.server.events.OnJoinServerEvent;
 import pl.norbit.discordmc.server.events.OnMessageEvent;
 
@@ -13,6 +14,8 @@ public final class DiscordMc extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        ConfigManager.loadConfig(this);
 
         discordBot = new DiscordBot(DiscordInfo.token);
         discordBot.start();
@@ -30,4 +33,5 @@ public final class DiscordMc extends JavaPlugin {
     public void onDisable() {
         discordBot.close();
     }
+
 }
