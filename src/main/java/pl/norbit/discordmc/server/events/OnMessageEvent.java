@@ -12,15 +12,15 @@ import pl.norbit.discordmc.server.objects.GamePlayer;
 
 public class OnMessageEvent implements Listener{
     private final JDA jda;
-    private final MessageChannel messageChannel;
+    private MessageChannel messageChannel;
 
     public OnMessageEvent(JDA jda) {
         this.jda = jda;
-        this.messageChannel = jda.getTextChannelsByName(DiscordInfo.channelName,false).get(0);
     }
 
     @EventHandler
     public void onMessage(AsyncPlayerChatEvent e) {
+        this.messageChannel = jda.getTextChannelsByName(DiscordInfo.channelName,false).get(0);
         String playerMessage = e.getMessage();
         Player sender = e.getPlayer();
         GamePlayer gamePlayer = GamePlayer.getGamePLayer(sender);

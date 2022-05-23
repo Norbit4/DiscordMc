@@ -11,7 +11,7 @@ public class DiscordBot {
     private JDA jda;
 
     public DiscordBot(String token) {
-        jdaBuilder = BotBuilder.build(token);
+        jdaBuilder = BotBuilder.getBuilder(token);
     }
 
     public void start(){
