@@ -1,0 +1,4 @@
+name: DiscordMc
+version: '${version}'
+main: pl.norbit.discordmc.DiscordMc
+authors: [ Norbit ]
