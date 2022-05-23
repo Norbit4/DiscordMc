@@ -12,31 +12,38 @@ import pl.norbit.discordmc.server.objects.GamePlayer;
 public class OnSendMessageEvent extends ListenerAdapter {
 
     @Override
-    public void onMessageReceived(MessageReceivedEvent event)
-    {
+    public void onMessageReceived(MessageReceivedEvent event) {
         Message message = event.getMessage();
         String channelName = message.getChannel().getName();
 
         if(channelName.equals(DiscordInfo.channelName)){
-            User author = event.getAuthor();
 
-            GamePlayer.getPlayersList(Channel.DISCORD).forEach(gamePlayer -> {
-                String formatMessage;
-                String botName = event.getJDA().getSelfUser().getAsTag();
-
-                if(author.getAsTag().equals(botName)){
-                    String messageDiscord = message.getContentDisplay();
-                    String[] spiltMessage = messageDiscord.split(":");
-                    String nickName = spiltMessage[0];
-                    String playerMessage = spiltMessage[1];
-
-                    formatMessage = ChatUtil.format(DiscordInfo.mcPrefix + " &f" + nickName + "&7:"+ playerMessage);
-                }else {
-                    formatMessage = ChatUtil.format(DiscordInfo.discordPrefix + " &f"
-                            + author.getAsTag() + "&7: " + message.getContentDisplay());
-                }
-                gamePlayer.getPlayer().sendMessage(formatMessage);
-            });
+            sendMessage(event);
         }
+    }
+
+    private void sendMessage(MessageReceivedEvent event){
+        User author = event.getAuthor();
+        Message message = event.getMessage();
+
+        GamePlayer.getPlayersList(Channel.DISCORD).forEach(gamePlayer -> {
+            String formatMessage;
+            String botName = event.getJDA().getSelfUser().getAsTag();
+
+            if(author.getAsTag().equals(botName)){
+                String messageDiscord = message.getContentDisplay();
+                String[] spiltMessage = messageDiscord.split(DiscordInfo.getMessageMark());
+                String nickName = spiltMessage[0].replace(" ","");
+                String playerMessage = spiltMessage[1].replace(" ","");;
+
+                formatMessage = ChatUtil.format(DiscordInfo.mcPrefix + DiscordInfo.getNickColor() + nickName
+                        + DiscordInfo.getMessageMark() + DiscordInfo.getMessageColor() + playerMessage);
+            }else {
+                formatMessage = ChatUtil.format(DiscordInfo.discordPrefix + DiscordInfo.getNickColor()
+                        + author.getAsTag() + DiscordInfo.getMessageMark() + DiscordInfo.getMessageColor()
+                        + message.getContentDisplay());
+            }
+            gamePlayer.getPlayer().sendMessage(formatMessage);
+        });
     }
 }

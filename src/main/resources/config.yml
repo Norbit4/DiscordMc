@@ -1,10 +1,15 @@
 #DiscordMc by Norbit4
 #Ver 1.0.1
-#
-#Bot token: https://discord.com/developers/applications
+
+#bot config
+#bot token: https://discord.com/developers/applications
 token: ''
-#Chat channel name in discord
-channelname: ''
-botactivity: ''
-discordprefix: '&d[Discord]'
-mcprefix: '&a[Mc]'
+channel-name: ''
+bot-activity: ''
+
+#minecraft server chat
+discord-prefix: '&d[Discord] '
+mc-prefix: '&a[Mc] '
+message-color: '&7'
+nick-color: '&f'
+message-mark: '&7:'
