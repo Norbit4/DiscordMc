@@ -6,6 +6,7 @@
 token: ''
 channel-name: ''
 bot-activity: ''
+discord-chat: false
 
 #minecraft server chat
 discord-prefix: '&d[Discord] '

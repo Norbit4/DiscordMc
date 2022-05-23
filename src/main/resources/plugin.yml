@@ -3,5 +3,5 @@ version: '${version}'
 main: pl.norbit.discordmc.DiscordMc
 authors: [ Norbit ]
 commands:
-  discord:
+  dc:
 

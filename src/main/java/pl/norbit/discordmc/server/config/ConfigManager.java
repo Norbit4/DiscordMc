@@ -20,7 +20,6 @@ public class ConfigManager {
         DiscordInfo.setNickColor(config.getString("nick-color"));
         DiscordInfo.setMessageColor(config.getString("message-color"));
         DiscordInfo.setMessageMark(config.getString("message-mark"));
+        DiscordInfo.setDiscordChat(config.getBoolean("discord-chat"));
     }
-
-
 }

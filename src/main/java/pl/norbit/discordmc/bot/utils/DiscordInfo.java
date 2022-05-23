@@ -2,6 +2,7 @@ package pl.norbit.discordmc.bot.utils;
 
 public class DiscordInfo {
     public static String channelName, discordPrefix, token, mcPrefix, botActivity, nickColor, messageColor, messageMark;
+    private static boolean discordChat;
 
     public static String getChannelName() {
         return channelName;
@@ -65,5 +66,13 @@ public class DiscordInfo {
 
     public static void setMessageMark(String messageMark) {
         DiscordInfo.messageMark = messageMark;
+    }
+
+    public static boolean isDiscordChat() {
+        return discordChat;
+    }
+
+    public static void setDiscordChat(boolean discordChat) {
+        DiscordInfo.discordChat = discordChat;
     }
 }
