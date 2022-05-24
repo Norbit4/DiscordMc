@@ -7,11 +7,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import pl.norbit.discordmc.bot.utils.ChatUtil;
-import pl.norbit.discordmc.bot.utils.DiscordInfo;
+import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.enums.Channel;
 import pl.norbit.discordmc.server.objects.GamePlayer;
 
-public class OnMessageEvent implements Listener{
+public class OnMessageEvent implements Listener {
     private final JDA jda;
 
     public OnMessageEvent(JDA jda) {
@@ -20,16 +20,22 @@ public class OnMessageEvent implements Listener{
 
     @EventHandler
     public void onMessage(AsyncPlayerChatEvent e) {
-        MessageChannel messageChannel = jda.getTextChannelsByName(DiscordInfo.channelName, false).get(0);
+        MessageChannel messageChannel = jda.getTextChannelsByName(PluginConfig.CHANNEL_NAME, false).get(0);
         String playerMessage = e.getMessage();
         Player sender = e.getPlayer();
         GamePlayer gamePlayer = GamePlayer.getGamePLayer(sender);
+
         if (gamePlayer.getChannel().equals(Channel.DISCORD)) {
             String playerNick = gamePlayer.getPlayer().getDisplayName();
-            String formatMessage = playerNick + DiscordInfo.getMessageMark() +  playerMessage;
+            String formatMessage = playerNick + PluginConfig.DISCORD_MESSAGE_MARK + playerMessage;
 
             messageChannel.sendMessage(formatMessage).queue();
             e.setCancelled(true);
+
+            GamePlayer.getPlayersList(Channel.DISCORD).forEach(gamePlayer1 -> {
+                gamePlayer1.getPlayer().sendMessage(ChatUtil.format(PluginConfig.MC_PREFIX + PluginConfig.NICK_COLOR
+                        + playerNick + PluginConfig.MESSAGE_COLOR + playerMessage));
+            });
         }
     }
 }

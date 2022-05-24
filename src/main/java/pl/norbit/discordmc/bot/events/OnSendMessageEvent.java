@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import pl.norbit.discordmc.bot.utils.ChatUtil;
-import pl.norbit.discordmc.bot.utils.DiscordInfo;
+import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.enums.Channel;
 import pl.norbit.discordmc.server.objects.GamePlayer;
 
@@ -16,7 +16,7 @@ public class OnSendMessageEvent extends ListenerAdapter {
         Message message = event.getMessage();
         String channelName = message.getChannel().getName();
 
-        if(channelName.equals(DiscordInfo.channelName)){
+        if(channelName.equals(PluginConfig.CHANNEL_NAME)){
 
             sendMessage(event);
         }
@@ -30,20 +30,12 @@ public class OnSendMessageEvent extends ListenerAdapter {
             String formatMessage;
             String botName = event.getJDA().getSelfUser().getAsTag();
 
-            if(author.getAsTag().equals(botName)){
-                String messageDiscord = message.getContentDisplay();
-                String[] spiltMessage = messageDiscord.split(DiscordInfo.getMessageMark());
-                String nickName = spiltMessage[0].replace(" ","");
-                String playerMessage = spiltMessage[1].replace(" ","");;
-
-                formatMessage = ChatUtil.format(DiscordInfo.mcPrefix + DiscordInfo.getNickColor() + nickName
-                        + DiscordInfo.getMessageMark() + DiscordInfo.getMessageColor() + playerMessage);
-            }else {
-                formatMessage = ChatUtil.format(DiscordInfo.discordPrefix + DiscordInfo.getNickColor()
-                        + author.getAsTag() + DiscordInfo.getMessageMark() + DiscordInfo.getMessageColor()
+            if(!author.getAsTag().equals(botName)) {
+                formatMessage = ChatUtil.format(PluginConfig.DISCORD_PREFIX + PluginConfig.NICK_COLOR
+                        + author.getAsTag() + PluginConfig.MESSAGE_MARK + PluginConfig.MESSAGE_COLOR
                         + message.getContentDisplay());
+                gamePlayer.getPlayer().sendMessage(formatMessage);
             }
-            gamePlayer.getPlayer().sendMessage(formatMessage);
         });
     }
 }

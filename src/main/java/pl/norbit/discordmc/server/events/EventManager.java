@@ -3,7 +3,7 @@ package pl.norbit.discordmc.server.events;
 import net.dv8tion.jda.api.JDA;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.norbit.discordmc.bot.utils.DiscordInfo;
+import pl.norbit.discordmc.server.config.PluginConfig;
 
 public class EventManager {
 
@@ -12,7 +12,7 @@ public class EventManager {
         PluginManager pluginManager = javaPlugin.getServer().getPluginManager();
         pluginManager.registerEvents(new OnJoinServerEvent(), javaPlugin);
 
-        if(DiscordInfo.isDiscordChat()) {
+        if(PluginConfig.CHAT_MODULE) {
             pluginManager.registerEvents(new OnMessageEvent(jda), javaPlugin);
         }
     }
