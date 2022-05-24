@@ -25,6 +25,8 @@ public final class DiscordMc extends JavaPlugin {
 
             //commands
             getServer().getPluginCommand(PluginConfig.COMMAND_PREFIX).setExecutor(new ChangeChannel());
+
+
         } else {
             System.out.println("enable plugin in config.yml");
         }
