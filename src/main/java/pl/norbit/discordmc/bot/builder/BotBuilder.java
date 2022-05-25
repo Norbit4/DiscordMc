@@ -11,7 +11,7 @@ public class BotBuilder {
         JDABuilder builder = JDABuilder.createDefault(token)
                 .setStatus(OnlineStatus.DO_NOT_DISTURB);
         if(!PluginConfig.BOT_ACTIVITY.equals("")){
-            builder.setActivity(Activity.watching(PluginConfig.BOT_ACTIVITY));
+            builder.setActivity(Activity.playing(PluginConfig.BOT_ACTIVITY));
         }
 
         if(PluginConfig.CHAT_MODULE){

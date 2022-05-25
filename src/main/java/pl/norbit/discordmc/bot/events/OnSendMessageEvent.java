@@ -30,7 +30,6 @@ public class OnSendMessageEvent extends ListenerAdapter {
         User author = event.getAuthor();
         Message message = event.getMessage();
         boolean isBot = event.getAuthor().isBot();
-
         if(!isBot) {
             event.getMessage().delete().queue();
             EmbedBuilder embedBuilder = Embed.getDiscordMessage(
