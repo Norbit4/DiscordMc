@@ -2,7 +2,6 @@ package pl.norbit.discordmc.bot.embed;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 
-import javax.annotation.Nullable;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;

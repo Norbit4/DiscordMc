@@ -31,10 +31,13 @@ public class OnMessageEvent implements Listener {
 
         if (gamePlayer.getChannel().equals(Channel.DISCORD)) {
             String playerNick = gamePlayer.getPlayer().getDisplayName();
-            String formatMessage = playerNick + PluginConfig.DISCORD_MESSAGE_MARK + playerMessage;
 
-            EmbedBuilder embedBuilder = Embed.getDiscordMessage( playerNick, playerMessage,
-                    new Color(33, 241, 99), "");
+            EmbedBuilder embedBuilder = Embed.getDiscordMessage(playerNick, playerMessage,
+                    new Color(
+                            PluginConfig.EMBED_MC_R,
+                            PluginConfig.EMBED_MC_G,
+                            PluginConfig.EMBED_MC_B),
+                    "");
 
             messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 

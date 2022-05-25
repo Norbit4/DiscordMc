@@ -29,20 +29,25 @@ public class OnSendMessageEvent extends ListenerAdapter {
     private void sendMessage(MessageReceivedEvent event){
         User author = event.getAuthor();
         Message message = event.getMessage();
-        //String botName = event.getJDA().getSelfUser().getAsTag();
         boolean isBot = event.getAuthor().isBot();
 
         if(!isBot) {
-            //author.getAsMention();
             event.getMessage().delete().queue();
-            EmbedBuilder embedBuilder = Embed.getDiscordMessage(author.getAsTag(),
-                    message.getContentDisplay(), new Color(142, 87, 178),author.getAsMention());
+            EmbedBuilder embedBuilder = Embed.getDiscordMessage(
+                    author.getAsTag(),
+                    message.getContentDisplay(),
+                    new Color(
+                            PluginConfig.EMBED_DISCORD_R,
+                            PluginConfig.EMBED_DISCORD_G,
+                            PluginConfig.EMBED_DISCORD_B),
+                    author.getAsMention());
 
             event.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
             String formatMessage = ChatUtil.format(PluginConfig.DISCORD_PREFIX + PluginConfig.NICK_COLOR
                     + author.getAsTag() + PluginConfig.MESSAGE_MARK + PluginConfig.MESSAGE_COLOR
                     + message.getContentDisplay());
+
             GamePlayer.getPlayersList(Channel.DISCORD).forEach(gamePlayer -> {
                 gamePlayer.getPlayer().sendMessage(formatMessage);
             });

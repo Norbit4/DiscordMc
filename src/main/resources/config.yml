@@ -17,11 +17,25 @@ discord-chat-module: false
 channel-name: ''
 
 # minecraft server chat
-discord-prefix: '&d[Discord] '
-mc-prefix: '&a[Mc] '
+discord-prefix: '&d[DC] '
+mc-prefix: '&a[MC] '
+message-mark: '&7: '
 message-color: '&7'
 nick-color: '&f'
-message-mark: '&7: '
 
 # discord channel chat
 discord-message-mark: ': '
+
+# rgb colors - embeds
+discord-user-rgb:
+  #R
+  - 142
+  #G
+  - 87
+  #B
+  - 178
+
+discord-mc-rgb:
+  - 33
+  - 241
+  - 99
