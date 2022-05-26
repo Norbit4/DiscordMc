@@ -10,6 +10,14 @@ command-prefix: 'dc'
 token: ''
 bot-activity: ''
 
+# database mongodb
+host: ""
+port: 27017
+user: ""
+password: ""
+database: ""
+ssl: false
+
 #---------------------------------------#
 #         [discord-chat-module]         #
 #---------------------------------------#

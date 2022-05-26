@@ -14,7 +14,24 @@ public class MongoDB {
     private final static MongoCollection<Document> collection;
 
     static {
-        client = MongoClients.create("mongodb://" + PluginConfig.MONGO_HOST + ":" + PluginConfig.MONGO_PORT);
+        String mongoURI;
+
+        if(PluginConfig.MONGO_USER.isEmpty() && PluginConfig.MONGO_PASS.isEmpty()) {
+            mongoURI  = "mongodb://" + PluginConfig.MONGO_HOST + ":" + PluginConfig.MONGO_PORT;
+        } else{
+            if(PluginConfig.MONGO_PASS.isEmpty()) {
+                mongoURI  = "mongodb://" + PluginConfig.MONGO_USER +
+                        "@"+ PluginConfig.MONGO_HOST + ":" + PluginConfig.MONGO_PORT;
+            }else {
+                mongoURI  ="mongodb://" + PluginConfig.MONGO_USER + ":"+ PluginConfig.MONGO_PASS
+                        + "@" + PluginConfig.MONGO_HOST + ":" + PluginConfig.MONGO_PORT;
+            }
+        }
+        if(PluginConfig.MONGO_SSL){
+            mongoURI = mongoURI + "&tls=true";
+        }
+
+        client = MongoClients.create(mongoURI);
         db = client.getDatabase(PluginConfig.MONGO_DATABASE);
         collection = db.getCollection("players");
     }

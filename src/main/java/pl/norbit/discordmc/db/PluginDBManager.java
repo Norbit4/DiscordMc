@@ -25,9 +25,11 @@ public class PluginDBManager {
 
     public static Player getUser(String discordID){
         Document document = MongoDB.getUser(GameUser.DISCORD_ID.name(), discordID);
-        UUID playerUUID = UUID.fromString(document.getString(GameUser.UUID));
-
-        return Bukkit.getPlayer(playerUUID);
+        if(document != null) {
+            UUID playerUUID = UUID.fromString(document.getString(GameUser.UUID.name()));
+            return Bukkit.getPlayer(playerUUID);
+        }
+        return null;
     }
 
     public static User getUser(UUID playerUUID){

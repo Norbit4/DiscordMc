@@ -7,19 +7,40 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Embed {
-    public static EmbedBuilder getDiscordMessage(String nick, String message, Color colorEmbed, String field){
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private static SimpleDateFormat dateFormat;
 
+    static {
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    }
+
+    private static EmbedBuilder getBuilder(String tittle, String desc, Color color, boolean addDate){
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle(nick);
-        embedBuilder.setDescription(message);
+
+        embedBuilder.setTitle(tittle);
+        embedBuilder.setDescription(desc);
+        embedBuilder.setColor(color);
+
+        if(addDate) {
+            Date date = new Date();
+            embedBuilder.setFooter(dateFormat.format(date));
+        }
+
+        return embedBuilder;
+    }
+
+    public static EmbedBuilder getDiscordMessage(String nick, String message, Color colorEmbed, String field){
+
+        EmbedBuilder embedBuilder = getBuilder(nick, message, colorEmbed, true);
         //embedBuilder.addField("", message, false);
-        embedBuilder.setColor(colorEmbed);
-        embedBuilder.setFooter(dateFormat.format(date));
+
         if(!field.isEmpty()) {
             embedBuilder.addField("", field, true);
         }
         return embedBuilder;
+    }
+
+    public static EmbedBuilder getInfoMessage(String tittle, String message, Color color){
+
+        return getBuilder(tittle, message, color, false);
     }
 }

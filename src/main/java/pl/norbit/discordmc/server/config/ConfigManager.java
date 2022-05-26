@@ -35,5 +35,12 @@ public class ConfigManager {
         PluginConfig.EMBED_MC_R = rgbMcList.get(0);
         PluginConfig.EMBED_MC_G = rgbMcList.get(1);
         PluginConfig.EMBED_MC_B = rgbMcList.get(2);
+
+        PluginConfig.MONGO_PORT = config.getInt("port");
+        PluginConfig.MONGO_HOST = config.getString("host");
+        PluginConfig.MONGO_PASS = config.getString("password");
+        PluginConfig.MONGO_USER = config.getString("user");
+        PluginConfig.MONGO_DATABASE = config.getString("database");
+        PluginConfig.MONGO_SSL = config.getBoolean("ssl");
     }
 }
