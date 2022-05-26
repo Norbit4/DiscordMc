@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import pl.norbit.discordmc.bot.embed.Embed;
 import pl.norbit.discordmc.bot.utils.ChatUtil;
 import pl.norbit.discordmc.db.PluginDBManager;
+import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.objects.GamePlayer;
 import pl.norbit.discordmc.sync.SyncPlayer;
 import pl.norbit.discordmc.sync.SyncTimerTask;
@@ -38,16 +39,20 @@ public class SyncCommandMc implements CommandExecutor {
             player.sendMessage(syncPlayer.getUser().getAsTag());
             SyncTimerTask.removeSyncPlayer(syncPlayer);
 
-            MessageEmbed embed = Embed.getInfoMessage("Success!"," " + player.getName() + " with "
-                            + syncPlayer.getUser().getAsTag() + "!", new Color(26, 154, 74)).build();
+            MessageEmbed embed = Embed.getInfoMessage(PluginConfig.SUCCESS_TITTLE," " + player.getName() + " with "
+                            + syncPlayer.getUser().getAsTag() + "!",
+                    new Color(PluginConfig.EMBED_SUCCESS_R, PluginConfig.EMBED_SUCCESS_G, PluginConfig.EMBED_SUCCESS_B))
+                    .build();
 
             syncPlayer.getMessageChannel().sendMessageEmbeds(embed).queue();
 
-            String mcMessage = "&aSuccess";
+            String mcMessage = PluginConfig.SYNC_SUCCESS_MC;
 
             player.sendMessage(ChatUtil.format(mcMessage));
         } else{
-            player.sendMessage("time out");
+            String mcMessage = PluginConfig.SYNC_TIME_OUT;
+
+            player.sendMessage(ChatUtil.format(mcMessage));
         }
 
         return true;

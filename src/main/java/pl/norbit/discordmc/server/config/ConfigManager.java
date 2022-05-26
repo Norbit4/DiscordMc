@@ -36,11 +36,44 @@ public class ConfigManager {
         PluginConfig.EMBED_MC_G = rgbMcList.get(1);
         PluginConfig.EMBED_MC_B = rgbMcList.get(2);
 
+        //mongo db
         PluginConfig.MONGO_PORT = config.getInt("port");
         PluginConfig.MONGO_HOST = config.getString("host");
         PluginConfig.MONGO_PASS = config.getString("password");
         PluginConfig.MONGO_USER = config.getString("user");
         PluginConfig.MONGO_DATABASE = config.getString("database");
         PluginConfig.MONGO_SSL = config.getBoolean("ssl");
+
+        //error dc message
+        PluginConfig.ERROR_TITTLE = config.getString("error-message-tittle");
+        List<Integer> rgbErrorList = config.getIntegerList("error-message-rgb");
+        PluginConfig.EMBED_ERROR_R = rgbErrorList.get(0);
+        PluginConfig.EMBED_ERROR_G = rgbErrorList.get(1);
+        PluginConfig.EMBED_ERROR_B = rgbErrorList.get(2);
+
+        //success dc message
+        PluginConfig.SUCCESS_TITTLE = config.getString("success-message-tittle");
+        List<Integer> rgbSuccessList = config.getIntegerList("success-message-rgb");
+        PluginConfig.EMBED_SUCCESS_R = rgbSuccessList .get(0);
+        PluginConfig.EMBED_SUCCESS_G  = rgbSuccessList .get(1);
+        PluginConfig.EMBED_SUCCESS_B  = rgbSuccessList .get(2);
+
+        //warn dc message
+        PluginConfig.WARN_TITTLE = config.getString("warn-message-tittle");
+        List<Integer> rgbWarnList = config.getIntegerList("warn-message-rgb");
+        PluginConfig.EMBED_WARN_R = rgbWarnList.get(0);
+        PluginConfig.EMBED_WARN_G  = rgbWarnList.get(1);
+        PluginConfig.EMBED_WARN_B = rgbWarnList.get(2);
+
+        //discord messages
+        PluginConfig.PLAYER_IS_SYNC_DC = config.getString("player-is-sync");
+        PluginConfig.OFFLINE_PLAYER_DC = config.getString("offline-player");
+        PluginConfig.SYNC_INFO_DC = config.getString("sync-info");
+        PluginConfig.SYNC_SUCCESS_DC = config.getString("sync-success");
+
+        //mc messages
+        PluginConfig.SYNC_INFO_MC = config.getString("sync-info-mc");
+        PluginConfig.SYNC_SUCCESS_MC = config.getString("sync-success-mc");
+        PluginConfig.SYNC_TIME_OUT = config.getString("sync-time-out");
     }
 }

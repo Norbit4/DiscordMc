@@ -5,22 +5,61 @@
 #---------------------------------------#
 #             [bot config]              #
 #---------------------------------------#
+
 enable: false
 command-prefix: 'dc'
 token: ''
 bot-activity: ''
 
 # database mongodb
-host: ""
+host: ''
 port: 27017
-user: ""
-password: ""
-database: ""
+user: ''
+password: ''
+database: ''
 ssl: false
+
+#---------------------------------------#
+#              [Messages]               #
+#---------------------------------------#
+
+# discord embeds colors
+warn-message-tiitle: 'WARN'
+warn-message-rgb:
+  #R
+  - 213
+  #G
+  - 156
+  #B
+  - 71
+
+success-message-tiitle: 'SUCCESS'
+success-message-rgb:
+  - 26
+  - 154
+  - 74
+
+error-message-tiitle: 'ERROR'
+error-message-rgb:
+  - 194
+  - 50
+  - 50
+
+#discord messages
+player-is-sync: 'This player is sync!'
+offline-player: 'This player is offline!'
+sync-info: 'Type /sync in minecraft chat to sync your accounts'
+sync-success: '{PLAYER} with {DISCORD}'
+
+#minecraft messages
+sync-info-mc: '&7Type &8/&bsync &7to connect your account with&a '
+sync-success-mc: '&aSuccess syc with {DISCORD}'
+sync-time-out: '&7Time out!'
 
 #---------------------------------------#
 #         [discord-chat-module]         #
 #---------------------------------------#
+
 discord-chat-module: false
 channel-name: ''
 
@@ -34,13 +73,10 @@ nick-color: '&f'
 # discord channel chat
 discord-message-mark: ': '
 
-# rgb colors - embeds
+# embeds chat colors
 discord-user-rgb:
-  #R
   - 142
-  #G
   - 87
-  #B
   - 178
 
 mc-user-rgb:
