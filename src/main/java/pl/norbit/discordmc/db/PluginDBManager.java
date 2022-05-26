@@ -18,8 +18,8 @@ public class PluginDBManager {
     public static void createUser(UUID playerUUID, String discordID){
         Document document = new Document()
                 .append(GameUser.UUID.name(), playerUUID.toString())
-                .append(GameUser.DISCORD_ID.name(), discordID);
-
+                .append(GameUser.DISCORD_ID.name(), discordID)
+                .append(GameUser.VOICE_CHAT.name(), false);
         MongoDB.addUser(document);
     }
 

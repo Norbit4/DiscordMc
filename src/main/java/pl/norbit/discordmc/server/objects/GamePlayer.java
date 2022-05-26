@@ -1,6 +1,11 @@
 package pl.norbit.discordmc.server.objects;
 
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.User;
+import org.bson.Document;
 import org.bukkit.entity.Player;
+import pl.norbit.discordmc.db.GameUser;
+import pl.norbit.discordmc.db.MongoDB;
 import pl.norbit.discordmc.server.enums.Channel;
 
 import java.util.ArrayList;
@@ -12,15 +17,30 @@ public class GamePlayer {
     private static final List<GamePlayer> playersList;
     private Channel channel;
     private final Player player;
+    private User discordUser;
+    private boolean voiceChat;
+    private final JDA jda;
 
     static {
         playersList = new ArrayList<>();
     }
 
-    public GamePlayer(Player player) {
+    public GamePlayer(Player player, JDA jda) {
+        this.jda = jda;
         this.player = player;
         this.channel = Channel.GLOBAL;
         playersList.add(this);
+
+        Document document = MongoDB.getUser(GameUser.UUID.name(), player.getUniqueId().toString());
+
+        if(document != null){
+            String userID = document.getString(GameUser.DISCORD_ID.name());
+            discordUser = jda.getUserById(userID);
+            voiceChat = document.getBoolean(GameUser.VOICE_CHAT.name());
+        }else{
+            discordUser = null;
+            voiceChat = false;
+        }
     }
 
     public static GamePlayer getGamePLayer(Player player){
@@ -59,4 +79,20 @@ public class GamePlayer {
         this.channel = channel;
     }
 
+    public User getDiscordUser() {
+        return discordUser;
+    }
+
+    public void setDiscordUser(String discordID) {
+
+        this.discordUser = jda.getUserById(discordID);
+    }
+
+    public boolean isVoiceChat() {
+        return voiceChat;
+    }
+
+    public void setVoiceChat(boolean voiceChat) {
+        this.voiceChat = voiceChat;
+    }
 }

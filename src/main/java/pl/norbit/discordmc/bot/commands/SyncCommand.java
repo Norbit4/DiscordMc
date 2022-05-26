@@ -7,7 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import pl.norbit.discordmc.bot.embed.Embed;
-import pl.norbit.discordmc.db.PluginDBManager;
+import pl.norbit.discordmc.bot.utils.ChatUtil;
+import pl.norbit.discordmc.server.objects.GamePlayer;
 import pl.norbit.discordmc.sync.SyncPlayer;
 import pl.norbit.discordmc.sync.SyncTimerTask;
 
@@ -23,16 +24,22 @@ public class SyncCommand extends ListenerAdapter {
             Player player = Bukkit.getPlayer(playerNick);
 
             if(player != null) {
-                Player player1 = PluginDBManager.getUser(event.getUser().getId());
-                if(player1 == null) {
+                //Player player1 = PluginDBManager.getUser(event.getUser().getId());
+                GamePlayer gamePlayer = GamePlayer.getGamePLayer(player);
+                if(gamePlayer.getDiscordUser() == null) {
 
-                    SyncTimerTask.addSyncPlayer(new SyncPlayer(player, event.getUser()));
+                    SyncTimerTask.addSyncPlayer(new SyncPlayer(player, event.getUser(),event.getChannel()));
 
-                    MessageEmbed embed = Embed.getInfoMessage("Succes","Type /sync in minecraft chat " +
+                    MessageEmbed embed = Embed.getInfoMessage("Success","Type /sync in minecraft chat " +
                                     "to sync your accounts",
                             new Color(26, 154, 74)).build();
 
                     event.reply("").addEmbeds(embed).queue();
+
+                    String mcMessage = "&Type &8/&bsync &7to connect your account with&a " + event.getUser().getAsTag();
+
+
+                    player.sendMessage(ChatUtil.format(mcMessage));
                 }else {
                     MessageEmbed embed = Embed.getInfoMessage("Warn","This player is sync!",
                             new Color(213, 156, 71)).build();

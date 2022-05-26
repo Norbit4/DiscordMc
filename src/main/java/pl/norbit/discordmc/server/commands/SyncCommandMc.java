@@ -1,13 +1,18 @@
 package pl.norbit.discordmc.server.commands;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.norbit.discordmc.bot.embed.Embed;
+import pl.norbit.discordmc.bot.utils.ChatUtil;
 import pl.norbit.discordmc.db.PluginDBManager;
+import pl.norbit.discordmc.server.objects.GamePlayer;
 import pl.norbit.discordmc.sync.SyncPlayer;
 import pl.norbit.discordmc.sync.SyncTimerTask;
 
+import java.awt.*;
 import java.util.UUID;
 
 public class SyncCommandMc implements CommandExecutor {
@@ -26,10 +31,21 @@ public class SyncCommandMc implements CommandExecutor {
         if(syncPlayer != null){
             String userID = syncPlayer.getUser().getId();
             PluginDBManager.createUser(playerUUID, userID);
+            GamePlayer gamePlayer = GamePlayer.getGamePLayer(player);
+            gamePlayer.setDiscordUser(userID);
 
             player.sendMessage(player.getName());
             player.sendMessage(syncPlayer.getUser().getAsTag());
             SyncTimerTask.removeSyncPlayer(syncPlayer);
+
+            MessageEmbed embed = Embed.getInfoMessage("Success!"," " + player.getName() + " with "
+                            + syncPlayer.getUser().getAsTag() + "!", new Color(26, 154, 74)).build();
+
+            syncPlayer.getMessageChannel().sendMessageEmbeds(embed).queue();
+
+            String mcMessage = "&aSuccess";
+
+            player.sendMessage(ChatUtil.format(mcMessage));
         } else{
             player.sendMessage("time out");
         }
