@@ -75,5 +75,8 @@ public class ConfigManager {
         PluginConfig.SYNC_INFO_MC = config.getString("sync-info-mc");
         PluginConfig.SYNC_SUCCESS_MC = config.getString("sync-success-mc");
         PluginConfig.SYNC_TIME_OUT = config.getString("sync-time-out");
+
+        PluginConfig.SERVER_ID = config.getString("server-id");
+
     }
 }

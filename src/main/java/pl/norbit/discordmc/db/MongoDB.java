@@ -1,12 +1,12 @@
 package pl.norbit.discordmc.db;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import org.bson.Document;
 import pl.norbit.discordmc.server.config.PluginConfig;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MongoDB {
     private final static MongoClient client;
@@ -33,7 +33,11 @@ public class MongoDB {
 
         client = MongoClients.create(mongoURI);
         db = client.getDatabase(PluginConfig.MONGO_DATABASE);
+
         collection = db.getCollection("players");
+
+//        Logger logger = Logger.getLogger("org.mongodb.driver");
+//        logger.setLevel(Level.SEVERE);
     }
 
     public static Document getUser(String key, String value){
@@ -49,4 +53,5 @@ public class MongoDB {
     public static void close(){
         client.close();
     }
+
 }

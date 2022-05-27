@@ -7,13 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Embed {
-    private static SimpleDateFormat dateFormat;
+    private static SimpleDateFormat dateFormat, dateFormatConsole;
 
     static {
         dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        dateFormatConsole = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     }
 
-    private static EmbedBuilder getBuilder(String tittle, String desc, Color color, boolean addDate){
+    private static EmbedBuilder getBuilder(String tittle, String desc, Color color, boolean addDate, String module){
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         if(!tittle.isEmpty()) {
@@ -24,7 +25,11 @@ public class Embed {
 
         if(addDate) {
             Date date = new Date();
-            embedBuilder.setFooter(dateFormat.format(date));
+            if(module.isEmpty()) {
+                embedBuilder.setFooter(dateFormat.format(date));
+            } else{
+                embedBuilder.setFooter(dateFormatConsole.format(date));
+            }
         }
 
         return embedBuilder;
@@ -32,7 +37,7 @@ public class Embed {
 
     public static EmbedBuilder getDiscordMessage(String nick, String message, Color colorEmbed, String field){
 
-        EmbedBuilder embedBuilder = getBuilder(nick, message, colorEmbed, true);
+        EmbedBuilder embedBuilder = getBuilder(nick, message, colorEmbed, true, "");
         //embedBuilder.addField("", message, false);
 
         if(!field.isEmpty()) {
@@ -43,6 +48,11 @@ public class Embed {
 
     public static EmbedBuilder getInfoMessage(String tittle, String message, Color color){
 
-        return getBuilder(tittle, message, color, false);
+        return getBuilder(tittle, message, color, false, "");
+    }
+
+    public static EmbedBuilder getConsoleMessage(String tittle, String message, Color color){
+
+        return getBuilder(tittle, message, color, true, "1");
     }
 }

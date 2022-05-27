@@ -1,5 +1,7 @@
 package pl.norbit.discordmc;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.DiscordBot;
@@ -23,10 +25,17 @@ public final class DiscordMc extends JavaPlugin {
 
         if(PluginConfig.PLUGIN_ENABLE) {
 
-            discordBot = new DiscordBot(PluginConfig.TOKEN);
+            discordBot = new DiscordBot(PluginConfig.TOKEN, this);
             discordBot.start();
 
-            new CommandManager(discordBot.getJda());
+            new CommandManager(discordBot.getJda(), this);
+
+            //logger
+            LogAppender appender = new LogAppender(discordBot.getJda(), this);
+            appender.start();
+
+            Logger logger = (Logger) LogManager.getRootLogger();
+            logger.addAppender(appender);
 
             //events
             EventManager.registerEvents(this, discordBot.getJda());
