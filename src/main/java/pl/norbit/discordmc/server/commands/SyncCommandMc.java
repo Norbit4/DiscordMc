@@ -39,14 +39,17 @@ public class SyncCommandMc implements CommandExecutor {
             player.sendMessage(syncPlayer.getUser().getAsTag());
             SyncTimerTask.removeSyncPlayer(syncPlayer);
 
-            MessageEmbed embed = Embed.getInfoMessage(PluginConfig.SUCCESS_TITTLE," " + player.getName() + " with "
-                            + syncPlayer.getUser().getAsTag() + "!",
+            String message = PluginConfig.SYNC_SUCCESS_DC.replace("{DISCORD}",
+                    syncPlayer.getUser().getAsTag()).replace("{PLAYER}", gamePlayer.getPlayer().getName());
+
+            MessageEmbed embed = Embed.getInfoMessage(PluginConfig.SUCCESS_TITTLE, message,
                     new Color(PluginConfig.EMBED_SUCCESS_R, PluginConfig.EMBED_SUCCESS_G, PluginConfig.EMBED_SUCCESS_B))
                     .build();
 
             syncPlayer.getMessageChannel().sendMessageEmbeds(embed).queue();
 
-            String mcMessage = PluginConfig.SYNC_SUCCESS_MC;
+            String mcMessage = PluginConfig.SYNC_SUCCESS_MC.replace("{DISCORD}",
+                    syncPlayer.getUser().getAsTag()).replace("{PLAYER}", gamePlayer.getPlayer().getName());
 
             player.sendMessage(ChatUtil.format(mcMessage));
         } else{

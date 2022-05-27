@@ -24,7 +24,7 @@ ssl: false
 #---------------------------------------#
 
 # discord embeds colors
-warn-message-tiitle: 'WARN'
+warn-message-tittle: 'WARN'
 warn-message-rgb:
   #R
   - 213
@@ -33,13 +33,13 @@ warn-message-rgb:
   #B
   - 71
 
-success-message-tiitle: 'SUCCESS'
+success-message-tittle: 'SUCCESS'
 success-message-rgb:
   - 26
   - 154
   - 74
 
-error-message-tiitle: 'ERROR'
+error-message-tittle: 'ERROR'
 error-message-rgb:
   - 194
   - 50
@@ -52,7 +52,7 @@ sync-info: 'Type /sync in minecraft chat to sync your accounts'
 sync-success: '{PLAYER} with {DISCORD}'
 
 #minecraft messages
-sync-info-mc: '&7Type &8/&bsync &7to connect your account with&a '
+sync-info-mc: '&7Type &8/&bsync &7to connect your account with&a {DISCORD}'
 sync-success-mc: '&aSuccess syc with {DISCORD}'
 sync-time-out: '&7Time out!'
 

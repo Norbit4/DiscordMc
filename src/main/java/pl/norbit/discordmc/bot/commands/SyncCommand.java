@@ -31,18 +31,18 @@ public class SyncCommand extends ListenerAdapter {
 
                     SyncTimerTask.addSyncPlayer(new SyncPlayer(player, event.getUser(),event.getChannel()));
 
+
                     MessageEmbed embed = Embed.getInfoMessage(PluginConfig.SUCCESS_TITTLE, PluginConfig.SYNC_INFO_DC,
                             new Color(PluginConfig.EMBED_SUCCESS_R, PluginConfig.EMBED_SUCCESS_G,
                                     PluginConfig.EMBED_SUCCESS_B)).build();
 
                     event.reply("").addEmbeds(embed).queue();
 
-                    String mcMessage = PluginConfig.SYNC_INFO_MC + event.getUser().getAsTag();
+                    String mcFormatMessage = PluginConfig.SYNC_INFO_MC.replace("{DISCORD}", event.getUser().getAsTag());
 
-
-                    player.sendMessage(ChatUtil.format(mcMessage));
+                    player.sendMessage(ChatUtil.format(mcFormatMessage));
                 }else {
-                    MessageEmbed embed = Embed.getInfoMessage(PluginConfig.WARN_TITTLE ,PluginConfig.PLAYER_IS_SYNC_DC,
+                    MessageEmbed embed = Embed.getInfoMessage(PluginConfig.WARN_TITTLE, PluginConfig.PLAYER_IS_SYNC_DC,
                             new Color(PluginConfig.EMBED_WARN_R, PluginConfig.EMBED_WARN_G, PluginConfig.EMBED_WARN_B))
                             .build();
 

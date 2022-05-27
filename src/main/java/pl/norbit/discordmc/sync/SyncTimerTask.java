@@ -22,7 +22,7 @@ public class SyncTimerTask {
 
                     syncPlayerList.forEach(syncPlayer -> {
 
-                        System.out.println(syncPlayer.getPlayer().getName() + " " + syncPlayer.time);
+                        //System.out.println(syncPlayer.getPlayer().getName() + " " + syncPlayer.time);
                         if(syncPlayer.time() == 1){
                             removeSyncPlayer(syncPlayer);
                         }

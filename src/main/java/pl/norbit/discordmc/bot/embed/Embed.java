@@ -16,7 +16,9 @@ public class Embed {
     private static EmbedBuilder getBuilder(String tittle, String desc, Color color, boolean addDate){
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
-        embedBuilder.setTitle(tittle);
+        if(!tittle.isEmpty()) {
+            embedBuilder.setTitle(tittle);
+        }
         embedBuilder.setDescription(desc);
         embedBuilder.setColor(color);
 
