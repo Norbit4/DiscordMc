@@ -20,6 +20,8 @@ public class ChangeChannel implements CommandExecutor {
                     gamePlayer.setChannel(ch);
 
                     player.sendMessage("zmieniono na :" + ch);
+                } else {
+
                 }
             }
         }

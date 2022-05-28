@@ -13,23 +13,24 @@ import pl.norbit.discordmc.server.objects.GamePlayer;
 
 import java.awt.*;
 
-public class OnSendMessageEvent extends ListenerAdapter {
+public class OnMessageChatEvent extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         Message message = event.getMessage();
         String channelName = message.getChannel().getName();
 
-        if(channelName.equals(PluginConfig.CHANNEL_NAME)){
+        if(channelName.equals(PluginConfig.CHAT_CHANNEL_NAME)) {
 
-            sendMessage(event);
+            sendChatMessage(event);
         }
     }
 
-    private void sendMessage(MessageReceivedEvent event){
+    private void sendChatMessage(MessageReceivedEvent event){
         User author = event.getAuthor();
         Message message = event.getMessage();
         boolean isBot = event.getAuthor().isBot();
+
         if(!isBot) {
             event.getMessage().delete().queue();
             EmbedBuilder embedBuilder = Embed.getDiscordMessage(

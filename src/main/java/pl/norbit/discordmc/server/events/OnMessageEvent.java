@@ -24,7 +24,7 @@ public class OnMessageEvent implements Listener {
 
     @EventHandler
     public void onMessage(AsyncPlayerChatEvent e) {
-        MessageChannel messageChannel = jda.getTextChannelsByName(PluginConfig.CHANNEL_NAME, false).get(0);
+        MessageChannel messageChannel = jda.getTextChannelsByName(PluginConfig.CHAT_CHANNEL_NAME, false).get(0);
         String playerMessage = e.getMessage();
         Player sender = e.getPlayer();
         GamePlayer gamePlayer = GamePlayer.getGamePLayer(sender);

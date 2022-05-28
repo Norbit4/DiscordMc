@@ -1,10 +1,12 @@
 package pl.norbit.discordmc;
 
+import net.dv8tion.jda.api.entities.MessageChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.DiscordBot;
+import pl.norbit.discordmc.bot.builder.BotBuilder;
 import pl.norbit.discordmc.bot.commands.CommandManager;
 import pl.norbit.discordmc.db.MongoDB;
 import pl.norbit.discordmc.db.PluginDBManager;
@@ -23,19 +25,44 @@ public final class DiscordMc extends JavaPlugin {
 
         ConfigManager.loadConfig(this);
 
+
         if(PluginConfig.PLUGIN_ENABLE) {
+            BotBuilder.init(this);
 
             discordBot = new DiscordBot(PluginConfig.TOKEN, this);
             discordBot.start();
 
+            if(PluginConfig.CONSOLE_MODULE){
+                MessageChannel messageChannel =
+                        discordBot.getJda().getTextChannelById(PluginConfig.CONSOLE_CHANNEL_NAME);
+
+                if(messageChannel == null){
+
+                    this.getPluginLoader().disablePlugin(this);
+                }
+
+            }
+
+            if(PluginConfig.CHAT_MODULE){
+                MessageChannel messageChannel =
+                        discordBot.getJda().getTextChannelById(PluginConfig.CHAT_CHANNEL_NAME);
+
+                if(messageChannel == null){
+                    this.getPluginLoader().disablePlugin(this);
+                }
+
+            }
+
             new CommandManager(discordBot.getJda(), this);
 
             //logger
-            LogAppender appender = new LogAppender(discordBot.getJda(), this);
-            appender.start();
+            if(PluginConfig.CONSOLE_MODULE) {
+                LogAppender appender = new LogAppender(discordBot.getJda(), this);
+                appender.start();
 
-            Logger logger = (Logger) LogManager.getRootLogger();
-            logger.addAppender(appender);
+                Logger logger = (Logger) LogManager.getRootLogger();
+                logger.addAppender(appender);
+            }
 
             //events
             EventManager.registerEvents(this, discordBot.getJda());

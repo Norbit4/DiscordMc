@@ -22,7 +22,6 @@ public class SyncTimerTask {
 
                     syncPlayerList.forEach(syncPlayer -> {
 
-                        //System.out.println(syncPlayer.getPlayer().getName() + " " + syncPlayer.time);
                         if(syncPlayer.time() == 1){
                             removeSyncPlayer(syncPlayer);
                         }
@@ -45,6 +44,5 @@ public class SyncTimerTask {
 
     public static void removeSyncPlayer(SyncPlayer syncPlayer){
         syncPlayerList.remove(syncPlayer);
-        System.out.println("work!");
     }
 }

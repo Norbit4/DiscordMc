@@ -3,6 +3,9 @@ package pl.norbit.discordmc.db;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;
 import org.bson.Document;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.server.config.PluginConfig;
 
 import java.util.logging.Level;
@@ -10,8 +13,14 @@ import java.util.logging.Logger;
 
 public class MongoDB {
     private final static MongoClient client;
-    private final static MongoDatabase db;
-    private final static MongoCollection<Document> collection;
+    private static MongoDatabase db;
+    private static MongoCollection<Document> collection;
+    private static JavaPlugin javaPlugin;
+
+    public static void init(JavaPlugin javaPlugin){
+        MongoDB.javaPlugin = javaPlugin;
+    }
+
 
     static {
         String mongoURI;
@@ -31,10 +40,16 @@ public class MongoDB {
             mongoURI = mongoURI + "&tls=true";
         }
 
-        client = MongoClients.create(mongoURI);
-        db = client.getDatabase(PluginConfig.MONGO_DATABASE);
 
-        collection = db.getCollection("players");
+        client = MongoClients.create(mongoURI);
+
+        if(!PluginConfig.MONGO_DATABASE.isEmpty()) {
+            db = client.getDatabase(PluginConfig.MONGO_DATABASE);
+            collection = db.getCollection("players");
+        }else {
+            Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[Error] Set database name!");
+            Bukkit.getServer().getPluginManager().disablePlugin(javaPlugin);
+        }
 
 //        Logger logger = Logger.getLogger("org.mongodb.driver");
 //        logger.setLevel(Level.SEVERE);
