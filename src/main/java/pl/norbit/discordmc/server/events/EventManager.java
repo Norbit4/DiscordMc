@@ -11,6 +11,7 @@ public class EventManager {
 
         PluginManager pluginManager = javaPlugin.getServer().getPluginManager();
         pluginManager.registerEvents(new OnJoinServerEvent(jda), javaPlugin);
+        pluginManager.registerEvents(new CommandEvent(), javaPlugin);
 
         if(PluginConfig.CHAT_MODULE) {
             pluginManager.registerEvents(new OnMessageEvent(jda), javaPlugin);

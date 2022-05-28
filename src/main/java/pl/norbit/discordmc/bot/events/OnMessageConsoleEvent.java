@@ -16,9 +16,9 @@ public class OnMessageConsoleEvent extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         Message message = event.getMessage();
-        String channelName = message.getChannel().getName();
+        String channelID = message.getChannel().getId();
 
-        if(channelName.equals(PluginConfig.CONSOLE_CHANNEL_NAME)) {
+        if(channelID.equals(PluginConfig.CONSOLE_CHANNEL_ID)) {
 
             if(!event.getAuthor().isBot()) {
 

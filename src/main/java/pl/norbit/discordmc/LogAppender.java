@@ -14,7 +14,7 @@ import java.awt.*;
 public class LogAppender extends AbstractAppender {
     private final JDA jda;
 
-    public LogAppender(JDA jda, JavaPlugin javaPlugin) {
+    public LogAppender(JDA jda, JavaPlugin javaPlugin){
         super("LogAppender", null, null);
         this.jda = jda;
 
@@ -23,8 +23,11 @@ public class LogAppender extends AbstractAppender {
 
         MessageEmbed embed = Embed.getConsoleMessage("", message, color).build();
 
-        jda.getTextChannelsByName(PluginConfig.CONSOLE_CHANNEL_NAME, false).get(0)
-                .sendMessageEmbeds(embed).queue();
+        try {
+            jda.awaitReady().getTextChannelById(PluginConfig.CONSOLE_CHANNEL_ID).sendMessageEmbeds(embed).queue();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -57,20 +60,21 @@ public class LogAppender extends AbstractAppender {
         }
 
         if(sendMessage) {
-            String[] replace = {"§9","§8","§7","§6","§5","§4","§3", "§2", "§1", "§0","§a", "§b", "§c","§d", "§e", "§f"};
+            String[] colorCodes = {"\\u00A7f", "\\u00A70", "\\u00A71", "\\u00A72", "\\u00A73", "\\u00A74", "\\u00A75",
+                    "\\u00A76", "\\u00A77", "\\u00A78", "\\u00A79", "\\u00A7a ", "\\u00A7b", "\\u00A7c", "\\u00A7d",
+                    "\\u00A7e", "\\u00A7f"};
 
-            String formatMessage = event.getMessage().getFormattedMessage().replaceAll("\u001b\\[[;\\d]*m", "");
+            String message = event.getMessage().getFormattedMessage();
 
-            for (String s : replace) {
-                formatMessage = formatMessage.replaceAll(s, "");
+            for (String s : colorCodes) {
+            message = message.replaceAll(s, "");
             }
 
-            String message = "**["+ event.getLevel().toString() + "]**: " + formatMessage + "";
+            String endMessage = "**["+ event.getLevel().toString() + "]**: " + message + "";
 
-            MessageEmbed embed = Embed.getConsoleMessage("", message, color).build();
+            MessageEmbed embed = Embed.getConsoleMessage("", endMessage, color).build();
 
-            jda.getTextChannelsByName(PluginConfig.CONSOLE_CHANNEL_NAME, false).get(0)
-                    .sendMessageEmbeds(embed).queue();
+            jda.getTextChannelById(PluginConfig.CONSOLE_CHANNEL_ID).sendMessageEmbeds(embed).queue();
         }
     }
 }

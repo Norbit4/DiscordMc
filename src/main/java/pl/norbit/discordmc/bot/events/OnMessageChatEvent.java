@@ -18,9 +18,9 @@ public class OnMessageChatEvent extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         Message message = event.getMessage();
-        String channelName = message.getChannel().getName();
+        String channelID = message.getChannel().getId();
 
-        if(channelName.equals(PluginConfig.CHAT_CHANNEL_NAME)) {
+        if(channelID.equals(PluginConfig.CHAT_CHANNEL_ID)) {
 
             sendChatMessage(event);
         }

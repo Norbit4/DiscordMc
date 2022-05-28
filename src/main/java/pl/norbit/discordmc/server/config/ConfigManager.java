@@ -16,7 +16,7 @@ public class ConfigManager {
         PluginConfig.TOKEN = config.getString("token");
         PluginConfig.DISCORD_PREFIX = config.getString("discord-prefix");
         PluginConfig.MC_PREFIX = config.getString("mc-prefix");
-        PluginConfig.CHAT_CHANNEL_NAME = config.getString("channel-chat-name");
+        PluginConfig.CHAT_CHANNEL_ID = config.getString("channel-chat-id");
         PluginConfig.BOT_ACTIVITY = config.getString("bot-activity");
         PluginConfig.NICK_COLOR = config.getString("nick-color");
         PluginConfig.MESSAGE_COLOR = config.getString("message-color");
@@ -85,7 +85,7 @@ public class ConfigManager {
         PluginConfig.BLOCK_WARN_MESSAGES = config.getBoolean("block-warn-messages");
         PluginConfig.BLOCK_ERROR_MESSAGES = config.getBoolean("block-error-messages");
 
-        PluginConfig.CONSOLE_CHANNEL_NAME = config.getString("channel-console-name");
+        PluginConfig.CONSOLE_CHANNEL_ID = config.getString("channel-console-id");
 
     }
 }

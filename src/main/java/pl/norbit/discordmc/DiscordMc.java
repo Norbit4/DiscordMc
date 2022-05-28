@@ -33,8 +33,12 @@ public final class DiscordMc extends JavaPlugin {
             discordBot.start();
 
             if(PluginConfig.CONSOLE_MODULE){
-                MessageChannel messageChannel =
-                        discordBot.getJda().getTextChannelById(PluginConfig.CONSOLE_CHANNEL_NAME);
+                MessageChannel messageChannel = null;
+                try {
+                    messageChannel = discordBot.getJda().awaitReady().getTextChannelById(PluginConfig.CONSOLE_CHANNEL_ID);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 if(messageChannel == null){
 
@@ -44,8 +48,13 @@ public final class DiscordMc extends JavaPlugin {
             }
 
             if(PluginConfig.CHAT_MODULE){
-                MessageChannel messageChannel =
-                        discordBot.getJda().getTextChannelById(PluginConfig.CHAT_CHANNEL_NAME);
+                MessageChannel messageChannel = null;
+                try {
+                    messageChannel = discordBot.getJda().awaitReady().getTextChannelById(PluginConfig.CHAT_CHANNEL_ID);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
 
                 if(messageChannel == null){
                     this.getPluginLoader().disablePlugin(this);
@@ -68,7 +77,7 @@ public final class DiscordMc extends JavaPlugin {
             EventManager.registerEvents(this, discordBot.getJda());
 
             //commands
-            getServer().getPluginCommand(PluginConfig.COMMAND_PREFIX).setExecutor(new ChangeChannel());
+            getServer().getPluginCommand("dc").setExecutor(new ChangeChannel());
             getServer().getPluginCommand("sync").setExecutor(new SyncCommandMc());
 
             PluginDBManager.init(discordBot.getJda());

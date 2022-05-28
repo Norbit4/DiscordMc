@@ -62,7 +62,7 @@ sync-time-out: '&7Time out!'
 #---------------------------------------#
 
 discord-chat-module: false
-channel-chat-name: ''
+channel-chat-id: ''
 
 # minecraft server chat
 discord-prefix: '&d[DC] '
@@ -90,7 +90,7 @@ mc-user-rgb:
 #---------------------------------------#
 
 discord-console-module: false
-channel-console-name: ''
+channel-console-id: ''
 
 discord-console-commands: true
 
