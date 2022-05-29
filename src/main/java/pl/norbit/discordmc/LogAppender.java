@@ -9,14 +9,19 @@ import pl.norbit.discordmc.bot.embed.Embed;
 import pl.norbit.discordmc.server.config.PluginConfig;
 
 import java.awt.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class LogAppender extends AbstractAppender {
     private final JDA jda;
+    public Queue<MessageEmbed> messageQueue;
 
     public LogAppender(JDA jda, JavaPlugin javaPlugin){
         super("LogAppender", null, null);
         this.jda = jda;
+        messageQueue = new LinkedList<>();
+        messageTask(javaPlugin);
 
         Color color = new Color(35, 201, 86);
         String message = "**Successfully connected to the console!**";
@@ -28,6 +33,7 @@ public class LogAppender extends AbstractAppender {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -60,9 +66,9 @@ public class LogAppender extends AbstractAppender {
         }
 
         if(sendMessage) {
-            String[] colorCodes = {"\\u00A7f", "\\u00A70", "\\u00A71", "\\u00A72", "\\u00A73", "\\u00A74", "\\u00A75",
-                    "\\u00A76", "\\u00A77", "\\u00A78", "\\u00A79", "\\u00A7a ", "\\u00A7b", "\\u00A7c", "\\u00A7d",
-                    "\\u00A7e", "\\u00A7f"};
+            String[] colorCodes = {"\\u00A70", "\\u00A71", "\\u00A72", "\\u00A73", "\\u00A74", "\\u00A75", "\\u00A76",
+                    "\\u00A77", "\\u00A78", "\\u00A79", "\\u00A7a", "\\u00A7b", "\\u00A7c", "\\u00A7d", "\\u00A7e",
+                    "\\u00A7f"};
 
             String message = event.getMessage().getFormattedMessage();
 
@@ -74,11 +80,25 @@ public class LogAppender extends AbstractAppender {
 
             MessageEmbed embed = Embed.getConsoleMessage("", endMessage, color).build();
 
-            try {
-                jda.awaitReady().getTextChannelById(PluginConfig.CONSOLE_CHANNEL_ID).sendMessageEmbeds(embed).queue();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            messageQueue.offer(embed);
         }
+    }
+
+    private void messageTask(JavaPlugin javaPlugin){
+        
+        javaPlugin.getServer().getScheduler().runTaskTimer(javaPlugin, () -> {
+
+            if(!messageQueue.isEmpty()) {
+                MessageEmbed embed = messageQueue.poll();
+                try {
+                    jda.awaitReady().getTextChannelById(PluginConfig.CONSOLE_CHANNEL_ID)
+                            .sendMessageEmbeds(embed).queue();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }, 0,25);
+
     }
 }

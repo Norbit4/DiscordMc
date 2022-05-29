@@ -56,7 +56,7 @@ sync-success: 'The player {PLAYER} has been synchronized with {DISCORD} account!
 #minecraft messages
 sync-info-mc: '&7Type &8/&b{PREFIX} {ARG1} &7to connect your account with&a {DISCORD}'
 sync-success-mc: '&aSuccess! &7The account has been synchronized with &c{DISCORD}!'
-sync-time-out: '&7You don't have sync pending!'
+sync-time-out: '&7You dont have sync pending!'
 
 wrong-args-message: 'Use: /{PREFIX} {ARG1} {ARG2}'
 
