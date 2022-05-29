@@ -13,18 +13,31 @@ public class ConfigManager {
         config.options().copyDefaults();
         javaPlugin.saveDefaultConfig();
 
+        //plugin options
+        PluginConfig.SERVER_ID = config.getString("server-id");
+        PluginConfig.PLUGIN_ENABLE = config.getBoolean("enable");
+        PluginConfig.COMMAND_PREFIX = config.getString("command-prefix");
         PluginConfig.TOKEN = config.getString("token");
         PluginConfig.DISCORD_PREFIX = config.getString("discord-prefix");
-        PluginConfig.MC_PREFIX = config.getString("mc-prefix");
-        PluginConfig.CHAT_CHANNEL_ID = config.getString("channel-chat-id");
         PluginConfig.BOT_ACTIVITY = config.getString("bot-activity");
+        PluginConfig.WRONG_ARGS_MESSAGE = config.getString("wrong-args-message");
+        PluginConfig.SYNC_COMMAND_ARG = config.getString("sync-command-arg");
+
+        //discord-chat-module
+        PluginConfig.MC_PREFIX = config.getString("mc-prefix");
+        PluginConfig.CHAT_MODULE = config.getBoolean("discord-chat-module");
+        PluginConfig.CHAT_CHANNEL_ID = config.getString("channel-chat-id");
         PluginConfig.NICK_COLOR = config.getString("nick-color");
         PluginConfig.MESSAGE_COLOR = config.getString("message-color");
         PluginConfig.MESSAGE_MARK = config.getString("message-mark");
-        PluginConfig.CHAT_MODULE = config.getBoolean("discord-chat-module");
         PluginConfig.DISCORD_MESSAGE_MARK = config.getString("discord-message-mark");
-        PluginConfig.COMMAND_PREFIX = config.getString("command-prefix");
-        PluginConfig.PLUGIN_ENABLE = config.getBoolean("enable");
+        PluginConfig.COMMAND_CHAT_CHANGE = config.getString("command-chat-change-arg");
+        PluginConfig.MINECRAFT_CHAT_ARG = config.getString("minecraft-chat-arg");
+        PluginConfig.DISCORD_CHAT_ARG = config.getString("discord-chat-arg");
+        PluginConfig.CHANNEL_CHANGE_MESSAGE = config.getString("channel-change-message");
+        PluginConfig.COMMAND_CHAT_CHANGE_ARG = config.getString("command-chat-change-arg");;
+
+        PluginConfig.COMMAND_ARGS_LIST = config.getStringList("command-args-list");
 
         List<Integer> rgbDiscordList = config.getIntegerList("discord-user-rgb");
         PluginConfig.EMBED_DISCORD_R = rgbDiscordList.get(0);
@@ -76,16 +89,11 @@ public class ConfigManager {
         PluginConfig.SYNC_SUCCESS_MC = config.getString("sync-success-mc");
         PluginConfig.SYNC_TIME_OUT = config.getString("sync-time-out");
 
-        PluginConfig.SERVER_ID = config.getString("server-id");
-
         //discord console module
-
         PluginConfig.CONSOLE_MODULE = config.getBoolean("discord-console-module");
+        PluginConfig.CONSOLE_CHANNEL_ID = config.getString("channel-console-id");
         PluginConfig.DISCORD_CONSOLE_COMMANDS = config.getBoolean("discord-console-commands");
         PluginConfig.BLOCK_WARN_MESSAGES = config.getBoolean("block-warn-messages");
         PluginConfig.BLOCK_ERROR_MESSAGES = config.getBoolean("block-error-messages");
-
-        PluginConfig.CONSOLE_CHANNEL_ID = config.getString("channel-console-id");
-
     }
 }

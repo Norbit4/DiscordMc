@@ -15,16 +15,21 @@ public class CommandEvent implements Listener {
 
         String cmd = cmdArray[0].replace("/","");
 
-        String arg1 = cmdArray[1];
-        String arg2 = cmdArray[2];
-
-        System.out.println(cmd);
-        System.out.println(arg1);
-        System.out.println(arg2);
-
         if(cmd.equals(PluginConfig.COMMAND_PREFIX) && !cmd.equals("dc")) {
 
+            String arg1 = "";
+            String arg2 = "";
+
+            if(cmdArray.length > 1){
+                arg1 = cmdArray[1];
+
+                if (cmdArray.length > 2){
+                   arg2 = cmdArray[2];
+                }
+            }
+
             Bukkit.getServer().dispatchCommand(e.getPlayer(), "dc " + arg1 + " " + arg2);
+
             e.setCancelled(true);
         }
     }

@@ -74,7 +74,11 @@ public class LogAppender extends AbstractAppender {
 
             MessageEmbed embed = Embed.getConsoleMessage("", endMessage, color).build();
 
-            jda.getTextChannelById(PluginConfig.CONSOLE_CHANNEL_ID).sendMessageEmbeds(embed).queue();
+            try {
+                jda.awaitReady().getTextChannelById(PluginConfig.CONSOLE_CHANNEL_ID).sendMessageEmbeds(embed).queue();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

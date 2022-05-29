@@ -22,7 +22,6 @@ public class DiscordBot {
         try {
             jda = jdaBuilder.build();
         } catch (LoginException e) {
-            //e.printStackTrace();
             javaPlugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[ERROR] Wrong token!");
         }
     }
