@@ -1,6 +1,7 @@
 package pl.norbit.discordmc;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
@@ -13,9 +14,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-public class LogAppender extends AbstractAppender {
+public class LogAppender extends AbstractAppender{
     private final JDA jda;
-    public Queue<MessageEmbed> messageQueue;
+    private final Queue<MessageEmbed> messageQueue;
 
     public LogAppender(JDA jda, JavaPlugin javaPlugin){
         super("LogAppender", null, null);
@@ -85,7 +86,7 @@ public class LogAppender extends AbstractAppender {
     }
 
     private void messageTask(JavaPlugin javaPlugin){
-        
+
         javaPlugin.getServer().getScheduler().runTaskTimer(javaPlugin, () -> {
 
             if(!messageQueue.isEmpty()) {

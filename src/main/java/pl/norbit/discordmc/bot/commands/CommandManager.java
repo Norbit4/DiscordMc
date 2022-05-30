@@ -14,6 +14,9 @@ public class CommandManager {
             jda.awaitReady().getGuildById(PluginConfig.SERVER_ID).upsertCommand("sync","sync mc with dc")
                     .addOption(OptionType.STRING, CmdOptions.NICK.name().toLowerCase(), "o", true)
                     .queue();
+            jda.awaitReady().getGuildById(PluginConfig.SERVER_ID).upsertCommand("profile","show your profile")
+                    .addOption(OptionType.MENTIONABLE, CmdOptions.MENTION.name().toLowerCase(), "o", false)
+                    .queue();
 
             jda.updateCommands().queue();
 

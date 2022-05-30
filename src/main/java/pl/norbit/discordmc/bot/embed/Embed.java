@@ -55,4 +55,12 @@ public class Embed {
 
         return getBuilder(tittle, message, color, true, "1");
     }
+
+    public static EmbedBuilder getProfileMessage(String discordMention, String mcName){
+        EmbedBuilder embedBuilder = getBuilder("Profile", "*", new Color(180, 115, 208),
+                false, "");
+        embedBuilder.addField("MC: " + mcName, "**DC:** " + discordMention, true);
+
+        return embedBuilder;
+    }
 }

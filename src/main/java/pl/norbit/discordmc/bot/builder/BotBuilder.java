@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.norbit.discordmc.bot.commands.ProfileCommand;
 import pl.norbit.discordmc.bot.commands.SyncCommand;
 import pl.norbit.discordmc.bot.events.OnMessageChatEvent;
 import pl.norbit.discordmc.bot.events.OnMessageConsoleEvent;
@@ -19,7 +20,8 @@ public class BotBuilder {
     public static JDABuilder getBuilder(String token){
         JDABuilder builder = JDABuilder.createDefault(token)
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
-                .addEventListeners(new SyncCommand());
+                .addEventListeners(new SyncCommand())
+                .addEventListeners(new ProfileCommand());
 
         if(!PluginConfig.BOT_ACTIVITY.equals("")){
             builder.setActivity(Activity.playing(PluginConfig.BOT_ACTIVITY));

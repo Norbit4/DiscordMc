@@ -8,9 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.server.config.PluginConfig;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class MongoDB {
     private final static MongoClient client;
     private static MongoDatabase db;
