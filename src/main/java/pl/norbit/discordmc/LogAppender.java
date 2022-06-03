@@ -1,7 +1,6 @@
 package pl.norbit.discordmc;
 
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
@@ -12,7 +11,6 @@ import pl.norbit.discordmc.server.config.PluginConfig;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.Queue;
-
 
 public class LogAppender extends AbstractAppender{
     private final JDA jda;
@@ -34,7 +32,6 @@ public class LogAppender extends AbstractAppender{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

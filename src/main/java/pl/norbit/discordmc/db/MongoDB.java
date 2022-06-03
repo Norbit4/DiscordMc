@@ -18,7 +18,6 @@ public class MongoDB {
         MongoDB.javaPlugin = javaPlugin;
     }
 
-
     static {
         String mongoURI;
 

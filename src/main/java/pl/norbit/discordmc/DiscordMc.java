@@ -15,10 +15,19 @@ import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.commands.ChangeChannel;
 import pl.norbit.discordmc.server.config.ConfigManager;
 import pl.norbit.discordmc.server.events.EventManager;
+import pl.norbit.discordmc.serverinfo.InfoUpdater;
 import pl.norbit.discordmc.sync.SyncTimerTask;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public final class DiscordMc extends JavaPlugin {
     private DiscordBot discordBot;
+    private final static ExecutorService executorService;
+
+    static {
+        executorService = Executors.newFixedThreadPool(2);
+    }
 
     @Override
     public void onEnable() {
@@ -81,6 +90,7 @@ public final class DiscordMc extends JavaPlugin {
             getServer().getPluginCommand("sync").setExecutor(new SyncCommandMc());
 
             PluginDBManager.init(discordBot.getJda());
+            InfoUpdater.start(discordBot.getJda());
 
             SyncTimerTask.runTaskTimer(this);
         } else {
@@ -94,4 +104,7 @@ public final class DiscordMc extends JavaPlugin {
         MongoDB.close();
     }
 
+    public static ExecutorService getExecutorService() {
+        return executorService;
+    }
 }

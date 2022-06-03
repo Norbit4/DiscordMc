@@ -32,15 +32,16 @@ public class ChangeChannel implements CommandExecutor {
 
                     GamePlayer gamePlayer = GamePlayer.getGamePLayer(player);
 
-                    if(args.length > 2) {
+                    if(args.length > 1) {
                         String arg = args[1].toUpperCase();
 
-                        if (arg.equals("GLOBAL") || arg.equals("DISCORD")) {
+                        if (arg.equalsIgnoreCase("GLOBAL") || arg.equalsIgnoreCase("DISCORD")){
                             Channel ch = Channel.valueOf(arg);
 
                             gamePlayer.setChannel(ch);
 
-                            String message = PluginConfig.CHANNEL_CHANGE_MESSAGE.replace("{CHANNEL}", ch.toString());
+                            String message = PluginConfig.CHANNEL_CHANGE_MESSAGE
+                                    .replace("{CHANNEL}", ch.toString());
 
                             player.sendMessage(ChatUtil.format(message));
                         } else {

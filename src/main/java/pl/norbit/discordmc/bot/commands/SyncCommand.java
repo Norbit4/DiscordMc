@@ -38,7 +38,8 @@ public class SyncCommand extends ListenerAdapter {
 
                     event.reply("").addEmbeds(embed).queue();
 
-                    String mcFormatMessage = PluginConfig.SYNC_INFO_MC.replace("{DISCORD}", event.getUser().getAsTag());
+                    String mcFormatMessage = PluginConfig.SYNC_INFO_MC
+                            .replace("{DISCORD}", event.getUser().getAsTag());
 
                     player.sendMessage(ChatUtil.format(mcFormatMessage));
                 }else {

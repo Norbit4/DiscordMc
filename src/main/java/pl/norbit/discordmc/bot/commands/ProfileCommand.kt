@@ -1,6 +1,5 @@
 package pl.norbit.discordmc.bot.commands
 
-import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import pl.norbit.discordmc.bot.embed.Embed
