@@ -23,6 +23,7 @@ import java.util.concurrent.Executors;
 
 public final class DiscordMc extends JavaPlugin {
     private DiscordBot discordBot;
+    private static Long timeServer;
     private final static ExecutorService executorService;
 
     static {
@@ -34,13 +35,14 @@ public final class DiscordMc extends JavaPlugin {
 
         ConfigManager.loadConfig(this);
 
-
         if(PluginConfig.PLUGIN_ENABLE) {
             BotBuilder.init(this);
 
             discordBot = new DiscordBot(PluginConfig.TOKEN, this);
             discordBot.start();
+            timeServer = System.currentTimeMillis();
 
+            //console module
             if(PluginConfig.CONSOLE_MODULE){
                 MessageChannel messageChannel = null;
                 try {
@@ -56,6 +58,7 @@ public final class DiscordMc extends JavaPlugin {
 
             }
 
+            //chat module
             if(PluginConfig.CHAT_MODULE){
                 MessageChannel messageChannel = null;
                 try {
@@ -90,7 +93,11 @@ public final class DiscordMc extends JavaPlugin {
             getServer().getPluginCommand("sync").setExecutor(new SyncCommandMc());
 
             PluginDBManager.init(discordBot.getJda());
-            InfoUpdater.start(discordBot.getJda());
+
+            //info module
+            if(PluginConfig.DISCORD_INFO_MODULE){
+                InfoUpdater.start(discordBot.getJda());
+            }
 
             SyncTimerTask.runTaskTimer(this);
         } else {
@@ -107,4 +114,9 @@ public final class DiscordMc extends JavaPlugin {
     public static ExecutorService getExecutorService() {
         return executorService;
     }
+
+    public static Long getTimeServer() {
+        return DiscordMc.timeServer;
+    }
+
 }

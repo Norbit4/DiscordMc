@@ -1,6 +1,7 @@
-
+#---------------------------------------#
 # DiscordMc by Norbit4
-# Ver 1.0.1
+# ver 1.0.1
+# github: https://github.com/Norbit4
 
 #---------------------------------------#
 #             [bot config]              #
@@ -109,5 +110,35 @@ channel-console-id: ''
 
 discord-console-commands: true
 
-block-warn-messages: false
 block-error-messages: false
+
+#---------------------------------------#
+#         [discord-info-module]         #
+#---------------------------------------#
+discord-info-module: false
+channel-info-id: ''
+
+# message info reload time in seconds, min time: 20s (for safe)
+message-reload-time: 20
+
+discord-info-rgb:
+  - 26
+  - 154
+  - 74
+
+# Placeholders
+# {SERVER_ONLINE}, {SERVER_MAX_PLAYERS}, {SERVER_TIME}, {SERVER_ALL_PLAYERS}, {SERVER_WORLDS}, {SERVER_VERSION},
+# {SERVER_ALLOW_NETHER}, {SERVER_ALLOW_END}
+embed-tittle: ''
+embed-desc: ''
+embed-info:
+  - 'Online://{SERVER_ONLINE}/{SERVER_MAX_PLAYERS}'
+  - 'Up Time:// {SERVER_TIME}'
+  - 'All Players:// {SERVER_ALL_PLAYERS}'
+  - 'Worlds:// {SERVER_WORLDS}'
+  - 'Ver:// {SERVER_VERSION}'
+  - 'Nether:// {SERVER_ALLOW_NETHER}'
+  - 'End:// {SERVER_ALLOW_END}'
+
+false-info: 'fal'
+true-info: 'tru'

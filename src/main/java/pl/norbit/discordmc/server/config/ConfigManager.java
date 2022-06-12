@@ -95,5 +95,20 @@ public class ConfigManager {
         PluginConfig.DISCORD_CONSOLE_COMMANDS = config.getBoolean("discord-console-commands");
         PluginConfig.BLOCK_WARN_MESSAGES = config.getBoolean("block-warn-messages");
         PluginConfig.BLOCK_ERROR_MESSAGES = config.getBoolean("block-error-messages");
+
+        //discord info module
+        PluginConfig.DISCORD_INFO_MODULE = config.getBoolean("discord-info-module");
+        PluginConfig.CHANNEL_INFO_ID = config.getString("channel-info-id");
+        List<Integer> rgbInfoList = config.getIntegerList("discord-info-rgb");
+        PluginConfig.EMBED_INFO_R = rgbInfoList.get(0);
+        PluginConfig.EMBED_INFO_G = rgbInfoList.get(1);
+        PluginConfig.EMBED_INFO_B = rgbInfoList.get(2);
+        PluginConfig.EMBED_INFO_TITTLE = config.getString("embed-tittle");
+        PluginConfig.EMBED_INFO_DESC = config.getString("embed-desc");
+        PluginConfig.EMBED_INFO_ARGS = config.getStringList("embed-info");
+        PluginConfig.FALSE_INFO = config.getString("false-info");
+        PluginConfig.TRUE_INFO = config.getString("true-info");
+        PluginConfig.MESSAGE_RELOAD_TIME = config.getInt("message-reload-time");
+
     }
 }
