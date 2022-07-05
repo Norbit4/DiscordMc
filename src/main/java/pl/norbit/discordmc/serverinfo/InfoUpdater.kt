@@ -13,9 +13,31 @@ import java.util.*
 class InfoUpdater {
 
     companion object {
+        private val maxPlayers = Bukkit.getMaxPlayers()
+        private val version = Bukkit.getVersion()
+        private var allowEndFormatted: String = "";
+        private var allowNetherFormatted: String = "";
+        private val allPlayer = Bukkit.getOfflinePlayers().size
+        private val stringWorldsList: ArrayList<String> = ArrayList()
 
         @JvmStatic
         fun start(jda: JDA?) {
+            val excludeFolders = listOf("cache", "plugins", "logs", "crash-reports")
+
+            DiscordMc.getExecutorService().submit{
+                while (true) {
+                    Bukkit.getOfflinePlayers().size
+
+                    stringWorldsList.clear()
+                    for (listFile in Bukkit.getServer().worldContainer.listFiles()) {
+                        if(listFile.isDirectory && !excludeFolders.contains(listFile.name)){
+                            stringWorldsList.add(listFile.name)
+                        }
+                    }
+
+                    Thread.sleep(60 * 1000 * 5)
+                }
+            }
 
             DiscordMc.getExecutorService().submit{
 
@@ -23,6 +45,21 @@ class InfoUpdater {
                     20 * 1000
                 }else{
                     PluginConfig.MESSAGE_RELOAD_TIME * 1000
+                }
+
+                val allowEnd = Bukkit.getAllowEnd()
+                val allowNether = Bukkit.getAllowNether()
+
+                allowEndFormatted = if(allowEnd){
+                    PluginConfig.TRUE_INFO
+                } else{
+                    PluginConfig.FALSE_INFO
+                }
+
+                allowNetherFormatted = if(allowNether){
+                    PluginConfig.TRUE_INFO
+                } else{
+                    PluginConfig.FALSE_INFO
                 }
 
                 val messageID: String
@@ -42,6 +79,7 @@ class InfoUpdater {
 
                     textChannel.sendMessage("*").setEmbeds(infoMessage.build()).complete()
                     messageID = textChannel.latestMessageId
+
                     while (true) {
 
                         val message = getEmbedConfigMessage(Embed.getInfoMessage(PluginConfig.EMBED_INFO_TITTLE,
@@ -59,37 +97,9 @@ class InfoUpdater {
         }
 
         private fun getEmbedConfigMessage(builder: EmbedBuilder?, lineList: List<String>): EmbedBuilder?{
+
             val onlinePlayers = Bukkit.getOnlinePlayers().size
-            val maxPlayers = Bukkit.getMaxPlayers()
-            val version = Bukkit.getVersion()
-            val stringWorldsList: ArrayList<String> = ArrayList()
-
-            val excludeFolders = listOf("cache", "plugins", "logs", "crash-reports")
-
-            for (listFile in Bukkit.getServer().worldContainer.listFiles()) {
-                if(listFile.isDirectory && !excludeFolders.contains(listFile.name)){
-                    stringWorldsList.add(listFile.name)
-                }
-            }
-            val allowEndFormatted: String
-            val allowNetherFormatted: String
-
-            val allPlayer = Bukkit.getOfflinePlayers().size
             val time = System.currentTimeMillis() - DiscordMc.getTimeServer()
-            val allowEnd = Bukkit.getAllowEnd()
-            val allowNether = Bukkit.getAllowNether()
-
-            allowEndFormatted = if(allowEnd){
-                PluginConfig.TRUE_INFO
-            } else{
-                PluginConfig.FALSE_INFO
-            }
-
-            allowNetherFormatted = if(allowNether){
-                PluginConfig.TRUE_INFO
-            } else{
-                PluginConfig.FALSE_INFO
-            }
 
             val formatMinutes: Long
             val seconds = time/1000

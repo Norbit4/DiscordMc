@@ -9,27 +9,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.server.config.PluginConfig;
 
 public class MongoDB {
-    private final static MongoClient client;
+    private static MongoClient client;
     private static MongoDatabase db;
     private static MongoCollection<Document> collection;
-    private static JavaPlugin javaPlugin;
 
-    public static void init(JavaPlugin javaPlugin){
-        MongoDB.javaPlugin = javaPlugin;
-    }
+    public static void start(JavaPlugin javaPlugin){
 
-    static {
+        System.out.println("start mongodb");
         String mongoURI;
 
-        if(PluginConfig.MONGO_USER.isEmpty() && PluginConfig.MONGO_PASS.isEmpty()) {
-            mongoURI  = "mongodb://" + PluginConfig.MONGO_HOST + ":" + PluginConfig.MONGO_PORT;
+        if(PluginConfig.DATABASE_USER.isEmpty() && PluginConfig.DATABASE_PASS.isEmpty()) {
+            mongoURI  = "mongodb://" + PluginConfig.DATABASE_HOST + ":" + PluginConfig.MONGO_PORT;
         } else{
-            if(PluginConfig.MONGO_PASS.isEmpty()) {
-                mongoURI  = "mongodb://" + PluginConfig.MONGO_USER +
-                        "@"+ PluginConfig.MONGO_HOST + ":" + PluginConfig.MONGO_PORT;
+            if(PluginConfig.DATABASE_PASS.isEmpty()) {
+                mongoURI  = "mongodb://" + PluginConfig.DATABASE_USER +
+                        "@"+ PluginConfig.DATABASE_HOST + ":" + PluginConfig.MONGO_PORT;
             }else {
-                mongoURI  ="mongodb://" + PluginConfig.MONGO_USER + ":"+ PluginConfig.MONGO_PASS
-                        + "@" + PluginConfig.MONGO_HOST + ":" + PluginConfig.MONGO_PORT;
+                mongoURI  ="mongodb://" + PluginConfig.DATABASE_USER + ":"+ PluginConfig.DATABASE_PASS
+                        + "@" + PluginConfig.DATABASE_HOST + ":" + PluginConfig.MONGO_PORT;
             }
         }
         if(PluginConfig.MONGO_SSL){
@@ -39,16 +36,13 @@ public class MongoDB {
 
         client = MongoClients.create(mongoURI);
 
-        if(!PluginConfig.MONGO_DATABASE.isEmpty()) {
-            db = client.getDatabase(PluginConfig.MONGO_DATABASE);
+        if(!PluginConfig.DATABASE_NAME.isEmpty()) {
+            db = client.getDatabase(PluginConfig.DATABASE_NAME);
             collection = db.getCollection("players");
         }else {
             Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[Error] Set database name!");
             Bukkit.getServer().getPluginManager().disablePlugin(javaPlugin);
         }
-
-//        Logger logger = Logger.getLogger("org.mongodb.driver");
-//        logger.setLevel(Level.SEVERE);
     }
 
     public static Document getUser(String key, String value){

@@ -14,7 +14,8 @@ token: ''
 bot-activity: ''
 server-id: ''
 
-# database mongodb
+# mysql/mongodb
+type: 'mysql'
 host: ''
 port: 27017
 user: ''
@@ -90,7 +91,7 @@ nick-color: '&f'
 # discord channel chat
 discord-message-mark: ': '
 
-# embeds chat colors
+# embeds color
 discord-user-rgb:
   - 142
   - 87
@@ -119,7 +120,7 @@ discord-info-module: false
 channel-info-id: ''
 
 # message info reload time in seconds, min time: 20s (for safe)
-message-reload-time: 20
+message-reload-time: 30
 
 discord-info-rgb:
   - 26
@@ -140,5 +141,5 @@ embed-info:
   - 'Nether:// {SERVER_ALLOW_NETHER}'
   - 'End:// {SERVER_ALLOW_END}'
 
-false-info: 'fal'
-true-info: 'tru'
+false-info: 'false'
+true-info: 'true'

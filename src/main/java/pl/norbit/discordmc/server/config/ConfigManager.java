@@ -22,6 +22,7 @@ public class ConfigManager {
         PluginConfig.BOT_ACTIVITY = config.getString("bot-activity");
         PluginConfig.WRONG_ARGS_MESSAGE = config.getString("wrong-args-message");
         PluginConfig.SYNC_COMMAND_ARG = config.getString("sync-command-arg");
+        PluginConfig.DATABASE_TYPE = config.getString("type");
 
         //discord-chat-module
         PluginConfig.MC_PREFIX = config.getString("mc-prefix");
@@ -51,10 +52,10 @@ public class ConfigManager {
 
         //mongo db
         PluginConfig.MONGO_PORT = config.getInt("port");
-        PluginConfig.MONGO_HOST = config.getString("host");
-        PluginConfig.MONGO_PASS = config.getString("password");
-        PluginConfig.MONGO_USER = config.getString("user");
-        PluginConfig.MONGO_DATABASE = config.getString("database");
+        PluginConfig.DATABASE_HOST = config.getString("host");
+        PluginConfig.DATABASE_PASS = config.getString("password");
+        PluginConfig.DATABASE_USER = config.getString("user");
+        PluginConfig.DATABASE_NAME = config.getString("database");
         PluginConfig.MONGO_SSL = config.getBoolean("ssl");
 
         //error dc message

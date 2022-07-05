@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.DiscordBot;
 import pl.norbit.discordmc.bot.builder.BotBuilder;
 import pl.norbit.discordmc.bot.commands.CommandManager;
-import pl.norbit.discordmc.db.MongoDB;
 import pl.norbit.discordmc.db.PluginDBManager;
 import pl.norbit.discordmc.server.commands.SyncCommandMc;
 import pl.norbit.discordmc.server.config.PluginConfig;
@@ -55,7 +54,6 @@ public final class DiscordMc extends JavaPlugin {
 
                     this.getPluginLoader().disablePlugin(this);
                 }
-
             }
 
             //chat module
@@ -71,7 +69,6 @@ public final class DiscordMc extends JavaPlugin {
                 if(messageChannel == null){
                     this.getPluginLoader().disablePlugin(this);
                 }
-
             }
 
             new CommandManager(discordBot.getJda(), this);
@@ -92,7 +89,7 @@ public final class DiscordMc extends JavaPlugin {
             getServer().getPluginCommand("dc").setExecutor(new ChangeChannel());
             getServer().getPluginCommand("sync").setExecutor(new SyncCommandMc());
 
-            PluginDBManager.init(discordBot.getJda());
+            PluginDBManager.init(discordBot.getJda(), this);
 
             //info module
             if(PluginConfig.DISCORD_INFO_MODULE){
@@ -108,7 +105,7 @@ public final class DiscordMc extends JavaPlugin {
     @Override
     public void onDisable() {
         discordBot.close();
-        MongoDB.close();
+        //MongoDB.close();
     }
 
     public static ExecutorService getExecutorService() {
