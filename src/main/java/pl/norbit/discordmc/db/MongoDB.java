@@ -15,7 +15,7 @@ public class MongoDB {
 
     public static void start(JavaPlugin javaPlugin){
 
-        System.out.println("start mongodb");
+        //27017
         String mongoURI;
 
         if(PluginConfig.DATABASE_USER.isEmpty() && PluginConfig.DATABASE_PASS.isEmpty()) {

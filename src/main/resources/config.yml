@@ -1,6 +1,6 @@
 #---------------------------------------#
 # DiscordMc by Norbit4
-# ver 1.0.1
+# ver 1.0.2
 # github: https://github.com/Norbit4
 
 #---------------------------------------#
@@ -14,10 +14,10 @@ token: ''
 bot-activity: ''
 server-id: ''
 
-# mysql/mongodb
+#types: mysql/mongodb
 type: 'mysql'
 host: ''
-port: 27017
+port: 3306
 user: ''
 password: ''
 database: ''
