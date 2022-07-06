@@ -33,7 +33,6 @@ public class MongoDB {
             mongoURI = mongoURI + "&tls=true";
         }
 
-
         client = MongoClients.create(mongoURI);
 
         if(!PluginConfig.DATABASE_NAME.isEmpty()) {

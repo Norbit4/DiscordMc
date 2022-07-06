@@ -2,10 +2,9 @@ package pl.norbit.discordmc.server.objects;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.User;
-import org.bson.Document;
 import org.bukkit.entity.Player;
-import pl.norbit.discordmc.db.GameUser;
-import pl.norbit.discordmc.db.MongoDB;
+import pl.norbit.discordmc.db.DatabaseRecord;
+import pl.norbit.discordmc.db.PluginDBManager;
 import pl.norbit.discordmc.server.enums.Channel;
 
 import java.util.ArrayList;
@@ -31,16 +30,15 @@ public class GamePlayer {
         this.channel = Channel.GLOBAL;
         playersList.add(this);
 
-        Document document = MongoDB.getUser(GameUser.UUID.name(), player.getUniqueId().toString());
+        //Document document = MongoDB.getUser(GameUser.UUID.name(), player.getUniqueId().toString());
+        DatabaseRecord databaseRecord = PluginDBManager.getUser(player.getUniqueId());
 
-        if(document != null){
-            String userID = document.getString(GameUser.DISCORD_ID.name());
-            discordUser = jda.getUserById(userID);
-            voiceChat = document.getBoolean(GameUser.VOICE_CHAT.name());
+        if(databaseRecord != null){
+            discordUser = databaseRecord.getUser();
         }else{
             discordUser = null;
-            voiceChat = false;
         }
+        voiceChat = false;
     }
 
     public static GamePlayer getGamePLayer(Player player){

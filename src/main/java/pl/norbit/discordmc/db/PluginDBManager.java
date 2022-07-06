@@ -56,26 +56,48 @@ public class PluginDBManager {
         }else{
             ResultSet user = Mysql.getUser(discordID);
 
-            try {
-                OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(user.getString(GameUser.UUID.name())));
-                User dcUser = jda.getUserById(discordID);
+            if(user != null) {
+                try {
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(user.getString(GameUser.UUID.name())));
+                    User dcUser = jda.getUserById(discordID);
 
-                return new DatabaseRecord(player, dcUser);
+                    return new DatabaseRecord(player, dcUser);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-
         }
 
         return null;
     }
 
-    public static User getUser(UUID playerUUID){
+    public static DatabaseRecord getUser(UUID playerUUID){
 
-        Document document = MongoDB.getUser(GameUser.UUID.name(), playerUUID.toString());
-        String discordID = document.getString(GameUser.DISCORD_ID);
+        if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {
+            Document doc = MongoDB.getUser(GameUser.UUID.name(), playerUUID.toString());
+            if (doc != null) {
 
-        return jda.getUserById(discordID);
+                OfflinePlayer player = Bukkit.getOfflinePlayer(playerUUID);
+                User user = jda.getUserById(doc.getString(GameUser.DISCORD_ID.name()));
+                return new DatabaseRecord(player, user);
+            }
+        }else{
+
+            ResultSet user = Mysql.getUser(playerUUID);
+
+            if(user != null) {
+                try {
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(playerUUID);
+                    User dcUser = jda.getUserById(user.getString(GameUser.DISCORD_ID.name()));
+
+                    return new DatabaseRecord(player, dcUser);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 }

@@ -30,8 +30,8 @@ class ProfileCommand: ListenerAdapter() {
 
             if(databaseRecord != null){
 
-                val userName = databaseRecord.user.asMention
-                val mcName = databaseRecord.player.name
+                val userName = databaseRecord.user?.asMention
+                val mcName = databaseRecord.player?.name
                 val embed = Embed.getProfileMessage(userName, mcName);
 
                 event.reply("").addEmbeds(embed.build()).queue()
