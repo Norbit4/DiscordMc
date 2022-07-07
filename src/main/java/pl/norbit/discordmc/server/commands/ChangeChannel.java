@@ -35,8 +35,17 @@ public class ChangeChannel implements CommandExecutor {
                     if(args.length > 1) {
                         String arg = args[1].toUpperCase();
 
-                        if (arg.equalsIgnoreCase("GLOBAL") || arg.equalsIgnoreCase("DISCORD")){
-                            Channel ch = Channel.valueOf(arg);
+                        if (arg.equalsIgnoreCase(PluginConfig.MINECRAFT_CHAT_ARG)
+                                || arg.equalsIgnoreCase(PluginConfig.DISCORD_CHAT_ARG)){
+
+                            String channel;
+                            if(PluginConfig.MINECRAFT_CHAT_ARG.equalsIgnoreCase(arg)){
+                                channel = "GLOBAL";
+                            }else{
+                                channel = "DISCORD";
+                            }
+
+                            Channel ch = Channel.valueOf(channel);
 
                             gamePlayer.setChannel(ch);
 
@@ -82,7 +91,8 @@ public class ChangeChannel implements CommandExecutor {
         String message = PluginConfig.WRONG_ARGS_MESSAGE
                 .replace("{PREFIX}", PluginConfig.COMMAND_PREFIX)
                 .replace("{ARG1}", PluginConfig.COMMAND_CHAT_CHANGE_ARG)
-                .replace("{ARG2}", "discord/global");
+                .replace("{ARG2}", PluginConfig.MINECRAFT_CHAT_ARG + "/"
+                        + PluginConfig.DISCORD_CHAT_ARG);
 
         player.sendMessage(ChatUtil.format(message));
     }

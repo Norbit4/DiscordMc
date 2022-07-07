@@ -43,6 +43,14 @@ public class PluginDBManager {
         }
     }
 
+    public static void deleteUser(UUID playerUUID){
+        if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")){
+            MongoDB.deleteUser(GameUser.UUID.name(), playerUUID.toString());
+        }else{
+            Mysql.deleteUser(playerUUID.toString());
+        }
+    }
+
     public static DatabaseRecord getUser(String discordID){
 
         if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {
@@ -59,6 +67,7 @@ public class PluginDBManager {
             if(user != null) {
                 try {
                     OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(user.getString(GameUser.UUID.name())));
+
                     User dcUser = jda.getUserById(discordID);
 
                     return new DatabaseRecord(player, dcUser);
@@ -83,13 +92,14 @@ public class PluginDBManager {
                 return new DatabaseRecord(player, user);
             }
         }else{
-
             ResultSet user = Mysql.getUser(playerUUID);
 
             if(user != null) {
                 try {
                     OfflinePlayer player = Bukkit.getOfflinePlayer(playerUUID);
-                    User dcUser = jda.getUserById(user.getString(GameUser.DISCORD_ID.name()));
+                    String id = user.getString(GameUser.DISCORD_ID.name());
+
+                    User dcUser = jda.retrieveUserById(id).complete();
 
                     return new DatabaseRecord(player, dcUser);
 

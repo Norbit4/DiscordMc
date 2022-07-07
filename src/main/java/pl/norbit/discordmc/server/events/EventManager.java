@@ -10,7 +10,7 @@ public class EventManager {
     public static void registerEvents(JavaPlugin javaPlugin, JDA jda){
 
         PluginManager pluginManager = javaPlugin.getServer().getPluginManager();
-        pluginManager.registerEvents(new OnJoinServerEvent(jda), javaPlugin);
+        pluginManager.registerEvents(new OnJoinServerEvent(jda, javaPlugin), javaPlugin);
         pluginManager.registerEvents(new CommandEvent(), javaPlugin);
 
         if(PluginConfig.CHAT_MODULE) {

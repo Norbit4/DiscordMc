@@ -5,3 +5,4 @@ authors: [ Norbit ]
 commands:
   dc:
   sync:
+  syncclear:

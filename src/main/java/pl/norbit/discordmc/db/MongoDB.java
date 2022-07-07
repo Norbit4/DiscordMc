@@ -44,6 +44,12 @@ public class MongoDB {
         }
     }
 
+    public static void deleteUser(String key, String value){
+        BasicDBObject dbObject = new BasicDBObject();
+        dbObject.append(key, value);
+
+        collection.deleteOne(dbObject);
+    }
     public static Document getUser(String key, String value){
         BasicDBObject dbObject = new BasicDBObject();
         dbObject.put(key, value);

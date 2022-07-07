@@ -23,6 +23,7 @@ public class ConfigManager {
         PluginConfig.WRONG_ARGS_MESSAGE = config.getString("wrong-args-message");
         PluginConfig.SYNC_COMMAND_ARG = config.getString("sync-command-arg");
         PluginConfig.DATABASE_TYPE = config.getString("type");
+        PluginConfig.SYNC_CLEAR_MC = config.getString("sync-clear-mc");
 
         //discord-chat-module
         PluginConfig.MC_PREFIX = config.getString("mc-prefix");

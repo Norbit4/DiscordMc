@@ -9,6 +9,7 @@ import pl.norbit.discordmc.bot.DiscordBot;
 import pl.norbit.discordmc.bot.builder.BotBuilder;
 import pl.norbit.discordmc.bot.commands.CommandManager;
 import pl.norbit.discordmc.db.PluginDBManager;
+import pl.norbit.discordmc.server.commands.SyncClear;
 import pl.norbit.discordmc.server.commands.SyncCommandMc;
 import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.commands.ChangeChannel;
@@ -40,6 +41,7 @@ public final class DiscordMc extends JavaPlugin {
             discordBot = new DiscordBot(PluginConfig.TOKEN, this);
             discordBot.start();
             timeServer = System.currentTimeMillis();
+            PluginDBManager.init(discordBot.getJda(), this);
 
             //console module
             if(PluginConfig.CONSOLE_MODULE){
@@ -88,8 +90,9 @@ public final class DiscordMc extends JavaPlugin {
             //commands
             getServer().getPluginCommand("dc").setExecutor(new ChangeChannel());
             getServer().getPluginCommand("sync").setExecutor(new SyncCommandMc());
+            getServer().getPluginCommand("syncclear").setExecutor(new SyncClear());
 
-            PluginDBManager.init(discordBot.getJda(), this);
+            //PluginDBManager.init(discordBot.getJda(), this);
 
             //info module
             if(PluginConfig.DISCORD_INFO_MODULE){
@@ -105,6 +108,7 @@ public final class DiscordMc extends JavaPlugin {
     @Override
     public void onDisable() {
         discordBot.close();
+
         //MongoDB.close();
     }
 

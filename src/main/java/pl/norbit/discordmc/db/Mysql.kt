@@ -5,6 +5,7 @@ import pl.norbit.discordmc.server.config.PluginConfig
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
+import java.sql.Statement
 import java.util.*
 
 class Mysql {
@@ -14,6 +15,7 @@ class Mysql {
         private var connection: Connection? = null
         private var javaPlugin: JavaPlugin? = null
         private const val tableName: String = "players"
+        private var statement: Statement? = null
 
         @JvmStatic
         fun start(javaPlugin: JavaPlugin) {
@@ -34,7 +36,7 @@ class Mysql {
                             "&allowPublicKeyRetrieval=true"
                 connection = DriverManager.getConnection(ulr, PluginConfig.DATABASE_USER, PluginConfig.DATABASE_PASS)
 
-                val statement = connection?.createStatement()
+                statement = connection?.createStatement()
 
                 val resultSet = statement?.executeQuery("SHOW TABLES like '$tableName';")
 
@@ -56,26 +58,20 @@ class Mysql {
 
         @JvmStatic
         fun addUser(playerUUID: String, userID: String){
-            val statement = connection?.createStatement()
+            //val statement = connection?.createStatement()
 
-            val exist = statement?.executeQuery("SELECT * FROM $tableName WHERE ${GameUser.UUID.name} = '$playerUUID';");
-
-            if (exist != null) {
-                if(exist.next()){
-                    statement?.executeUpdate("DELETE FROM $tableName WHERE ${GameUser.UUID.name} = '$playerUUID';");
-                }
-            }
+            deleteUser(playerUUID)
 
             statement?.executeUpdate(
                 "INSERT INTO $tableName(${GameUser.UUID.name}, ${GameUser.DISCORD_ID.name})" +
-                        "VALUES('$playerUUID', $userID);")
+                        "VALUES('$playerUUID', '$userID');")
 
-            statement?.close()
+            //statement?.close()
         }
 
         @JvmStatic
         fun getUser(discordID: String):ResultSet?{
-            val statement = connection?.createStatement()
+            //val statement = connection?.createStatement()
             val exist = statement?.executeQuery(
                 "SELECT * FROM $tableName WHERE ${GameUser.DISCORD_ID.name} = '$discordID';");
 
@@ -92,20 +88,31 @@ class Mysql {
         fun getUser(playerUUID: UUID):ResultSet?{
 
             //javaPlugin?.server?.scheduler?.runTaskLater(javaPlugin, {
-            val uuidString = playerUUID.toString()
-            val statement = connection?.createStatement()
+            val uuidString:String = playerUUID.toString()
+            //val statement = connection?.createStatement()
 
             val exist = statement?.executeQuery(
                 "SELECT * FROM $tableName WHERE ${GameUser.UUID.name} = '$uuidString';");
 
                 if (exist != null) {
-                    if(exist.next()){
+                    if(exist.next()) {
                         return exist
                     }
                 }
-            //}, 1)
-
             return null
+        }
+
+        @JvmStatic
+        fun deleteUser(playerUUID: String){
+            //val statement = connection?.createStatement()
+
+            val exist = statement?.executeQuery("SELECT * FROM $tableName WHERE ${GameUser.UUID.name} = '$playerUUID';");
+
+            if (exist != null) {
+                if(exist.next()){
+                    statement?.executeUpdate("DELETE FROM $tableName WHERE ${GameUser.UUID.name} = '$playerUUID';");
+                }
+            }
         }
     }
 }
