@@ -83,7 +83,11 @@ public class GamePlayer {
 
     public void setDiscordUser(String discordID) {
 
-        this.discordUser = jda.getUserById(discordID);
+        if(discordID != null) {
+            this.discordUser = jda.getUserById(discordID);
+        }else{
+            this.discordUser = null;
+        }
     }
 
     public boolean isVoiceChat() {

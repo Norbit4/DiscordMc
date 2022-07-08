@@ -30,9 +30,9 @@ class Mysql {
             javaPlugin.server.scheduler.runTaskLater(javaPlugin, {
                 //3306
                 val ulr =
-                    "jdbc:mysql://${PluginConfig.DATABASE_HOST}:${PluginConfig.MONGO_PORT}/" +
+                    "jdbc:mysql://${PluginConfig.DATABASE_HOST}:${PluginConfig.DATABASE_PORT}/" +
                             PluginConfig.DATABASE_NAME +
-                            "?useUnicode=yes&characterEncoding=UTF-8&useSSL=${PluginConfig.MONGO_SSL}" +
+                            "?useUnicode=yes&characterEncoding=UTF-8&useSSL=${PluginConfig.DATABASE_SSL}" +
                             "&allowPublicKeyRetrieval=true"
                 connection = DriverManager.getConnection(ulr, PluginConfig.DATABASE_USER, PluginConfig.DATABASE_PASS)
 

@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public class SyncPlayer {
     private final Player player;
     private final User user;
-    int time;
+    private int time;
     public MessageChannel messageChannel;
 
     public SyncPlayer(Player player, User user, MessageChannel messageChannel) {
@@ -36,6 +36,10 @@ public class SyncPlayer {
             return 1;
         }
         return 0;
+    }
+
+    public int getTime() {
+        return time;
     }
 
     public MessageChannel getMessageChannel() {

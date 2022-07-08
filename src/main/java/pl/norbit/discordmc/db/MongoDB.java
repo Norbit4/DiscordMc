@@ -19,17 +19,17 @@ public class MongoDB {
         String mongoURI;
 
         if(PluginConfig.DATABASE_USER.isEmpty() && PluginConfig.DATABASE_PASS.isEmpty()) {
-            mongoURI  = "mongodb://" + PluginConfig.DATABASE_HOST + ":" + PluginConfig.MONGO_PORT;
+            mongoURI  = "mongodb://" + PluginConfig.DATABASE_HOST + ":" + PluginConfig.DATABASE_PORT;
         } else{
             if(PluginConfig.DATABASE_PASS.isEmpty()) {
                 mongoURI  = "mongodb://" + PluginConfig.DATABASE_USER +
-                        "@"+ PluginConfig.DATABASE_HOST + ":" + PluginConfig.MONGO_PORT;
+                        "@"+ PluginConfig.DATABASE_HOST + ":" + PluginConfig.DATABASE_PORT;
             }else {
                 mongoURI  ="mongodb://" + PluginConfig.DATABASE_USER + ":"+ PluginConfig.DATABASE_PASS
-                        + "@" + PluginConfig.DATABASE_HOST + ":" + PluginConfig.MONGO_PORT;
+                        + "@" + PluginConfig.DATABASE_HOST + ":" + PluginConfig.DATABASE_PORT;
             }
         }
-        if(PluginConfig.MONGO_SSL){
+        if(PluginConfig.DATABASE_SSL){
             mongoURI = mongoURI + "&tls=true";
         }
 

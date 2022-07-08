@@ -8,14 +8,15 @@
 #---------------------------------------#
 
 enable: false
-command-prefix: 'dc'
+prefix-command: 'discordmc'
 sync-command-arg: 'sync'
-token: ''
+sync-command-clear-arg: 'syncclear'
+bot-token: ''
 bot-activity: ''
-server-id: ''
+discord-server-id: ''
 
 #types: mysql/mongodb
-type: 'mysql'
+database-type: 'mysql'
 host: ''
 port: 3306
 user: ''
@@ -24,7 +25,7 @@ database: ''
 ssl: false
 
 #---------------------------------------#
-#              [Messages]               #
+#              [messages]               #
 #---------------------------------------#
 
 # discord embeds colors
@@ -53,21 +54,23 @@ error-message-rgb:
 player-is-sync: 'This player is synchronize!'
 offline-player: 'This player is offline!'
 sync-info: 'Type **/{PREFIX} {ARG1}** in minecraft chat to sync your accounts!'
-sync-success: 'The player {PLAYER} has been synchronized with {DISCORD} account!'
+sync-success: 'The player **{PLAYER}** has been synchronized with **{DISCORD}** account!'
 
 #minecraft messages
+permission-message: '&cYou dont have permissions!'
 sync-info-mc: '&7Type &8/&b{PREFIX} {ARG1} &7to connect your account with&a {DISCORD}'
 sync-success-mc: '&aSuccess! &7The account has been synchronized with &c{DISCORD}!'
 sync-clear-mc: '&aSuccess! &7The sync has been cleared!'
 sync-time-out: '&7You dont have sync pending!'
 
-wrong-args-message: 'Use: /{PREFIX} {ARG1} {ARG2}'
+wrong-args-message: '&7Use: &8/&b{PREFIX} &a{ARG1} &8<&a{ARG2}&8>'
 
 command-args-list:
-  - '&7------------&8[DC&8]------------'
+  - '&7------------&8[{PREFIX}&8]------------'
   - ''
-  - '&8/&bdc &8<&async&8>'
-  - '&8/&bdc &8<s&ac&8> &8<&aglobal/discord&8>'
+  - '&8/&b{PREFIX} &a{SYNC_CMD} &7- accept sync accounts'
+  - '&8/&b{PREFIX} &a{SYNC_CLEAR_CMD} &7- clear your sync'
+  - '&8/&b{PREFIX} &a{CHANNEL_CMD} &8<&a{CHANNEL_MC_ARG}/{CHANNEL_DC_ARG}&8> &7- change chat channel'
   - ''
 
 #---------------------------------------#
@@ -80,7 +83,7 @@ channel-chat-id: ''
 command-chat-change-arg: 'channel'
 minecraft-chat-arg: 'mc'
 discord-chat-arg: 'dc'
-channel-change-message: 'The channel has been changed to: {CHANNEL}'
+channel-change-message: '&7The channel has been changed to: &a{CHANNEL}'
 
 # minecraft server chat
 discord-prefix: '&d[DC] '
@@ -128,12 +131,13 @@ discord-info-rgb:
   - 154
   - 74
 
-# Placeholders
+# Placeholders:
 # {SERVER_ONLINE}, {SERVER_MAX_PLAYERS}, {SERVER_TIME}, {SERVER_ALL_PLAYERS}, {SERVER_WORLDS}, {SERVER_VERSION},
 # {SERVER_ALLOW_NETHER}, {SERVER_ALLOW_END}
 embed-tittle: ''
 embed-desc: ''
 embed-info:
+  # 'TITLE//DESC'
   - 'Online://{SERVER_ONLINE}/{SERVER_MAX_PLAYERS}'
   - 'Up Time:// {SERVER_TIME}'
   - 'All Players:// {SERVER_ALL_PLAYERS}'

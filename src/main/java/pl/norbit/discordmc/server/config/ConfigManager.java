@@ -13,17 +13,21 @@ public class ConfigManager {
         config.options().copyDefaults();
         javaPlugin.saveDefaultConfig();
 
+        PluginConfig.MODULE_OFF_MESSAGE = "&cModule {MODULE} is disable! Enable module in config.yml";
+
         //plugin options
-        PluginConfig.SERVER_ID = config.getString("server-id");
+        PluginConfig.SERVER_ID = config.getString("discord-server-id");
         PluginConfig.PLUGIN_ENABLE = config.getBoolean("enable");
-        PluginConfig.COMMAND_PREFIX = config.getString("command-prefix");
-        PluginConfig.TOKEN = config.getString("token");
+        PluginConfig.COMMAND_PREFIX = config.getString("prefix-command");
+        PluginConfig.TOKEN = config.getString("bot-token");
         PluginConfig.DISCORD_PREFIX = config.getString("discord-prefix");
         PluginConfig.BOT_ACTIVITY = config.getString("bot-activity");
         PluginConfig.WRONG_ARGS_MESSAGE = config.getString("wrong-args-message");
         PluginConfig.SYNC_COMMAND_ARG = config.getString("sync-command-arg");
-        PluginConfig.DATABASE_TYPE = config.getString("type");
-        PluginConfig.SYNC_CLEAR_MC = config.getString("sync-clear-mc");
+        PluginConfig.DATABASE_TYPE = config.getString("database-type");
+        PluginConfig.SYNC_COMMAND_CLEAR_ARG = config.getString("sync-command-clear-arg");
+        PluginConfig.SYNC_CLEAR_MESSAGE = config.getString("sync-clear-mc");
+        PluginConfig.PERMISSION_MESSAGE = config.getString("permission-message");
 
         //discord-chat-module
         PluginConfig.MC_PREFIX = config.getString("mc-prefix");
@@ -51,13 +55,13 @@ public class ConfigManager {
         PluginConfig.EMBED_MC_G = rgbMcList.get(1);
         PluginConfig.EMBED_MC_B = rgbMcList.get(2);
 
-        //mongo db
-        PluginConfig.MONGO_PORT = config.getInt("port");
+        //database
+        PluginConfig.DATABASE_PORT = config.getInt("port");
         PluginConfig.DATABASE_HOST = config.getString("host");
         PluginConfig.DATABASE_PASS = config.getString("password");
         PluginConfig.DATABASE_USER = config.getString("user");
         PluginConfig.DATABASE_NAME = config.getString("database");
-        PluginConfig.MONGO_SSL = config.getBoolean("ssl");
+        PluginConfig.DATABASE_SSL = config.getBoolean("ssl");
 
         //error dc message
         PluginConfig.ERROR_TITTLE = config.getString("error-message-tittle");
@@ -83,6 +87,7 @@ public class ConfigManager {
         //discord messages
         PluginConfig.PLAYER_IS_SYNC_DC = config.getString("player-is-sync");
         PluginConfig.OFFLINE_PLAYER_DC = config.getString("offline-player");
+        PluginConfig.SYNC_INFO_DC = config.getString("sync-info");
         PluginConfig.SYNC_INFO_DC = config.getString("sync-info");
         PluginConfig.SYNC_SUCCESS_DC = config.getString("sync-success");
 
@@ -111,6 +116,5 @@ public class ConfigManager {
         PluginConfig.FALSE_INFO = config.getString("false-info");
         PluginConfig.TRUE_INFO = config.getString("true-info");
         PluginConfig.MESSAGE_RELOAD_TIME = config.getInt("message-reload-time");
-
     }
 }

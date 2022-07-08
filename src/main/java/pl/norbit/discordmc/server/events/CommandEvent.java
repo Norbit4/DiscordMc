@@ -9,26 +9,26 @@ import pl.norbit.discordmc.server.config.PluginConfig;
 public class CommandEvent implements Listener {
 
     @EventHandler
-    public void onCMD(PlayerCommandPreprocessEvent e){
+    public void onCMD(PlayerCommandPreprocessEvent e) {
 
-        String[] cmdArray =  e.getMessage().split(" ");
+        String[] cmdArray = e.getMessage().split(" ");
 
-        String cmd = cmdArray[0].replace("/","");
+        String cmd = cmdArray[0].replace("/", "");
 
-        if(cmd.equals(PluginConfig.COMMAND_PREFIX) && !cmd.equals("dc")) {
+        if (cmd.equalsIgnoreCase(PluginConfig.COMMAND_PREFIX) && !cmd.equalsIgnoreCase("discordmc")) {
 
             String arg1 = "";
             String arg2 = "";
 
-            if(cmdArray.length > 1){
+            if (cmdArray.length > 1) {
                 arg1 = cmdArray[1];
 
-                if (cmdArray.length > 2){
-                   arg2 = cmdArray[2];
+                if (cmdArray.length > 2) {
+                    arg2 = cmdArray[2];
                 }
             }
 
-            Bukkit.getServer().dispatchCommand(e.getPlayer(), "dc " + arg1 + " " + arg2);
+            Bukkit.getServer().dispatchCommand(e.getPlayer(), "discordmc " + arg1 + " " + arg2);
 
             e.setCancelled(true);
         }

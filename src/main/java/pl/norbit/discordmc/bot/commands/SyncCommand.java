@@ -24,27 +24,44 @@ public class SyncCommand extends ListenerAdapter {
 
             Player player = Bukkit.getPlayer(playerNick);
 
-            if(player != null) {
+            if(player != null ) {
 
-                GamePlayer gamePlayer = GamePlayer.getGamePLayer(player);
-                if(gamePlayer.getDiscordUser() == null) {
+                SyncPlayer syncPlayer = SyncTimerTask.getSyncPlayer(player.getUniqueId());
 
-                    SyncTimerTask.addSyncPlayer(new SyncPlayer(player, event.getUser(),event.getChannel()));
+                if(syncPlayer == null) {
+
+                    GamePlayer gamePlayer = GamePlayer.getGamePLayer(player);
+                    if (gamePlayer.getDiscordUser() == null) {
+
+                        SyncTimerTask.addSyncPlayer(new SyncPlayer(player, event.getUser(), event.getChannel()));
+
+                        String message = PluginConfig.SYNC_INFO_DC
+                                .replace("{PREFIX}", PluginConfig.COMMAND_PREFIX)
+                                .replace("{ARG1}", PluginConfig.SYNC_COMMAND_ARG);
 
 
-                    MessageEmbed embed = Embed.getInfoMessage(PluginConfig.SUCCESS_TITTLE, PluginConfig.SYNC_INFO_DC,
-                            new Color(PluginConfig.EMBED_SUCCESS_R, PluginConfig.EMBED_SUCCESS_G,
-                                    PluginConfig.EMBED_SUCCESS_B)).build();
+                        MessageEmbed embed = Embed.getInfoMessage(PluginConfig.SUCCESS_TITTLE, message,
+                                new Color(PluginConfig.EMBED_SUCCESS_R, PluginConfig.EMBED_SUCCESS_G,
+                                        PluginConfig.EMBED_SUCCESS_B)).build();
 
-                    event.reply("").addEmbeds(embed).queue();
+                        event.reply("").addEmbeds(embed).queue();
 
-                    String mcFormatMessage = PluginConfig.SYNC_INFO_MC
-                            .replace("{DISCORD}", event.getUser().getAsTag());
+                        String mcFormatMessage = PluginConfig.SYNC_INFO_MC
+                                .replace("{DISCORD}", event.getUser().getAsTag())
+                                .replace("{PREFIX}", PluginConfig.COMMAND_PREFIX)
+                                .replace("{ARG1}", PluginConfig.SYNC_COMMAND_ARG);
 
-                    player.sendMessage(ChatUtil.format(mcFormatMessage));
-                }else {
-                    MessageEmbed embed = Embed.getInfoMessage(PluginConfig.WARN_TITTLE, PluginConfig.PLAYER_IS_SYNC_DC,
-                            new Color(PluginConfig.EMBED_WARN_R, PluginConfig.EMBED_WARN_G, PluginConfig.EMBED_WARN_B))
+                        player.sendMessage(ChatUtil.format(mcFormatMessage));
+                    } else {
+                        MessageEmbed embed = Embed.getInfoMessage(PluginConfig.WARN_TITTLE, PluginConfig.PLAYER_IS_SYNC_DC,
+                                        new Color(PluginConfig.EMBED_WARN_R, PluginConfig.EMBED_WARN_G, PluginConfig.EMBED_WARN_B))
+                                .build();
+
+                        event.reply("").addEmbeds(embed).queue();
+                    }
+                }else{
+                    MessageEmbed embed = Embed.getInfoMessage(PluginConfig.WARN_TITTLE, "Time: " + syncPlayer.getTime(),
+                                    new Color(PluginConfig.EMBED_WARN_R, PluginConfig.EMBED_WARN_G, PluginConfig.EMBED_WARN_B))
                             .build();
 
                     event.reply("").addEmbeds(embed).queue();

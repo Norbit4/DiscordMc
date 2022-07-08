@@ -45,4 +45,8 @@ public class SyncTimerTask {
     public static void removeSyncPlayer(SyncPlayer syncPlayer){
         syncPlayerList.remove(syncPlayer);
     }
+
+    public static List<SyncPlayer> getSyncPlayerList() {
+        return syncPlayerList;
+    }
 }

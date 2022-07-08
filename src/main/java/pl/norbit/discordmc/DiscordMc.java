@@ -9,10 +9,8 @@ import pl.norbit.discordmc.bot.DiscordBot;
 import pl.norbit.discordmc.bot.builder.BotBuilder;
 import pl.norbit.discordmc.bot.commands.CommandManager;
 import pl.norbit.discordmc.db.PluginDBManager;
-import pl.norbit.discordmc.server.commands.SyncClear;
-import pl.norbit.discordmc.server.commands.SyncCommandMc;
 import pl.norbit.discordmc.server.config.PluginConfig;
-import pl.norbit.discordmc.server.commands.ChangeChannel;
+import pl.norbit.discordmc.server.commands.MainCMD;
 import pl.norbit.discordmc.server.config.ConfigManager;
 import pl.norbit.discordmc.server.events.EventManager;
 import pl.norbit.discordmc.serverinfo.InfoUpdater;
@@ -67,7 +65,6 @@ public final class DiscordMc extends JavaPlugin {
                     e.printStackTrace();
                 }
 
-
                 if(messageChannel == null){
                     this.getPluginLoader().disablePlugin(this);
                 }
@@ -88,11 +85,7 @@ public final class DiscordMc extends JavaPlugin {
             EventManager.registerEvents(this, discordBot.getJda());
 
             //commands
-            getServer().getPluginCommand("dc").setExecutor(new ChangeChannel());
-            getServer().getPluginCommand("sync").setExecutor(new SyncCommandMc());
-            getServer().getPluginCommand("syncclear").setExecutor(new SyncClear());
-
-            //PluginDBManager.init(discordBot.getJda(), this);
+            getServer().getPluginCommand("discordmc").setExecutor(new MainCMD());
 
             //info module
             if(PluginConfig.DISCORD_INFO_MODULE){
