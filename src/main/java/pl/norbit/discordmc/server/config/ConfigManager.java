@@ -28,6 +28,7 @@ public class ConfigManager {
         PluginConfig.SYNC_COMMAND_CLEAR_ARG = config.getString("sync-command-clear-arg");
         PluginConfig.SYNC_CLEAR_MESSAGE = config.getString("sync-clear-mc");
         PluginConfig.PERMISSION_MESSAGE = config.getString("permission-message");
+        PluginConfig.EMBED_PROFILE = config.getStringList("embed-profile");
 
         //discord-chat-module
         PluginConfig.MC_PREFIX = config.getString("mc-prefix");

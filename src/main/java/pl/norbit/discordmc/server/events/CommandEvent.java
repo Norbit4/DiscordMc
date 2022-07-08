@@ -27,7 +27,6 @@ public class CommandEvent implements Listener {
                     arg2 = cmdArray[2];
                 }
             }
-
             Bukkit.getServer().dispatchCommand(e.getPlayer(), "discordmc " + arg1 + " " + arg2);
 
             e.setCancelled(true);

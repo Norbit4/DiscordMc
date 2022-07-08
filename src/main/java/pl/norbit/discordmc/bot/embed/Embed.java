@@ -64,42 +64,6 @@ public class Embed {
     public static EmbedBuilder getProfileMessage(String discordMention, String mcName){
         EmbedBuilder embedBuilder = getBuilder("Profile", "", new Color(180, 115, 208),
                 false, "");
-        embedBuilder.addField("nick:", mcName, false);
-        embedBuilder.addField("user:", discordMention, false);
-
-        Player p = Bukkit.getPlayer(mcName);
-
-        String playerStatus;
-
-        if(p != null){
-            playerStatus = "online";
-        }else{
-            playerStatus = "offline";
-        }
-
-        embedBuilder.addField("status:", playerStatus, false);
-
-        if(p != null){
-            String world = "{WORLD}".replace("{WORLD}", "" + p.getWorld().getName());
-
-            embedBuilder.addField("world:", world, false);
-
-            String loc = "X: {X} Y: {Y} Z: {Z}"
-                    .replace("{X}", String.valueOf((int) p.getLocation().getX()))
-                    .replace("{Y}", String.valueOf((int) p.getLocation().getY()))
-                    .replace("{Z}", String.valueOf((int) p.getLocation().getZ()));
-
-            embedBuilder.addField("loc:", loc, false);
-        }
-        try {
-            if(isUsernamePremium(mcName)) {
-                embedBuilder.addField("namemc:", "https://namemc.com/profile/" + mcName + ".1", false);
-            }else {
-                embedBuilder.addField("namemc:", "player is non-premium", false);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         return embedBuilder;
     }
     public static boolean isUsernamePremium(String username) throws IOException {

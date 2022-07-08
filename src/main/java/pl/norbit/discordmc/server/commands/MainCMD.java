@@ -137,8 +137,6 @@ public class MainCMD implements CommandExecutor {
             GamePlayer gamePlayer = GamePlayer.getGamePLayer(player);
             gamePlayer.setDiscordUser(userID);
 
-            player.sendMessage(player.getName());
-            player.sendMessage(syncPlayer.getUser().getAsTag());
             SyncTimerTask.removeSyncPlayer(syncPlayer);
 
             String message = PluginConfig.SYNC_SUCCESS_DC.replace("{DISCORD}",

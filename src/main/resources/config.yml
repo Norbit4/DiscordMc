@@ -24,6 +24,15 @@ password: ''
 database: ''
 ssl: false
 
+embed-profile:
+  # 'TITLE//DESC'
+  - 'nick://{NICK}'
+  - 'user:// {USER}'
+  - 'status:// {STATUS}'
+  - 'world:// {WORLD}'
+  - 'loc:// X: {X} Y: {Y} Z: {Z}'
+  - 'namemc:// {NAME_MC}'
+
 #---------------------------------------#
 #              [messages]               #
 #---------------------------------------#
