@@ -23,11 +23,11 @@ class ProfileCommand: ListenerAdapter() {
                 val mention = event.getOption(CmdOptions.MENTION.name.lowercase())!!.asMentionable
                 id = mention.id
 
-                message = "This user is not synchronized!"
+                message = PluginConfig.ARG_USER_IS_NOT_SYNC
             }else {
 
                 id = event.user.id
-                message = "You are not synchronized! Use **/sync** to sync your accounts!"
+                message = PluginConfig.USER_IS_NOT_SYNC
             }
 
             val databaseRecord = PluginDBManager.getUser(id)

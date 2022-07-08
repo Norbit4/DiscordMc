@@ -33,6 +33,8 @@ public class ConfigManager {
         PluginConfig.NAME_MC_NON_PREMIUM = config.getString("namemc-non-premium");
         PluginConfig.PLAYER_OFFLINE_STATUS = config.getString("player-offline-status");
         PluginConfig.PLAYER_ONLINE_STATUS = config.getString("player-online-status");
+        PluginConfig.USER_IS_NOT_SYNC = config.getString("user-in-not-sync");
+        PluginConfig.ARG_USER_IS_NOT_SYNC = config.getString("arg-user-in-not-sync");
 
         List<Integer> profileRGB = config.getIntegerList("embed-profile-rgb");
         PluginConfig.EMBED_PROFILE_R = profileRGB.get(0);

@@ -38,7 +38,8 @@ embed-profile:
 namemc-non-premium: 'Player is non-premium'
 player-offline-status: 'offline'
 player-online-status: 'online'
-
+user-in-not-sync: 'You are not synchronized! Use **/sync** to sync your accounts!'
+arg-user-in-not-sync: 'This user is not synchronized!'
 embed-profile-rgb:
   - 154
   - 199
