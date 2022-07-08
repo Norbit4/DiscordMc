@@ -24,6 +24,8 @@ password: ''
 database: ''
 ssl: false
 
+embed-profile-title: 'Profile'
+
 embed-profile:
   # 'TITLE//DESC'
   - 'nick://{NICK}'
@@ -32,6 +34,15 @@ embed-profile:
   - 'world:// {WORLD}'
   - 'loc:// X: {X} Y: {Y} Z: {Z}'
   - 'namemc:// {NAME_MC}'
+
+namemc-non-premium: 'Player is non-premium'
+player-offline-status: 'offline'
+player-online-status: 'online'
+
+embed-profile-rgb:
+  - 154
+  - 199
+  - 50
 
 #---------------------------------------#
 #              [messages]               #

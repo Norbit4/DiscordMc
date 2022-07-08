@@ -29,6 +29,15 @@ public class ConfigManager {
         PluginConfig.SYNC_CLEAR_MESSAGE = config.getString("sync-clear-mc");
         PluginConfig.PERMISSION_MESSAGE = config.getString("permission-message");
         PluginConfig.EMBED_PROFILE = config.getStringList("embed-profile");
+        PluginConfig.EMBED_PROFILE_TITLE = config.getString("embed-profile-title");
+        PluginConfig.NAME_MC_NON_PREMIUM = config.getString("namemc-non-premium");
+        PluginConfig.PLAYER_OFFLINE_STATUS = config.getString("player-offline-status");
+        PluginConfig.PLAYER_ONLINE_STATUS = config.getString("player-online-status");
+
+        List<Integer> profileRGB = config.getIntegerList("embed-profile-rgb");
+        PluginConfig.EMBED_PROFILE_R = profileRGB.get(0);
+        PluginConfig.EMBED_PROFILE_G = profileRGB.get(1);
+        PluginConfig.EMBED_PROFILE_B = profileRGB.get(2);
 
         //discord-chat-module
         PluginConfig.MC_PREFIX = config.getString("mc-prefix");

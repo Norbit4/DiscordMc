@@ -3,6 +3,7 @@ package pl.norbit.discordmc.bot.embed;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import pl.norbit.discordmc.server.config.PluginConfig;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -62,7 +63,11 @@ public class Embed {
     }
 
     public static EmbedBuilder getProfileMessage(String discordMention, String mcName){
-        EmbedBuilder embedBuilder = getBuilder("Profile", "", new Color(180, 115, 208),
+        EmbedBuilder embedBuilder = getBuilder(PluginConfig.EMBED_PROFILE_TITLE, "",
+                new Color(
+                        PluginConfig.EMBED_PROFILE_R,
+                        PluginConfig.EMBED_PROFILE_G,
+                        PluginConfig.EMBED_PROFILE_B),
                 false, "");
         return embedBuilder;
     }

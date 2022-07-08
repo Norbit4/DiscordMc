@@ -8,7 +8,6 @@ import pl.norbit.discordmc.db.PluginDBManager
 import pl.norbit.discordmc.server.config.PluginConfig
 import java.awt.Color
 import java.io.BufferedReader
-import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URL
 
@@ -54,9 +53,9 @@ class ProfileCommand: ListenerAdapter() {
                     replacements["{Y}"] = "$y"
                     replacements["{Z}"] = "$z"
                     replacements["{WORLD}"] = world
-                    status = "online"
+                    status = PluginConfig.PLAYER_ONLINE_STATUS
                 }else{
-                    status = "offline"
+                    status = PluginConfig.PLAYER_OFFLINE_STATUS
                 }
 
                 replacements["{NICK}"] = "$mcName"
@@ -66,7 +65,7 @@ class ProfileCommand: ListenerAdapter() {
                 if(isUsernamePremium(mcName)) {
                     replacements["{NAME_MC}"] = "https://namemc.com/profile/$mcName.1"
                 }else{
-                    replacements["{NAME_MC}"] = "player is non-premium"
+                    replacements["{NAME_MC}"] = PluginConfig.NAME_MC_NON_PREMIUM
                 }
 
                 for (line in lineList) {
