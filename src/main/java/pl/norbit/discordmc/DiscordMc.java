@@ -16,6 +16,7 @@ import pl.norbit.discordmc.server.events.EventManager;
 import pl.norbit.discordmc.serverinfo.InfoUpdater;
 import pl.norbit.discordmc.sync.SyncTimerTask;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -31,7 +32,8 @@ public final class DiscordMc extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        ConfigManager.loadConfig(this);
+        ConfigManager.loadConfig(this, true);
+
 
         if(PluginConfig.PLUGIN_ENABLE) {
             BotBuilder.init(this);
@@ -85,7 +87,7 @@ public final class DiscordMc extends JavaPlugin {
             EventManager.registerEvents(this, discordBot.getJda());
 
             //commands
-            getServer().getPluginCommand("discordmc").setExecutor(new MainCMD());
+            getServer().getPluginCommand("discordmc").setExecutor(new MainCMD(this));
 
             //info module
             if(PluginConfig.DISCORD_INFO_MODULE){

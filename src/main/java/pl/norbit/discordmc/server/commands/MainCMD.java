@@ -5,9 +5,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.embed.Embed;
 import pl.norbit.discordmc.bot.utils.ChatUtil;
 import pl.norbit.discordmc.db.PluginDBManager;
+import pl.norbit.discordmc.server.config.ConfigManager;
 import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.enums.Channel;
 import pl.norbit.discordmc.server.objects.GamePlayer;
@@ -20,6 +22,12 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainCMD implements CommandExecutor {
+
+    private JavaPlugin javaPlugin;
+
+    public MainCMD(JavaPlugin javaPlugin) {
+        this.javaPlugin = javaPlugin;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -87,7 +95,13 @@ public class MainCMD implements CommandExecutor {
                         p.sendMessage(ChatUtil.format(message));
                     }
 
-                } else {
+                }else if(args[0].equalsIgnoreCase("reload")){
+
+                    ConfigManager.loadConfig(javaPlugin, false);
+
+                    String message = "&aConfig has been reloaded!";
+                    p.sendMessage(ChatUtil.format(message));
+                }else {
 
                     sendHelpMessage(p);
                 }

@@ -1,17 +1,27 @@
 package pl.norbit.discordmc.server.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class ConfigManager {
 
-    public static void loadConfig(JavaPlugin javaPlugin) {
+    public static void loadConfig(JavaPlugin javaPlugin, boolean start){
+
+        if(!start){
+            javaPlugin.reloadConfig();
+        }
 
         FileConfiguration config = javaPlugin.getConfig();
-        config.options().copyDefaults();
-        javaPlugin.saveDefaultConfig();
+
+        if(start) {
+            config.options().copyDefaults();
+            javaPlugin.saveDefaultConfig();
+        }
 
         PluginConfig.MODULE_OFF_MESSAGE = "&cModule {MODULE} is disable! Enable module in config.yml";
 

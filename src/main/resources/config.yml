@@ -92,6 +92,7 @@ command-args-list:
   - '&8/&b{PREFIX} &a{SYNC_CMD} &7- accept sync accounts'
   - '&8/&b{PREFIX} &a{SYNC_CLEAR_CMD} &7- clear your sync'
   - '&8/&b{PREFIX} &a{CHANNEL_CMD} &8<&a{CHANNEL_MC_ARG}/{CHANNEL_DC_ARG}&8> &7- change chat channel'
+  - '&8/&b{PREFIX} &areload &7- reload config.yml'
   - ''
 
 #---------------------------------------#

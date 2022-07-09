@@ -77,11 +77,9 @@ class Mysql {
 
             if (exist != null) {
                 if(exist.next()){
-
                     return exist
                 }
             }
-
             return null
         }
         @JvmStatic
