@@ -33,42 +33,21 @@ public class MainCMD implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(!(sender instanceof Player)) return false;
+        Player p = (Player) sender;
 
-            Player p = (Player) sender;
-            if(args.length > 0) {
+        if(args.length > 0) {
 
-                AtomicBoolean permissionMessage = new AtomicBoolean(true);
+            AtomicBoolean permissionMessage = new AtomicBoolean(true);
 
-                if (args[0].equalsIgnoreCase(PluginConfig.COMMAND_CHAT_CHANGE_ARG)) {
-                    if(PluginConfig.CHAT_MODULE) {
-
-                        p.getEffectivePermissions().forEach(perm -> {
-                            if(perm.getPermission().equalsIgnoreCase("discordmc.channel") ||
-                                    perm.getPermission().equalsIgnoreCase("discordmc.*") ||
-                                    perm.getPermission().equalsIgnoreCase("*"))
-                            {
-                                changeChannelCMD(args, p);
-                                permissionMessage.set(false);
-                            }
-                        });
-
-                        if(permissionMessage.get()){
-                            String message = PluginConfig.PERMISSION_MESSAGE;
-                            p.sendMessage(ChatUtil.format(message));
-                        }
-
-                    }else{
-                        sendHelpMessage(p);
-                    }
-
-                }else if(args[0].equalsIgnoreCase(PluginConfig.SYNC_COMMAND_ARG)){
+            if (args[0].equalsIgnoreCase(PluginConfig.COMMAND_CHAT_CHANGE_ARG)) {
+                if(PluginConfig.CHAT_MODULE) {
 
                     p.getEffectivePermissions().forEach(perm -> {
-                        if(perm.getPermission().equalsIgnoreCase("discordmc.sync")||
+                        if(perm.getPermission().equalsIgnoreCase("discordmc.channel") ||
                                 perm.getPermission().equalsIgnoreCase("discordmc.*") ||
                                 perm.getPermission().equalsIgnoreCase("*"))
                         {
-                            syncCmd(p);
+                            changeChannelCMD(args, p);
                             permissionMessage.set(false);
                         }
                     });
@@ -78,36 +57,57 @@ public class MainCMD implements CommandExecutor {
                         p.sendMessage(ChatUtil.format(message));
                     }
 
-                } else if(args[0].equalsIgnoreCase(PluginConfig.SYNC_COMMAND_CLEAR_ARG)){
-
-                    p.getEffectivePermissions().forEach(perm -> {
-                        if(perm.getPermission().equalsIgnoreCase("discordmc.syncclear")||
-                                perm.getPermission().equalsIgnoreCase("discordmc.*") ||
-                                perm.getPermission().equalsIgnoreCase("*"))
-                        {
-                            syncClearCMD(p);
-                            permissionMessage.set(false);
-                        }
-                    });
-
-                    if(permissionMessage.get()){
-                        String message = PluginConfig.PERMISSION_MESSAGE;
-                        p.sendMessage(ChatUtil.format(message));
-                    }
-
-                }else if(args[0].equalsIgnoreCase("reload")){
-
-                    ConfigManager.loadConfig(javaPlugin, false);
-
-                    String message = "&aConfig has been reloaded!";
-                    p.sendMessage(ChatUtil.format(message));
-                }else {
-
+                }else{
                     sendHelpMessage(p);
                 }
-            }else{
+
+            }else if(args[0].equalsIgnoreCase(PluginConfig.SYNC_COMMAND_ARG)){
+
+                p.getEffectivePermissions().forEach(perm -> {
+                    if(perm.getPermission().equalsIgnoreCase("discordmc.sync")||
+                            perm.getPermission().equalsIgnoreCase("discordmc.*") ||
+                            perm.getPermission().equalsIgnoreCase("*"))
+                    {
+                        syncCmd(p);
+                        permissionMessage.set(false);
+                    }
+                });
+
+                if(permissionMessage.get()){
+                    String message = PluginConfig.PERMISSION_MESSAGE;
+                    p.sendMessage(ChatUtil.format(message));
+                }
+
+            } else if(args[0].equalsIgnoreCase(PluginConfig.SYNC_COMMAND_CLEAR_ARG)){
+
+                p.getEffectivePermissions().forEach(perm -> {
+                    if(perm.getPermission().equalsIgnoreCase("discordmc.syncclear")||
+                            perm.getPermission().equalsIgnoreCase("discordmc.*") ||
+                            perm.getPermission().equalsIgnoreCase("*"))
+                    {
+                        syncClearCMD(p);
+                        permissionMessage.set(false);
+                    }
+                });
+
+                if(permissionMessage.get()){
+                    String message = PluginConfig.PERMISSION_MESSAGE;
+                    p.sendMessage(ChatUtil.format(message));
+                }
+
+            }else if(args[0].equalsIgnoreCase("reload")){
+
+                ConfigManager.loadConfig(javaPlugin, false);
+
+                String message = "&aConfig has been reloaded!";
+                p.sendMessage(ChatUtil.format(message));
+            }else {
+
                 sendHelpMessage(p);
             }
+        }else{
+            sendHelpMessage(p);
+        }
         return true;
     }
 

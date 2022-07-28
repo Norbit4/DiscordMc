@@ -91,7 +91,7 @@ public final class DiscordMc extends JavaPlugin {
 
             //info module
             if(PluginConfig.DISCORD_INFO_MODULE){
-                InfoUpdater.start(discordBot.getJda());
+                InfoUpdater.start(discordBot.getJda(), this);
             }
 
             SyncTimerTask.runTaskTimer(this);

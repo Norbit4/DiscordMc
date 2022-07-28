@@ -3,8 +3,8 @@ package pl.norbit.discordmc.server.objects;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.User;
 import org.bukkit.entity.Player;
-import pl.norbit.discordmc.db.DatabaseRecord;
 import pl.norbit.discordmc.db.PluginDBManager;
+import pl.norbit.discordmc.db.objects.DatabaseRecord;
 import pl.norbit.discordmc.server.enums.Channel;
 
 import java.util.ArrayList;

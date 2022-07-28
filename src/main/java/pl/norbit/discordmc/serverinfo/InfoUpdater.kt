@@ -4,9 +4,13 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.MessageHistory
 import org.bukkit.Bukkit
+import org.bukkit.plugin.java.JavaPlugin
 import pl.norbit.discordmc.DiscordMc
 import pl.norbit.discordmc.bot.embed.Embed
 import pl.norbit.discordmc.server.config.PluginConfig
+import pl.norbit.pluginutils.task.TaskBuilder
+import pl.norbit.pluginutils.task.TaskType
+import pl.norbit.pluginutils.task.TaskUnit
 import java.awt.Color
 import java.util.*
 
@@ -21,30 +25,46 @@ class InfoUpdater {
         private val stringWorldsList: ArrayList<String> = ArrayList()
 
         @JvmStatic
-        fun start(jda: JDA?) {
+        fun start(jda: JDA?, javaPlugin: JavaPlugin) {
             val excludeFolders = listOf("cache", "plugins", "logs", "crash-reports")
-
-            DiscordMc.getExecutorService().submit{
-                while (true) {
-                    Bukkit.getOfflinePlayers().size
-
+            TaskBuilder
+                .builder()
+                .javaPlugin(javaPlugin)
+                .period(5)
+                .periodUnit(TaskUnit.MINUTES)
+                .taskType(TaskType.TIMER)
+                .runnable {
                     stringWorldsList.clear()
                     for (listFile in Bukkit.getServer().worldContainer.listFiles()) {
                         if(listFile.isDirectory && !excludeFolders.contains(listFile.name)){
                             stringWorldsList.add(listFile.name)
                         }
                     }
-
-                    Thread.sleep(60 * 1000 * 5)
                 }
-            }
+                .build().start()
 
-            DiscordMc.getExecutorService().submit{
+
+//            DiscordMc.getExecutorService().submit{
+//                while (true) {
+//                    Bukkit.getOfflinePlayers().size
+//
+//                    stringWorldsList.clear()
+//                    for (listFile in Bukkit.getServer().worldContainer.listFiles()) {
+//                        if(listFile.isDirectory && !excludeFolders.contains(listFile.name)){
+//                            stringWorldsList.add(listFile.name)
+//                        }
+//                    }
+//
+//                    Thread.sleep(60 * 1000 * 5)
+//                }
+//            }
+
+            //DiscordMc.getExecutorService().submit{
 
                 val reloadTime = if(PluginConfig.MESSAGE_RELOAD_TIME <= 20){
-                    20 * 1000
+                    20
                 }else{
-                    PluginConfig.MESSAGE_RELOAD_TIME * 1000
+                    PluginConfig.MESSAGE_RELOAD_TIME
                 }
 
                 val allowEnd = Bukkit.getAllowEnd()
@@ -80,20 +100,40 @@ class InfoUpdater {
                     textChannel.sendMessage("*").setEmbeds(infoMessage.build()).complete()
                     messageID = textChannel.latestMessageId
 
-                    while (true) {
+                    TaskBuilder
+                        .builder()
+                        .javaPlugin(javaPlugin)
+                        .period(reloadTime)
+                        .periodUnit(TaskUnit.SECONDS)
+                        .taskType(TaskType.TIMER)
+                        .runnable {
+                            val message = getEmbedConfigMessage(
+                                Embed.getInfoMessage(
+                                    PluginConfig.EMBED_INFO_TITTLE,
+                                    PluginConfig.EMBED_INFO_DESC,
+                                    color
+                                ),
+                                PluginConfig.EMBED_INFO_ARGS
+                            )
 
-                        val message = getEmbedConfigMessage(Embed.getInfoMessage(PluginConfig.EMBED_INFO_TITTLE,
-                            PluginConfig.EMBED_INFO_DESC,
-                            color),
-                            PluginConfig.EMBED_INFO_ARGS)
+                            textChannel.editMessageById(messageID, "*").setEmbeds(message?.build()).queue()
+                        }
+                        .build().start()
 
-                        textChannel.editMessageById(messageID, "*").setEmbeds(message?.build()).queue()
-
-                        Thread.sleep(reloadTime.toLong())
-                    }
+//                    while (true) {
+//
+//                        val message = getEmbedConfigMessage(Embed.getInfoMessage(PluginConfig.EMBED_INFO_TITTLE,
+//                            PluginConfig.EMBED_INFO_DESC,
+//                            color),
+//                            PluginConfig.EMBED_INFO_ARGS)
+//
+//                        textChannel.editMessageById(messageID, "*").setEmbeds(message?.build()).queue()
+//
+//                        Thread.sleep(reloadTime.toLong())
+//                    }
                 }
 
-            }
+           // }
         }
 
         private fun getEmbedConfigMessage(builder: EmbedBuilder?, lineList: List<String>): EmbedBuilder?{

@@ -10,6 +10,8 @@ import java.awt.Color
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
+import java.util.*
+import kotlin.collections.HashMap
 
 class ProfileCommand: ListenerAdapter() {
 
@@ -33,16 +35,19 @@ class ProfileCommand: ListenerAdapter() {
             val databaseRecord = PluginDBManager.getUser(id)
             val lineList:List<String> = PluginConfig.EMBED_PROFILE
 
+            //checks player exist in database
             if(databaseRecord != null){
 
                 val userName = databaseRecord.user?.asMention
                 val mcName = databaseRecord.player?.name
+                val p = databaseRecord.player?.player
+
                 val builder = Embed.getProfileMessage(userName, mcName);
-                val p = Bukkit.getPlayer(mcName)
                 val replacements: HashMap<String, String> = HashMap()
                 var status = ""
                 val replacementsOnline = arrayOf("{X}", "{Y}", "{Z}", "{WORLD}")
 
+                //checks player online status
                 if(p != null) {
                     val x = p.location.x.toInt()
                     val y = p.location.y.toInt()
@@ -53,8 +58,12 @@ class ProfileCommand: ListenerAdapter() {
                     replacements["{Y}"] = "$y"
                     replacements["{Z}"] = "$z"
                     replacements["{WORLD}"] = world
+                    builder.setColor(Color(62, 249, 36))
+
                     status = PluginConfig.PLAYER_ONLINE_STATUS
                 }else{
+                    builder.setColor(Color(212, 29, 25))
+
                     status = PluginConfig.PLAYER_OFFLINE_STATUS
                 }
 
@@ -62,12 +71,14 @@ class ProfileCommand: ListenerAdapter() {
                 replacements["{USER}"] = "$userName"
                 replacements["{STATUS}"] = status
 
+                //checks player is premium
                 if(isUsernamePremium(mcName)) {
                     replacements["{NAME_MC}"] = "https://namemc.com/profile/$mcName.1"
                 }else{
                     replacements["{NAME_MC}"] = PluginConfig.NAME_MC_NON_PREMIUM
                 }
 
+                //replaces placements
                 for (line in lineList) {
                     if(line == "{EMPTY_LINE}"){
                         builder?.addBlankField(false)
