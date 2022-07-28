@@ -17,7 +17,6 @@ public class GamePlayer {
     private Channel channel;
     private final Player player;
     private User discordUser;
-    private boolean voiceChat;
     private final JDA jda;
 
     static {
@@ -30,7 +29,6 @@ public class GamePlayer {
         this.channel = Channel.GLOBAL;
         playersList.add(this);
 
-        //Document document = MongoDB.getUser(GameUser.UUID.name(), player.getUniqueId().toString());
         DatabaseRecord databaseRecord = PluginDBManager.getUser(player.getUniqueId());
 
         if(databaseRecord != null){
@@ -38,13 +36,21 @@ public class GamePlayer {
         }else{
             discordUser = null;
         }
-        voiceChat = false;
     }
 
     public static GamePlayer getGamePLayer(Player player){
         Optional<GamePlayer> optionalGamePlayer = playersList
                 .stream()
                 .filter(gamePlayer -> gamePlayer.getPlayer().equals(player))
+                .findFirst();
+
+        return optionalGamePlayer.orElse(null);
+    }
+
+    public static GamePlayer getGamePLayer(User discordUser){
+        Optional<GamePlayer> optionalGamePlayer = playersList
+                .stream()
+                .filter(gamePlayer -> gamePlayer.getDiscordUser().equals(discordUser))
                 .findFirst();
 
         return optionalGamePlayer.orElse(null);
@@ -88,13 +94,5 @@ public class GamePlayer {
         }else{
             this.discordUser = null;
         }
-    }
-
-    public boolean isVoiceChat() {
-        return voiceChat;
-    }
-
-    public void setVoiceChat(boolean voiceChat) {
-        this.voiceChat = voiceChat;
     }
 }

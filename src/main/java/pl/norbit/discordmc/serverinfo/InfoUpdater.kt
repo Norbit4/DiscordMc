@@ -43,24 +43,6 @@ class InfoUpdater {
                 }
                 .build().start()
 
-
-//            DiscordMc.getExecutorService().submit{
-//                while (true) {
-//                    Bukkit.getOfflinePlayers().size
-//
-//                    stringWorldsList.clear()
-//                    for (listFile in Bukkit.getServer().worldContainer.listFiles()) {
-//                        if(listFile.isDirectory && !excludeFolders.contains(listFile.name)){
-//                            stringWorldsList.add(listFile.name)
-//                        }
-//                    }
-//
-//                    Thread.sleep(60 * 1000 * 5)
-//                }
-//            }
-
-            //DiscordMc.getExecutorService().submit{
-
                 val reloadTime = if(PluginConfig.MESSAGE_RELOAD_TIME <= 20){
                     20
                 }else{
@@ -119,21 +101,7 @@ class InfoUpdater {
                             textChannel.editMessageById(messageID, "*").setEmbeds(message?.build()).queue()
                         }
                         .build().start()
-
-//                    while (true) {
-//
-//                        val message = getEmbedConfigMessage(Embed.getInfoMessage(PluginConfig.EMBED_INFO_TITTLE,
-//                            PluginConfig.EMBED_INFO_DESC,
-//                            color),
-//                            PluginConfig.EMBED_INFO_ARGS)
-//
-//                        textChannel.editMessageById(messageID, "*").setEmbeds(message?.build()).queue()
-//
-//                        Thread.sleep(reloadTime.toLong())
-//                    }
                 }
-
-           // }
         }
 
         private fun getEmbedConfigMessage(builder: EmbedBuilder?, lineList: List<String>): EmbedBuilder?{
@@ -183,6 +151,5 @@ class InfoUpdater {
             }
             return builder;
         }
-
     }
 }
