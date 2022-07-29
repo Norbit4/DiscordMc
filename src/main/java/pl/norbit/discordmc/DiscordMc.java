@@ -3,6 +3,7 @@ package pl.norbit.discordmc;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.DiscordBot;
@@ -95,6 +96,7 @@ public final class DiscordMc extends JavaPlugin {
             }
 
             SyncTimerTask.runTaskTimer(this);
+
         } else {
             getServer().getConsoleSender().sendMessage(ChatColor.RED + "Enable plugin in config.yml");
         }

@@ -1,11 +1,8 @@
 package pl.norbit.discordmc.server.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class ConfigManager {
@@ -128,6 +125,7 @@ public class ConfigManager {
         //discord info module
         PluginConfig.DISCORD_INFO_MODULE = config.getBoolean("discord-info-module");
         PluginConfig.CHANNEL_INFO_ID = config.getString("channel-info-id");
+        PluginConfig.IGNORE_FOLDERS = config.getStringList("ignore-folders");
         List<Integer> rgbInfoList = config.getIntegerList("discord-info-rgb");
         PluginConfig.EMBED_INFO_R = rgbInfoList.get(0);
         PluginConfig.EMBED_INFO_G = rgbInfoList.get(1);

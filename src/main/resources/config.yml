@@ -153,6 +153,16 @@ discord-info-rgb:
   - 154
   - 74
 
+# folders ignored when creating worlds list
+ignore-folders:
+  - 'cache'
+  - 'plugins'
+  - 'logs'
+  - 'crash-reports'
+  - 'libraries'
+  - 'config'
+  - 'versions'
+
 # Placeholders:
 # {SERVER_ONLINE}, {SERVER_MAX_PLAYERS}, {SERVER_TIME}, {SERVER_ALL_PLAYERS}, {SERVER_WORLDS}, {SERVER_VERSION},
 # {SERVER_ALLOW_NETHER}, {SERVER_ALLOW_END}

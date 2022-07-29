@@ -26,7 +26,8 @@ class InfoUpdater {
 
         @JvmStatic
         fun start(jda: JDA?, javaPlugin: JavaPlugin) {
-            val excludeFolders = listOf("cache", "plugins", "logs", "crash-reports")
+            val excludeFolders = PluginConfig.IGNORE_FOLDERS;
+            //listOf("cache", "plugins", "logs", "crash-reports", "versions", "libraries", "config")
             TaskBuilder
                 .builder()
                 .javaPlugin(javaPlugin)

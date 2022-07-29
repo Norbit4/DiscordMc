@@ -66,7 +66,7 @@ public class LogAppender extends AbstractAppender{
         if(sendMessage) {
             String[] colorCodes = {"\\u00A70", "\\u00A71", "\\u00A72", "\\u00A73", "\\u00A74", "\\u00A75", "\\u00A76",
                     "\\u00A77", "\\u00A78", "\\u00A79", "\\u00A7a", "\\u00A7b", "\\u00A7c", "\\u00A7d", "\\u00A7e",
-                    "\\u00A7f"};
+                    "\\u00A7f","&a", "&b", "&c", "&d", "&e", "&f", "&0", "&1","&2", "&3", "&4", "&5", "&7", "&8"};
 
             String message = event.getMessage().getFormattedMessage();
 
