@@ -20,8 +20,3 @@ more about modules: [here]("Click")
 ⛭ [Spigot]( "Click")
 
 🌐 [Wiki](https://github.com/Norbit4/DiscordMc/wiki "Click")
-
->contact:
->
->dc: BORBI#2685
->
