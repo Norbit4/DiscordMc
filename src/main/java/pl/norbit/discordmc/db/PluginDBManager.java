@@ -21,12 +21,12 @@ public class PluginDBManager {
 
         if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
             MysqlDB.start(javaPlugin);
-            System.out.println("mysql");
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {
             MongoDatabase.start();
-            System.out.println("mongo");
         }else{
-            System.out.println("[Error] Invalid database type in config.yml! (mysql/mongodb)");
+            javaPlugin.getServer()
+                    .getConsoleSender().sendMessage("[Error] Invalid database type in config.yml! (mysql/mongodb)");
+            //System.out.println("[Error] Invalid database type in config.yml! (mysql/mongodb)");
             javaPlugin.getPluginLoader().disablePlugin(javaPlugin);
         }
     }
