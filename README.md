@@ -9,7 +9,7 @@
 > support: Spigot/PaperSpigot
 
 ## Modules
-- ***Sync module*** - sync yout minecraft account with discord account!
+- ***Sync module*** - sync your minecraft account with discord account!
 - ***Console module*** - minecraft server console in discord channel!
 - ***Chat module*** - synchronize discord channel with minecraft chat!
 - ***Info module*** - display server placeholders/staus etc. in discord channel!
