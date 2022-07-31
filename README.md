@@ -14,9 +14,9 @@
 - ***Chat module*** - synchronize discord channel with minecraft chat!
 - ***Info module*** - display server placeholders/staus etc. in discord channel!
 
-more about modules: [here]("Click")
+read more about modules: [here](https://github.com/Norbit4/DiscordMc/wiki "Click")
 ## Links
 
-⛭ [Spigot]( "Click")
+⛭ [Download]( "Click")
 
 🌐 [Wiki](https://github.com/Norbit4/DiscordMc/wiki "Click")
