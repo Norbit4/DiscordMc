@@ -97,6 +97,5 @@ public class LogAppender extends AbstractAppender{
             }
 
         }, 0,30);
-
     }
 }

@@ -103,8 +103,7 @@ public final class DiscordMc extends JavaPlugin {
     @Override
     public void onDisable() {
         discordBot.close();
-
-        //MongoDB.close();
+        PluginDBManager.close();
     }
 
     public static ExecutorService getExecutorService() {

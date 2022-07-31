@@ -57,6 +57,12 @@ class MysqlDB {
         }
 
         @JvmStatic
+        fun close(){
+            statement?.close()
+            connection?.close()
+        }
+
+        @JvmStatic
         fun addUser(playerUUID: String, userID: String){
             //val statement = connection?.createStatement()
 

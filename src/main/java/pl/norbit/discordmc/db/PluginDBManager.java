@@ -31,6 +31,14 @@ public class PluginDBManager {
         }
     }
 
+    public static void close(){
+        if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
+            MysqlDB.close();
+        }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {
+            MongoDatabase.close();
+        }
+    }
+
     public static void createUser(UUID playerUUID, String discordID){
 
         if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {

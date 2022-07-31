@@ -124,7 +124,6 @@ public class MainCMD implements CommandExecutor {
                     .replace("{CHANNEL_MC_ARG}", PluginConfig.MINECRAFT_CHAT_ARG)
                     .replace("{CHANNEL_DC_ARG}", PluginConfig.DISCORD_CHAT_ARG);
 
-
             player.sendMessage(ChatUtil.format(formatMessage));
         }
     }
@@ -154,7 +153,8 @@ public class MainCMD implements CommandExecutor {
             SyncTimerTask.removeSyncPlayer(syncPlayer);
 
             String message = PluginConfig.SYNC_SUCCESS_DC.replace("{DISCORD}",
-                    syncPlayer.getUser().getAsTag()).replace("{PLAYER}", gamePlayer.getPlayer().getName());
+                    syncPlayer.getUser().getAsTag())
+                    .replace("{PLAYER}", gamePlayer.getPlayer().getName());
 
             MessageEmbed embed = Embed.getInfoMessage(PluginConfig.SUCCESS_TITTLE, message,
                             new Color(PluginConfig.EMBED_SUCCESS_R, PluginConfig.EMBED_SUCCESS_G, PluginConfig.EMBED_SUCCESS_B))
@@ -162,8 +162,10 @@ public class MainCMD implements CommandExecutor {
 
             syncPlayer.getMessageChannel().sendMessageEmbeds(embed).queue();
 
-            String mcMessage = PluginConfig.SYNC_SUCCESS_MC.replace("{DISCORD}",
-                    syncPlayer.getUser().getAsTag()).replace("{PLAYER}", gamePlayer.getPlayer().getName());
+            String mcMessage = PluginConfig.SYNC_SUCCESS_MC
+                    .replace("{DISCORD}",
+                    syncPlayer.getUser().getAsTag())
+                    .replace("{PLAYER}", gamePlayer.getPlayer().getName());
 
             player.sendMessage(ChatUtil.format(mcMessage));
         } else{
