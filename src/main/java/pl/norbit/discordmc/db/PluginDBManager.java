@@ -6,6 +6,7 @@ import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.norbit.discordmc.DiscordMc;
 import pl.norbit.discordmc.db.objects.DatabaseRecord;
 import pl.norbit.discordmc.server.config.PluginConfig;
 
@@ -20,20 +21,17 @@ public class PluginDBManager {
         PluginDBManager.jda = jda;
 
         if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
-            MysqlDB.start(javaPlugin);
+            MysqlDatabase.start(javaPlugin);
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {
             MongoDatabase.start();
         }else{
-            javaPlugin.getServer()
-                    .getConsoleSender().sendMessage("[Error] Invalid database type in config.yml! (mysql/mongodb)");
-            //System.out.println("[Error] Invalid database type in config.yml! (mysql/mongodb)");
-            javaPlugin.getPluginLoader().disablePlugin(javaPlugin);
+            DiscordMc.sendMessage("&cInvalid database type in config.yml! (mysql/mongodb)");
         }
     }
 
     public static void close(){
         if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
-            MysqlDB.close();
+            MysqlDatabase.close();
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {
             MongoDatabase.close();
         }
@@ -44,11 +42,10 @@ public class PluginDBManager {
         if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {
             Document document = new Document()
                     .append(GameUser.UUID.name(), playerUUID.toString())
-                    .append(GameUser.DISCORD_ID.name(), discordID)
-                    .append(GameUser.VOICE_CHAT.name(), false);
+                    .append(GameUser.DISCORD_ID.name(), discordID);
             MongoDatabase.addUser(document);
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")) {
-            MysqlDB.addUser(playerUUID.toString(), discordID);
+            MysqlDatabase.addUser(playerUUID.toString(), discordID);
         }
     }
 
@@ -56,7 +53,7 @@ public class PluginDBManager {
         if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")){
             MongoDatabase.deleteUser(GameUser.UUID.name(), playerUUID.toString());
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
-            MysqlDB.deleteUser(playerUUID.toString());
+            MysqlDatabase.deleteUser(playerUUID.toString());
         }
     }
 
@@ -71,7 +68,7 @@ public class PluginDBManager {
                 return new DatabaseRecord(player, user);
             }
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
-            ResultSet user = MysqlDB.getUser(discordID);
+            ResultSet user = MysqlDatabase.getUser(discordID);
 
             if(user != null) {
                 try {
@@ -100,7 +97,7 @@ public class PluginDBManager {
                 return new DatabaseRecord(player, user);
             }
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
-            ResultSet user = MysqlDB.getUser(playerUUID);
+            ResultSet user = MysqlDatabase.getUser(playerUUID);
 
             if(user != null) {
                 try {

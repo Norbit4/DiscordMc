@@ -4,10 +4,12 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.DiscordBot;
 import pl.norbit.discordmc.bot.builder.BotBuilder;
 import pl.norbit.discordmc.bot.commands.CommandManager;
+import pl.norbit.discordmc.bot.utils.ChatUtil;
 import pl.norbit.discordmc.db.PluginDBManager;
 import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.commands.MainCMD;
@@ -16,23 +18,24 @@ import pl.norbit.discordmc.server.events.EventManager;
 import pl.norbit.discordmc.serverinfo.InfoUpdater;
 import pl.norbit.discordmc.sync.SyncTimerTask;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
 
 public final class DiscordMc extends JavaPlugin {
     private DiscordBot discordBot;
     private static Long timeServer;
-    private final static ExecutorService executorService;
+    private static JavaPlugin javaPlugin;
 
-    static {
-        executorService = Executors.newFixedThreadPool(2);
-    }
+    private static ConsoleCommandSender commandSender;
+
 
     @Override
     public void onEnable() {
+        commandSender = getServer().getConsoleSender();
+        javaPlugin = this;
+
+        onStart();
 
         ConfigManager.loadConfig(this, true);
-
 
         if(PluginConfig.PLUGIN_ENABLE) {
             BotBuilder.init(this);
@@ -97,21 +100,48 @@ public final class DiscordMc extends JavaPlugin {
 
         } else {
             getServer().getConsoleSender().sendMessage(ChatColor.RED + "Enable plugin in config.yml");
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 
     @Override
     public void onDisable() {
-        discordBot.close();
-        PluginDBManager.close();
+        if(PluginConfig.PLUGIN_ENABLE) {
+            discordBot.close();
+            PluginDBManager.close();
+        }
+            onStop();
     }
 
-    public static ExecutorService getExecutorService() {
-        return executorService;
+    private void onStart(){
+        sendMessage("");
+        sendMessage("&7------------[&aDiscordMC&7]------------");
+        sendMessage("");
+        sendMessage("&aHI :)");
+        sendMessage("");
+        sendMessage("&fWiki:&b https://github.com/Norbit4/DiscordMc/wiki");
+        sendMessage("&fSpigot: ");
+        sendMessage("&fPlugin created by&e Norbit4");
+        sendMessage("&7-----------------------------------");
+    }
+
+    private void onStop(){
+        sendMessage("");
+        sendMessage("&7------------[&cDiscordMC&7]------------");
+        sendMessage("");
+        sendMessage("&cBYE :(");
+        sendMessage("");
+        sendMessage("&7-----------------------------------");
     }
 
     public static Long getTimeServer() {
         return DiscordMc.timeServer;
     }
 
+    public static void disablePlugin(){
+        javaPlugin.getServer().getPluginManager().disablePlugin(javaPlugin);
+    }
+    public static void sendMessage(String message){
+        commandSender.sendMessage(ChatUtil.format(message));
+    }
 }

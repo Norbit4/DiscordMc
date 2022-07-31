@@ -1,6 +1,8 @@
 package pl.norbit.discordmc.db
 
+import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
+import pl.norbit.discordmc.DiscordMc
 import pl.norbit.discordmc.server.config.PluginConfig
 import java.sql.Connection
 import java.sql.DriverManager
@@ -8,7 +10,7 @@ import java.sql.ResultSet
 import java.sql.Statement
 import java.util.*
 
-class MysqlDB {
+class MysqlDatabase {
 
     companion object {
 
@@ -49,9 +51,9 @@ class MysqlDB {
 
                 if (i == 0) {
                     statement?.executeUpdate(cmd);
-                    println("The table $tableName has been created!")
+                    DiscordMc.sendMessage("&a The table &e$tableName &ahas been created!")
                 } else {
-                    println("The table $tableName has been loaded!")
+                    DiscordMc.sendMessage("&aThe table &e$tableName &ahas been loaded!")
                 }
             }, 1)
         }
