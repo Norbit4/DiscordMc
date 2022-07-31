@@ -116,9 +116,7 @@ public final class DiscordMc extends JavaPlugin {
     private void onStart(){
         sendMessage("");
         sendMessage("&7------------[&aDiscordMC&7]------------");
-        sendMessage("");
         sendMessage("&aHI :)");
-        sendMessage("");
         sendMessage("&fWiki:&b https://github.com/Norbit4/DiscordMc/wiki");
         sendMessage("&fSpigot: ");
         sendMessage("&fPlugin created by&e Norbit4");
@@ -128,9 +126,7 @@ public final class DiscordMc extends JavaPlugin {
     private void onStop(){
         sendMessage("");
         sendMessage("&7------------[&cDiscordMC&7]------------");
-        sendMessage("");
         sendMessage("&cBYE :(");
-        sendMessage("");
         sendMessage("&7-----------------------------------");
     }
 

@@ -96,11 +96,17 @@ public class MainCMD implements CommandExecutor {
                 }
 
             }else if(args[0].equalsIgnoreCase("reload")){
+                p.getEffectivePermissions().forEach(perm -> {
+                    if(perm.getPermission().equalsIgnoreCase("discordmc.reload")||
+                            perm.getPermission().equalsIgnoreCase("discordmc.*") ||
+                            perm.getPermission().equalsIgnoreCase("*"))
+                    {
+                        ConfigManager.loadConfig(javaPlugin, false);
 
-                ConfigManager.loadConfig(javaPlugin, false);
-
-                String message = "&aConfig has been reloaded!";
-                p.sendMessage(ChatUtil.format(message));
+                        String message = "&aConfig has been reloaded!";
+                        p.sendMessage(ChatUtil.format(message));
+                    }
+                });
             }else {
 
                 sendHelpMessage(p);
@@ -157,8 +163,12 @@ public class MainCMD implements CommandExecutor {
                     .replace("{PLAYER}", gamePlayer.getPlayer().getName());
 
             MessageEmbed embed = Embed.getInfoMessage(PluginConfig.SUCCESS_TITTLE, message,
-                            new Color(PluginConfig.EMBED_SUCCESS_R, PluginConfig.EMBED_SUCCESS_G, PluginConfig.EMBED_SUCCESS_B))
-                    .build();
+                            new Color(
+                                    PluginConfig.EMBED_SUCCESS_R,
+                                    PluginConfig.EMBED_SUCCESS_G,
+                                    PluginConfig.EMBED_SUCCESS_B)
+                        )
+                        .build();
 
             syncPlayer.getMessageChannel().sendMessageEmbeds(embed).queue();
 

@@ -7,6 +7,7 @@
 #             [bot config]              #
 #---------------------------------------#
 
+# configuration: https://github.com/Norbit4/DiscordMc/wiki/Configuration
 enable: false
 prefix-command: 'discordmc'
 sync-command-arg: 'sync'
@@ -73,6 +74,7 @@ error-message-rgb:
 
 #discord messages
 player-is-sync: 'This player is synchronize!'
+discord-user-is-sync: 'You are synchronized!'
 offline-player: 'This player is offline!'
 sync-info: 'Type **/{PREFIX} {ARG1}** in minecraft chat to sync your accounts!'
 sync-success: 'The player **{PLAYER}** has been synchronized with **{DISCORD}** account!'
@@ -98,6 +100,8 @@ command-args-list:
 #---------------------------------------#
 #         [discord-chat-module]         #
 #---------------------------------------#
+# help: https://github.com/Norbit4/DiscordMc/wiki/Chat-module
+
 discord-chat-module: false
 channel-chat-id: ''
 
@@ -131,6 +135,7 @@ mc-user-rgb:
 #---------------------------------------#
 #        [discord-console-module]       #
 #---------------------------------------#
+# help: https://github:com/Norbit4/DiscordMc/wiki/Cosole-module
 
 discord-console-module: false
 channel-console-id: ''
@@ -139,9 +144,16 @@ discord-console-commands: true
 
 block-error-messages: false
 
+# blocked commands in discord console
+blocked-commands:
+  - help
+  - pl
+
 #---------------------------------------#
 #         [discord-info-module]         #
 #---------------------------------------#
+# help: https://github.com/Norbit4/DiscordMc/wiki/Info-module
+
 discord-info-module: false
 channel-info-id: ''
 

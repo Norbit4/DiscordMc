@@ -49,8 +49,10 @@ public class SyncCommand extends ListenerAdapter {
 
 
                             MessageEmbed embed = Embed.getInfoMessage(PluginConfig.SUCCESS_TITTLE, message,
-                                    new Color(PluginConfig.EMBED_SUCCESS_R, PluginConfig.EMBED_SUCCESS_G,
-                                            PluginConfig.EMBED_SUCCESS_B)).build();
+                                    new Color(PluginConfig.EMBED_SUCCESS_R,
+                                            PluginConfig.EMBED_SUCCESS_G,
+                                            PluginConfig.EMBED_SUCCESS_B))
+                                    .build();
 
                             event.reply("").addEmbeds(embed).queue();
 
@@ -61,29 +63,41 @@ public class SyncCommand extends ListenerAdapter {
 
                             player.sendMessage(ChatUtil.format(mcFormatMessage));
                         }else{
-                            MessageEmbed embed = Embed.getInfoMessage(PluginConfig.WARN_TITTLE, "You are synchronized!",
-                                            new Color(PluginConfig.EMBED_WARN_R, PluginConfig.EMBED_WARN_G, PluginConfig.EMBED_WARN_B))
+                            MessageEmbed embed = Embed.getInfoMessage(PluginConfig.WARN_TITTLE, PluginConfig.DISCORD_USER_IS_SYNC,
+                                            new Color(
+                                                    PluginConfig.EMBED_WARN_R,
+                                                    PluginConfig.EMBED_WARN_G,
+                                                    PluginConfig.EMBED_WARN_B))
                                     .build();
 
                             event.reply("").addEmbeds(embed).queue();
                         }
                     } else {
                         MessageEmbed embed = Embed.getInfoMessage(PluginConfig.WARN_TITTLE, PluginConfig.PLAYER_IS_SYNC_DC,
-                                        new Color(PluginConfig.EMBED_WARN_R, PluginConfig.EMBED_WARN_G, PluginConfig.EMBED_WARN_B))
+                                        new Color(
+                                                PluginConfig.EMBED_WARN_R,
+                                                PluginConfig.EMBED_WARN_G,
+                                                PluginConfig.EMBED_WARN_B))
                                 .build();
 
                         event.reply("").addEmbeds(embed).queue();
                     }
                 }else{
                     MessageEmbed embed = Embed.getInfoMessage(PluginConfig.WARN_TITTLE, "Time: " + syncPlayer.getTime(),
-                                    new Color(PluginConfig.EMBED_WARN_R, PluginConfig.EMBED_WARN_G, PluginConfig.EMBED_WARN_B))
+                                    new Color(
+                                            PluginConfig.EMBED_WARN_R,
+                                            PluginConfig.EMBED_WARN_G,
+                                            PluginConfig.EMBED_WARN_B))
                             .build();
 
                     event.reply("").addEmbeds(embed).queue();
                 }
             }else{
                 MessageEmbed embed = Embed.getInfoMessage(PluginConfig.ERROR_TITTLE ,PluginConfig.OFFLINE_PLAYER_DC,
-                        new Color(PluginConfig.EMBED_ERROR_R, PluginConfig.EMBED_ERROR_G, PluginConfig.EMBED_ERROR_B))
+                        new Color(
+                                PluginConfig.EMBED_ERROR_R,
+                                PluginConfig.EMBED_ERROR_G,
+                                PluginConfig.EMBED_ERROR_B))
                         .build();
 
                 event.reply("").addEmbeds(embed).queue();

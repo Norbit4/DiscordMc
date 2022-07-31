@@ -3,7 +3,6 @@ package pl.norbit.discordmc.db;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
-import pl.norbit.discordmc.DiscordMc;
 import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.pluginutils.database.MongoDB;
 

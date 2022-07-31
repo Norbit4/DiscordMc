@@ -42,6 +42,7 @@ public class ConfigManager {
         PluginConfig.PLAYER_ONLINE_STATUS = config.getString("player-online-status");
         PluginConfig.USER_IS_NOT_SYNC = config.getString("user-in-not-sync");
         PluginConfig.ARG_USER_IS_NOT_SYNC = config.getString("arg-user-in-not-sync");
+        PluginConfig.DISCORD_USER_IS_SYNC = config.getString("discord-user-is-sync");
 
         List<Integer> profileRGB = config.getIntegerList("embed-profile-rgb");
         PluginConfig.EMBED_PROFILE_R = profileRGB.get(0);
@@ -116,6 +117,7 @@ public class ConfigManager {
         PluginConfig.SYNC_TIME_OUT = config.getString("sync-time-out");
 
         //discord console module
+        PluginConfig.BLOCKED_COMMANDS = config.getStringList("blocked-commands");
         PluginConfig.CONSOLE_MODULE = config.getBoolean("discord-console-module");
         PluginConfig.CONSOLE_CHANNEL_ID = config.getString("channel-console-id");
         PluginConfig.DISCORD_CONSOLE_COMMANDS = config.getBoolean("discord-console-commands");
