@@ -24,8 +24,10 @@ public class PluginDBManager {
             MysqlDatabase.start(javaPlugin);
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {
             MongoDatabase.start();
+        }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("LOCAL")) {
+            LocalDB.init(javaPlugin);
         }else{
-            DiscordMc.sendMessage("&cInvalid database type in config.yml! (mysql/mongodb)");
+            DiscordMc.sendMessage("&cInvalid database type in config.yml! (mysql/mongodb/local)");
         }
     }
 
@@ -46,14 +48,18 @@ public class PluginDBManager {
             MongoDatabase.addUser(document);
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")) {
             MysqlDatabase.addUser(playerUUID.toString(), discordID);
+        }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("LOCAL")) {
+               LocalDB.addUser(playerUUID.toString(), discordID);
         }
     }
 
     public static void deleteUser(UUID playerUUID){
         if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")){
             MongoDatabase.deleteUser(GameUser.UUID.name(), playerUUID.toString());
-        }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
+        }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")) {
             MysqlDatabase.deleteUser(playerUUID.toString());
+        }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("LOCAL")){
+            LocalDB.deleteUser(playerUUID);
         }
     }
 
@@ -81,6 +87,13 @@ public class PluginDBManager {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+            }
+        }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("LOCAL")){
+            LocalDB.LocalRecord user = LocalDB.getUser(discordID);
+            if(user != null) {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(user.getPlayerUUID());
+                User dcUser = jda.getUserById(discordID);
+                return new DatabaseRecord(player, dcUser);
             }
         }
         return null;
@@ -111,6 +124,13 @@ public class PluginDBManager {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+            }
+        }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("LOCAL")){
+            LocalDB.LocalRecord user = LocalDB.getUser(playerUUID);
+            if(user != null) {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(playerUUID);
+                User dcUser = jda.getUserById(user.getUserID());
+                return new DatabaseRecord(player, dcUser);
             }
         }
         return null;

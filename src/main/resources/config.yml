@@ -16,8 +16,8 @@ bot-token: ''
 bot-activity: ''
 discord-server-id: ''
 
-#types: mysql/mongodb
-database-type: 'mysql'
+# types: local/mysql/mongodb
+database-type: 'local'
 host: ''
 port: 3306
 user: ''

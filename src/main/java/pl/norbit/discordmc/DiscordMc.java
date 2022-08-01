@@ -118,7 +118,7 @@ public final class DiscordMc extends JavaPlugin {
         sendMessage("&7------------[&aDiscordMC&7]------------");
         sendMessage("&aHI :)");
         sendMessage("&fWiki:&b https://github.com/Norbit4/DiscordMc/wiki");
-        sendMessage("&fSpigot: ");
+        sendMessage("&fSpigot:&b https://www.spigotmc.org/resources/discordmc-1-8-1-19-sync-your-minecraft-server-with-discord-server.103901/");
         sendMessage("&fPlugin created by&e Norbit4");
         sendMessage("&7-----------------------------------");
     }
