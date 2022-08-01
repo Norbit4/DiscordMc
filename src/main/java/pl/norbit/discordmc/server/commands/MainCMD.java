@@ -37,76 +37,87 @@ public class MainCMD implements CommandExecutor {
 
         if(args.length > 0) {
 
-            AtomicBoolean permissionMessage = new AtomicBoolean(true);
-
             if (args[0].equalsIgnoreCase(PluginConfig.COMMAND_CHAT_CHANGE_ARG)) {
                 if(PluginConfig.CHAT_MODULE) {
 
+                    AtomicBoolean hasPerm = new AtomicBoolean(false);
                     p.getEffectivePermissions().forEach(perm -> {
                         if(perm.getPermission().equalsIgnoreCase("discordmc.channel") ||
                                 perm.getPermission().equalsIgnoreCase("discordmc.*") ||
-                                perm.getPermission().equalsIgnoreCase("*"))
-                        {
-                            changeChannelCMD(args, p);
-                            permissionMessage.set(false);
+                                perm.getPermission().equalsIgnoreCase("*")) {
+                            hasPerm.set(true);
                         }
                     });
 
-                    if(permissionMessage.get()){
+                    if(hasPerm.get()){
+                        changeChannelCMD(args, p);
+                    }else{
                         String message = PluginConfig.PERMISSION_MESSAGE;
                         p.sendMessage(ChatUtil.format(message));
                     }
-
                 }else{
                     sendHelpMessage(p);
                 }
 
             }else if(args[0].equalsIgnoreCase(PluginConfig.SYNC_COMMAND_ARG)){
 
+                AtomicBoolean hasPerm = new AtomicBoolean(false);
                 p.getEffectivePermissions().forEach(perm -> {
                     if(perm.getPermission().equalsIgnoreCase("discordmc.sync")||
                             perm.getPermission().equalsIgnoreCase("discordmc.*") ||
                             perm.getPermission().equalsIgnoreCase("*"))
                     {
-                        syncCmd(p);
-                        permissionMessage.set(false);
+                        hasPerm.set(true);
                     }
                 });
 
-                if(permissionMessage.get()){
+                if(hasPerm.get()){
+                    syncCmd(p);
+                }else{
                     String message = PluginConfig.PERMISSION_MESSAGE;
                     p.sendMessage(ChatUtil.format(message));
                 }
 
             } else if(args[0].equalsIgnoreCase(PluginConfig.SYNC_COMMAND_CLEAR_ARG)){
 
+                AtomicBoolean hasPerm = new AtomicBoolean(false);
                 p.getEffectivePermissions().forEach(perm -> {
                     if(perm.getPermission().equalsIgnoreCase("discordmc.syncclear")||
                             perm.getPermission().equalsIgnoreCase("discordmc.*") ||
                             perm.getPermission().equalsIgnoreCase("*"))
                     {
-                        syncClearCMD(p);
-                        permissionMessage.set(false);
+                        hasPerm.set(true);
                     }
                 });
 
-                if(permissionMessage.get()){
+                if(hasPerm.get()){
+                    syncClearCMD(p);
+                }else{
                     String message = PluginConfig.PERMISSION_MESSAGE;
                     p.sendMessage(ChatUtil.format(message));
                 }
 
             }else if(args[0].equalsIgnoreCase("reload")){
+                AtomicBoolean hasPerm = new AtomicBoolean(false);
+
                 p.getEffectivePermissions().forEach(perm -> {
                     if(perm.getPermission().equalsIgnoreCase("discordmc.reload")||
                             perm.getPermission().equalsIgnoreCase("discordmc.*") ||
                             perm.getPermission().equalsIgnoreCase("*"))
                     {
-                        ConfigManager.loadConfig(javaPlugin, false);
-
-                        String message = "&aConfig has been reloaded!";
-                        p.sendMessage(ChatUtil.format(message));
+                        hasPerm.set(true);
                     }
                 });
+
+                if(hasPerm.get()){
+                    ConfigManager.loadConfig(javaPlugin, false);
+
+                    String message = "&aConfig has been reloaded!";
+                    p.sendMessage(ChatUtil.format(message));
+                }else{
+                    String message = PluginConfig.PERMISSION_MESSAGE;
+                    p.sendMessage(ChatUtil.format(message));
+                }
             }else {
 
                 sendHelpMessage(p);
