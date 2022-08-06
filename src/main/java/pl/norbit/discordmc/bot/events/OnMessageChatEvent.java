@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import pl.norbit.discordmc.bot.embed.Embed;
-import pl.norbit.discordmc.bot.utils.ChatUtil;
+import pl.norbit.discordmc.utils.ChatUtil;
 import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.enums.Channel;
 import pl.norbit.discordmc.server.objects.GamePlayer;

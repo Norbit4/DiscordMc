@@ -1,6 +1,6 @@
 #---------------------------------------#
 # DiscordMc by Norbit4
-# ver 1.0.2
+# ver 1.2.0
 # github: https://github.com/Norbit4
 
 #---------------------------------------#
@@ -35,6 +35,16 @@ embed-profile:
   - 'world:// {WORLD}'
   - 'loc:// X: {X} Y: {Y} Z: {Z}'
   - 'namemc:// {NAME_MC}'
+
+# discord rank sync
+sync-rank-enable: false
+# discord name sync (set discord user mc name)
+# this option need enabled 'sync-rank-enabled'
+sync-name: false
+
+# wiki sync roles: https://github.com/Norbit4/DiscordMc/wiki/Rank-sync
+sync-roles:
+  - 'rank-permission:discord-rank-id'
 
 namemc-non-premium: 'Player is non-premium'
 player-offline-status: 'offline'

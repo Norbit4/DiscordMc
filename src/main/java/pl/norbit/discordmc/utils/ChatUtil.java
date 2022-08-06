@@ -1,4 +1,4 @@
-package pl.norbit.discordmc.bot.utils;
+package pl.norbit.discordmc.utils;
 
 import net.md_5.bungee.api.ChatColor;
 

@@ -9,7 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.DiscordBot;
 import pl.norbit.discordmc.bot.builder.BotBuilder;
 import pl.norbit.discordmc.bot.commands.CommandManager;
-import pl.norbit.discordmc.bot.utils.ChatUtil;
+import pl.norbit.discordmc.sync.SyncManager;
+import pl.norbit.discordmc.utils.ChatUtil;
 import pl.norbit.discordmc.db.PluginDBManager;
 import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.commands.MainCMD;
@@ -44,6 +45,10 @@ public final class DiscordMc extends JavaPlugin {
             discordBot.start();
             timeServer = System.currentTimeMillis();
             PluginDBManager.init(discordBot.getJda(), this);
+
+            if(PluginConfig.SYNC_RANK_ENABLE) {
+                SyncManager.init(discordBot.getJda());
+            }
 
             //console module
             if(PluginConfig.CONSOLE_MODULE){

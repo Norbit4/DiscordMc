@@ -1,16 +1,15 @@
 package pl.norbit.discordmc.bot.commands;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import pl.norbit.discordmc.bot.embed.Embed;
-import pl.norbit.discordmc.bot.utils.ChatUtil;
-import pl.norbit.discordmc.db.GameUser;
-import pl.norbit.discordmc.db.MongoDatabase;
+import pl.norbit.discordmc.utils.ChatUtil;
 import pl.norbit.discordmc.db.PluginDBManager;
 import pl.norbit.discordmc.db.objects.DatabaseRecord;
 import pl.norbit.discordmc.server.config.PluginConfig;

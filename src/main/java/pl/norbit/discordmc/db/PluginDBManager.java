@@ -70,7 +70,7 @@ public class PluginDBManager {
 
             if (doc != null) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(doc.getString(GameUser.UUID.name())));
-                User user = jda.getUserById(doc.getString(GameUser.DISCORD_ID.name()));
+                User user = jda.retrieveUserById(doc.getString(GameUser.DISCORD_ID.name())).complete();
                 return new DatabaseRecord(player, user);
             }
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
@@ -80,7 +80,7 @@ public class PluginDBManager {
                 try {
                     OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(user.getString(GameUser.UUID.name())));
 
-                    User dcUser = jda.getUserById(discordID);
+                    User dcUser = jda.retrieveUserById(discordID).complete();
 
                     return new DatabaseRecord(player, dcUser);
 
@@ -92,7 +92,7 @@ public class PluginDBManager {
             LocalDB.LocalRecord user = LocalDB.getUser(discordID);
             if(user != null) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(user.getPlayerUUID());
-                User dcUser = jda.getUserById(discordID);
+                User dcUser = jda.retrieveUserById(discordID).complete();
                 return new DatabaseRecord(player, dcUser);
             }
         }
@@ -104,9 +104,8 @@ public class PluginDBManager {
         if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MONGODB")) {
             Document doc = MongoDatabase.getUser(GameUser.UUID.name(), playerUUID.toString());
             if (doc != null) {
-
                 OfflinePlayer player = Bukkit.getOfflinePlayer(playerUUID);
-                User user = jda.getUserById(doc.getString(GameUser.DISCORD_ID.name()));
+                User user = jda.retrieveUserById(doc.getString(GameUser.DISCORD_ID.name())).complete();
                 return new DatabaseRecord(player, user);
             }
         }else if(PluginConfig.DATABASE_TYPE.equalsIgnoreCase("MYSQL")){
@@ -129,7 +128,7 @@ public class PluginDBManager {
             LocalDB.LocalRecord user = LocalDB.getUser(playerUUID);
             if(user != null) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(playerUUID);
-                User dcUser = jda.getUserById(user.getUserID());
+                User dcUser = jda.retrieveUserById(user.getUserID()).complete();
                 return new DatabaseRecord(player, dcUser);
             }
         }

@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import pl.norbit.discordmc.bot.embed.Embed;
-import pl.norbit.discordmc.bot.utils.ChatUtil;
+import pl.norbit.discordmc.utils.ChatUtil;
 import pl.norbit.discordmc.server.config.PluginConfig;
 import pl.norbit.discordmc.server.enums.Channel;
 import pl.norbit.discordmc.server.objects.GamePlayer;

@@ -43,6 +43,9 @@ public class ConfigManager {
         PluginConfig.USER_IS_NOT_SYNC = config.getString("user-in-not-sync");
         PluginConfig.ARG_USER_IS_NOT_SYNC = config.getString("arg-user-in-not-sync");
         PluginConfig.DISCORD_USER_IS_SYNC = config.getString("discord-user-is-sync");
+        PluginConfig.SYNC_ROLES = config.getStringList("sync-roles");
+        PluginConfig.SYNC_RANK_ENABLE = config.getBoolean("sync-rank-enable");
+        PluginConfig.SYNC_NAME = config.getBoolean("sync-name");
 
         List<Integer> profileRGB = config.getIntegerList("embed-profile-rgb");
         PluginConfig.EMBED_PROFILE_R = profileRGB.get(0);

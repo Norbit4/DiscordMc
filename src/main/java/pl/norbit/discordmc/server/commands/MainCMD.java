@@ -7,7 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.embed.Embed;
-import pl.norbit.discordmc.bot.utils.ChatUtil;
+import pl.norbit.discordmc.db.objects.DatabaseRecord;
+import pl.norbit.discordmc.sync.SyncManager;
+import pl.norbit.discordmc.utils.ChatUtil;
 import pl.norbit.discordmc.db.PluginDBManager;
 import pl.norbit.discordmc.server.config.ConfigManager;
 import pl.norbit.discordmc.server.config.PluginConfig;
@@ -15,11 +17,11 @@ import pl.norbit.discordmc.server.enums.Channel;
 import pl.norbit.discordmc.server.objects.GamePlayer;
 import pl.norbit.discordmc.sync.SyncPlayer;
 import pl.norbit.discordmc.sync.SyncTimerTask;
+import pl.norbit.discordmc.utils.PermissionUtil;
 
 import java.awt.*;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainCMD implements CommandExecutor {
 
@@ -37,19 +39,13 @@ public class MainCMD implements CommandExecutor {
 
         if(args.length > 0) {
 
+            PermissionUtil permissionUtil = new PermissionUtil(p);
+
             if (args[0].equalsIgnoreCase(PluginConfig.COMMAND_CHAT_CHANGE_ARG)) {
                 if(PluginConfig.CHAT_MODULE) {
+                    String[] perms = {"discordmc.channel", "discordmc.*", "*"};
 
-                    AtomicBoolean hasPerm = new AtomicBoolean(false);
-                    p.getEffectivePermissions().forEach(perm -> {
-                        if(perm.getPermission().equalsIgnoreCase("discordmc.channel") ||
-                                perm.getPermission().equalsIgnoreCase("discordmc.*") ||
-                                perm.getPermission().equalsIgnoreCase("*")) {
-                            hasPerm.set(true);
-                        }
-                    });
-
-                    if(hasPerm.get()){
+                    if(permissionUtil.hasPermission(perms)){
                         changeChannelCMD(args, p);
                     }else{
                         String message = PluginConfig.PERMISSION_MESSAGE;
@@ -61,17 +57,9 @@ public class MainCMD implements CommandExecutor {
 
             }else if(args[0].equalsIgnoreCase(PluginConfig.SYNC_COMMAND_ARG)){
 
-                AtomicBoolean hasPerm = new AtomicBoolean(false);
-                p.getEffectivePermissions().forEach(perm -> {
-                    if(perm.getPermission().equalsIgnoreCase("discordmc.sync")||
-                            perm.getPermission().equalsIgnoreCase("discordmc.*") ||
-                            perm.getPermission().equalsIgnoreCase("*"))
-                    {
-                        hasPerm.set(true);
-                    }
-                });
+                String[] perms = {"discordmc.sync", "discordmc.*", "*"};
 
-                if(hasPerm.get()){
+                if(permissionUtil.hasPermission(perms)){
                     syncCmd(p);
                 }else{
                     String message = PluginConfig.PERMISSION_MESSAGE;
@@ -80,17 +68,9 @@ public class MainCMD implements CommandExecutor {
 
             } else if(args[0].equalsIgnoreCase(PluginConfig.SYNC_COMMAND_CLEAR_ARG)){
 
-                AtomicBoolean hasPerm = new AtomicBoolean(false);
-                p.getEffectivePermissions().forEach(perm -> {
-                    if(perm.getPermission().equalsIgnoreCase("discordmc.syncclear")||
-                            perm.getPermission().equalsIgnoreCase("discordmc.*") ||
-                            perm.getPermission().equalsIgnoreCase("*"))
-                    {
-                        hasPerm.set(true);
-                    }
-                });
+                String[] perms = {"discordmc.syncclear", "discordmc.*", "*"};
 
-                if(hasPerm.get()){
+                if(permissionUtil.hasPermission(perms)){
                     syncClearCMD(p);
                 }else{
                     String message = PluginConfig.PERMISSION_MESSAGE;
@@ -98,24 +78,31 @@ public class MainCMD implements CommandExecutor {
                 }
 
             }else if(args[0].equalsIgnoreCase("reload")){
-                AtomicBoolean hasPerm = new AtomicBoolean(false);
 
-                p.getEffectivePermissions().forEach(perm -> {
-                    if(perm.getPermission().equalsIgnoreCase("discordmc.reload")||
-                            perm.getPermission().equalsIgnoreCase("discordmc.*") ||
-                            perm.getPermission().equalsIgnoreCase("*"))
-                    {
-                        hasPerm.set(true);
-                    }
-                });
+                String[] perms = {"discordmc.reload", "discordmc.*", "*"};
 
-                if(hasPerm.get()){
+                if(permissionUtil.hasPermission(perms)){
                     ConfigManager.loadConfig(javaPlugin, false);
 
                     String message = "&aConfig has been reloaded!";
                     p.sendMessage(ChatUtil.format(message));
                 }else{
                     String message = PluginConfig.PERMISSION_MESSAGE;
+                    p.sendMessage(ChatUtil.format(message));
+                }
+            }else if(args[0].equalsIgnoreCase("rankreload")){
+
+                if(PluginConfig.SYNC_RANK_ENABLE) {
+                    String[] perms = {"discordmc.rankreload", "discordmc.*", "*"};
+
+                    if (permissionUtil.hasPermission(perms)) {
+                        syncRank(p);
+                    } else {
+                        String message = PluginConfig.PERMISSION_MESSAGE;
+                        p.sendMessage(ChatUtil.format(message));
+                    }
+                }else{
+                    String message = "&cSync rank is disabled!";
                     p.sendMessage(ChatUtil.format(message));
                 }
             }else {
@@ -154,6 +141,28 @@ public class MainCMD implements CommandExecutor {
 
         player.sendMessage(ChatUtil.format(message));
     }
+    private void syncRank(Player p){
+
+        DatabaseRecord user = PluginDBManager.getUser(p.getUniqueId());
+
+        if(user != null){
+
+            boolean b = SyncManager.addPlayer(p.getUniqueId(), user.getUser().getId());
+
+            if(PluginConfig.SYNC_NAME){
+                SyncManager.changeToMinecraftName(p, user.getUser().getId());
+            }
+
+            String message = "&aRank reloaded!";
+
+            p.sendMessage(ChatUtil.format(message));
+        }else{
+
+            String message = "&cYou are not sync!";
+
+            p.sendMessage(ChatUtil.format(message));
+        }
+    }
 
     private void syncCmd(Player player){
 
@@ -177,11 +186,18 @@ public class MainCMD implements CommandExecutor {
                             new Color(
                                     PluginConfig.EMBED_SUCCESS_R,
                                     PluginConfig.EMBED_SUCCESS_G,
-                                    PluginConfig.EMBED_SUCCESS_B)
-                        )
+                                    PluginConfig.EMBED_SUCCESS_B))
                         .build();
 
             syncPlayer.getMessageChannel().sendMessageEmbeds(embed).queue();
+
+            if(PluginConfig.SYNC_RANK_ENABLE) {
+                SyncManager.addPlayer(playerUUID, userID);
+            }
+
+            if(PluginConfig.SYNC_NAME){
+                SyncManager.changeToMinecraftName(player, userID);
+            }
 
             String mcMessage = PluginConfig.SYNC_SUCCESS_MC
                     .replace("{DISCORD}",
@@ -230,10 +246,18 @@ public class MainCMD implements CommandExecutor {
         }
     }
     private void syncClearCMD(Player player){
+
         PluginDBManager.deleteUser(player.getUniqueId());
 
         String message = PluginConfig.SYNC_CLEAR_MESSAGE;
         GamePlayer gamePlayer = GamePlayer.getGamePLayer(player);
+
+        if(gamePlayer.getDiscordUser() != null) {
+            String id = gamePlayer.getDiscordUser().getId();
+            SyncManager.clearRanks(id);
+            SyncManager.clearName(id);
+        }
+
         gamePlayer.setDiscordUser(null);
 
         player.sendMessage(ChatUtil.format(message));

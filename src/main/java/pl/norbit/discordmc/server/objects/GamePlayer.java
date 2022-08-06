@@ -90,7 +90,7 @@ public class GamePlayer {
     public void setDiscordUser(String discordID) {
 
         if(discordID != null) {
-            this.discordUser = jda.getUserById(discordID);
+            this.discordUser = jda.retrieveUserById(discordID).complete();
         }else{
             this.discordUser = null;
         }
