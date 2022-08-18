@@ -15,6 +15,7 @@ import java.util.Queue;
 public class LogAppender extends AbstractAppender{
     private final JDA jda;
     private final Queue<String> messagesQueue;
+    private final JavaPlugin javaPlugin;
 
     private static class QueueEmbed{
         private String text;
@@ -43,6 +44,8 @@ public class LogAppender extends AbstractAppender{
     public LogAppender(JDA jda, JavaPlugin javaPlugin){
         super("LogAppender", null, null);
         this.jda = jda;
+        this.javaPlugin = javaPlugin;
+
         messagesQueue = new LinkedList<>();
         messageTask(javaPlugin);
 
@@ -60,7 +63,6 @@ public class LogAppender extends AbstractAppender{
 
     @Override
     public void append(LogEvent event) {
-        Color color;
 
         boolean sendMessage = true;
 
@@ -84,7 +86,7 @@ public class LogAppender extends AbstractAppender{
         if(sendMessage) {
             String[] colorCodes = {"\\u00A70", "\\u00A71", "\\u00A72", "\\u00A73", "\\u00A74", "\\u00A75", "\\u00A76",
                     "\\u00A77", "\\u00A78", "\\u00A79", "\\u00A7a", "\\u00A7b", "\\u00A7c", "\\u00A7d", "\\u00A7e",
-                    "\\u00A7f", "\\u00A7k", "\\u00A7l", "\\u00A7m", "\\u00A7n", "\\u00A7o", "\\u00A7r"};
+                    "\\u00A7f", "\\u00A7k", "\\u00A7l", "\\u00A7m", "\\u00A7n", "\\u00A7o", "\\u00A7r","\u001B","\\[m"};
 
             String message = event.getMessage().getFormattedMessage();
 
