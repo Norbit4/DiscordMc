@@ -11,6 +11,7 @@ Have fun!
 
 ## Modules
 🔗 ***Sync module*** - sync your minecraft account with discord account!
+
 <details> 
   <summary> click for more! </summary>
   
@@ -20,7 +21,7 @@ Have fun!
 
 ![image](https://user-images.githubusercontent.com/46154743/187051001-e0667b2b-dfb8-474b-bf32-57679232a0e4.png)
 
-*player oflfline:*
+*player offline:*
 
 ![image](https://user-images.githubusercontent.com/46154743/187051049-cfb115d4-57f8-4dc4-b7aa-0ba325715c9b.png)
 
@@ -29,7 +30,7 @@ Have fun!
 
 This plugin allows you to easily sync the ranks and nicknames of your minecraft account with your discord account!
 
-[More](https://github.com/Norbit4/DiscordMc/wiki/Discord-profiles "Click")
+[Discord profiles](https://github.com/Norbit4/DiscordMc/wiki/Discord-profiles "Click")
 
 [Sync accounts](https://github.com/Norbit4/DiscordMc/wiki/Sync-accounts "Click")
 
@@ -72,6 +73,7 @@ This plugin allows you to easily sync the ranks and nicknames of your minecraft 
   ![image](https://user-images.githubusercontent.com/46154743/187051199-51efa1eb-4b3a-41f4-adf3-ac96917d300f.png)
 
   [More](https://github.com/Norbit4/DiscordMc/wiki/Chat-module "Click")
+  
 </details> 
 
 #
