@@ -1,6 +1,6 @@
 #---------------------------------------#
 # DiscordMc by Norbit4
-# ver 1.2.0
+# ver 1.2.2
 # github: https://github.com/Norbit4
 
 #---------------------------------------#
@@ -40,6 +40,7 @@ embed-profile:
 sync-rank-enable: false
 # discord name sync (set discord user mc name)
 # this option need enabled 'sync-rank-enabled'
+# nick sync does not work for the discord server owner, it is specific to discord servers!
 sync-name: false
 
 # wiki sync roles: https://github.com/Norbit4/DiscordMc/wiki/Rank-sync
