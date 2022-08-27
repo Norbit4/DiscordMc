@@ -193,10 +193,10 @@ public class MainCMD implements CommandExecutor {
 
             if(PluginConfig.SYNC_RANK_ENABLE) {
                 SyncManager.addPlayer(playerUUID, userID);
-            }
 
-            if(PluginConfig.SYNC_NAME){
-                SyncManager.changeToMinecraftName(player, userID);
+                if(PluginConfig.SYNC_NAME){
+                    SyncManager.changeToMinecraftName(player, userID);
+                }
             }
 
             String mcMessage = PluginConfig.SYNC_SUCCESS_MC
@@ -254,8 +254,11 @@ public class MainCMD implements CommandExecutor {
 
         if(gamePlayer.getDiscordUser() != null) {
             String id = gamePlayer.getDiscordUser().getId();
-            SyncManager.clearRanks(id);
-            SyncManager.clearName(id);
+
+            if(PluginConfig.SYNC_RANK_ENABLE) {
+                SyncManager.clearRanks(id);
+                SyncManager.clearName(id);
+            }
         }
 
         gamePlayer.setDiscordUser(null);
