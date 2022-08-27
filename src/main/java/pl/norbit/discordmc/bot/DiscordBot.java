@@ -2,8 +2,8 @@ package pl.norbit.discordmc.bot;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.norbit.discordmc.DiscordMc;
 import pl.norbit.discordmc.bot.builder.BotBuilder;
 
 import javax.security.auth.login.LoginException;
@@ -22,7 +22,9 @@ public class DiscordBot {
         try {
             jda = jdaBuilder.build();
         } catch (LoginException e) {
-            javaPlugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[ERROR] Wrong token!");
+            DiscordMc.sendMessage("&c[ERROR] Wrong token!");
+            DiscordMc.sendMessage("&cHow to get discord bot token?");
+            DiscordMc.sendMessage("&chttps://github.com/Norbit4/DiscordMc/wiki/Configuration#bot-token");
         }
     }
 
@@ -35,6 +37,8 @@ public class DiscordBot {
     }
 
     public void close(){
-        jda.shutdown();
+        if(jda != null) {
+            jda.shutdownNow();
+        }
     }
 }

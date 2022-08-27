@@ -55,6 +55,7 @@ public class SyncManager {
         Guild guild = jda.getGuildById(PluginConfig.SERVER_ID);
 
         Member member  = guild.retrieveMemberById(discordUUID).complete();
+
         if(!member.isOwner()) {
             member.modifyNickname(minecraftNick).queue();
         }
