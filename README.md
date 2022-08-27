@@ -1,5 +1,6 @@
 # DiscordMc
 💬 Plugin to comunicate minecraft server with discord server!
+Have fun!
 
 ![image](https://user-images.githubusercontent.com/46154743/181646297-644cd932-2229-4097-9380-2e0255c2242a.png)
 
@@ -9,7 +10,7 @@
 > support: Spigot/PaperSpigot
 
 ## Modules
-***Sync module*** - sync your minecraft account with discord account!
+🔗 ***Sync module*** - sync your minecraft account with discord account!
 <details> 
   <summary> click for more! </summary>
   
@@ -38,7 +39,7 @@ This plugin allows you to easily sync the ranks and nicknames of your minecraft 
 
 #
 
-***Console module*** - minecraft server console in discord channel!
+👨‍💻 ***Console module*** - minecraft server console in discord channel!
 
 <details> 
   <summary> click for more! </summary>
@@ -57,27 +58,38 @@ This plugin allows you to easily sync the ranks and nicknames of your minecraft 
 
 #
 
-***Chat module*** - synchronize discord channel with minecraft chat!
+📮 ***Chat module*** - synchronize discord channel with minecraft chat!
 
 <details> 
   <summary> click for more! </summary>
   
+  *mc chat:*
+  
+  ![image](https://user-images.githubusercontent.com/46154743/187051179-3f708414-4708-4cc8-b65d-4d0dea60a2af.png)
+
+  *discord channel:*
+  
+  ![image](https://user-images.githubusercontent.com/46154743/187051199-51efa1eb-4b3a-41f4-adf3-ac96917d300f.png)
+
+  [More](https://github.com/Norbit4/DiscordMc/wiki/Chat-module "Click")
 </details> 
 
 #
 
-***Info module*** - display server placeholders/staus etc. in discord channel!
+📌 ***Info module*** - display server placeholders/staus etc. in discord channel!
 
 <details> 
   <summary> click for more! </summary>
   
+  ![image](https://user-images.githubusercontent.com/46154743/187051263-27e7a5e1-91fd-4a47-8ac3-133666f9d3d9.png)
+
+  [More](https://github.com/Norbit4/DiscordMc/wiki/Info-module "Click")
+  
 </details> 
 
-#
 
-read more about modules: [here](https://github.com/Norbit4/DiscordMc/wiki "Click")
 ## Links
 
 ⛭ [Spigot](https://www.spigotmc.org/resources/discordmc-1-8-1-19-sync-your-minecraft-server-with-discord-server.103901/ "Click")
 
-🌐 [Wiki](https://github.com/Norbit4/DiscordMc/wiki "Click")
+📚 [Wiki](https://github.com/Norbit4/DiscordMc/wiki "Click")
