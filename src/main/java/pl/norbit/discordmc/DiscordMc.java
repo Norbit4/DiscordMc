@@ -92,11 +92,16 @@ public final class DiscordMc extends JavaPlugin {
 
             //logger
             if(PluginConfig.CONSOLE_MODULE) {
-                LogAppender appender = new LogAppender(discordBot.getJda(), this);
-                appender.start();
 
-                Logger logger = (Logger) LogManager.getRootLogger();
-                logger.addAppender(appender);
+                if(PluginConfig.DISCORD_CONSOLE_DISPLAY) {
+                    LogAppender appender = new LogAppender(jda, this);
+                    appender.start();
+
+                    Logger logger = (Logger) LogManager.getRootLogger();
+                    logger.addAppender(appender);
+                }else {
+                    LogAppender.consoleStartMessage(jda);
+                }
             }
 
             //events
@@ -111,7 +116,7 @@ public final class DiscordMc extends JavaPlugin {
 
                 if(!b) return false;
 
-                InfoUpdater.start(discordBot.getJda(), this);
+                InfoUpdater.start(jda, this);
             }
 
             SyncTimerTask.runTaskTimer(this);

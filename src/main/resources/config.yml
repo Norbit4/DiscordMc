@@ -152,7 +152,11 @@ mc-user-rgb:
 discord-console-module: false
 channel-console-id: ''
 
+#allowed commands in discord console
 discord-console-commands: true
+
+#allowed to display info discord console
+discord-console-display: true
 
 block-error-messages: false
 

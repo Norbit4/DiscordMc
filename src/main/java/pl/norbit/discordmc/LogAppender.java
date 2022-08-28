@@ -30,14 +30,27 @@ public class LogAppender extends AbstractAppender{
         }
 
         public boolean size(String s){
-            if(text.length() + s.length() >= 4096){
-                return false;
-            }
-            return true;
+            return text.length() + s.length() < 4096;
         }
 
         public MessageEmbed getEmbed(){
             return Embed.getConsoleMessage("", text, color).build();
+        }
+    }
+    public static void consoleStartMessage(JDA jda){
+
+        Color color = new Color(35, 201, 86);
+
+        String message = "**Successfully connected to the console!"
+                + " Settings = commands:" + PluginConfig.DISCORD_CONSOLE_COMMANDS +"," +
+                " display:"+ PluginConfig.DISCORD_CONSOLE_DISPLAY + "**";
+
+        MessageEmbed embed = Embed.getConsoleMessage("", message, color).build();
+
+        try {
+            jda.awaitReady().getTextChannelById(PluginConfig.CONSOLE_CHANNEL_ID).sendMessageEmbeds(embed).queue();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -49,15 +62,10 @@ public class LogAppender extends AbstractAppender{
         messagesQueue = new LinkedList<>();
         messageTask(javaPlugin);
 
-        Color color = new Color(35, 201, 86);
-        String message = "**Successfully connected to the console!**";
-
-        MessageEmbed embed = Embed.getConsoleMessage("", message, color).build();
-
-        try {
-            jda.awaitReady().getTextChannelById(PluginConfig.CONSOLE_CHANNEL_ID).sendMessageEmbeds(embed).queue();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(PluginConfig.DISCORD_CONSOLE_COMMANDS) {
+            consoleStartMessage(jda);
+        }else{
+            consoleStartMessage(jda);
         }
     }
 
