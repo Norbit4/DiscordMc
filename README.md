@@ -5,7 +5,7 @@
   <a href="https://github.com/Norbit4/DiscordMc/" target="_blank" rel="noreferrer"> 
   <img src="https://user-images.githubusercontent.com/46154743/188979948-a4a971db-81f6-4738-a513-e84e1b4f1b91.png" width="750" alt="logo"/></a>
   
-  [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-orange.svg)](https://www.gnu.org/licenses/gpl-3.0)
+  [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-orange.svg)](https://github.com/Norbit4/DiscordMc/blob/master/LICENSE)
   [![Github tag](https://badgen.net/github/tag/Norbit4/DiscordMc)](https://github.com/Norbit4/DiscordMc/tags/)
   [![Github all releases](https://img.shields.io/github/downloads/Norbit4/DiscordMc/total.svg)](https://GitHub.com/Norbit4/DiscordMc/releases/)
   [![ver](https://badgen.net/badge/version/1.8-1.19+/green?)](https://github.com/Norbit4/DiscordMc/)
