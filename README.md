@@ -1,16 +1,21 @@
 # DiscordMc
-💬 Plugin to comunicate minecraft server with discord server!
-Have fun!
 
-![image](https://user-images.githubusercontent.com/46154743/181646297-644cd932-2229-4097-9380-2e0255c2242a.png)
+<div align="center">
+  
+  <a href="https://github.com/Norbit4/DiscordMc/" target="_blank" rel="noreferrer"> 
+  <img src="https://user-images.githubusercontent.com/46154743/188979948-a4a971db-81f6-4738-a513-e84e1b4f1b91.png" width="750" alt="logo"/></a>
+  
+  [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-orange.svg)](https://github.com/Norbit4/DiscordMc/blob/master/LICENSE)
+  [![Github tag](https://badgen.net/github/tag/Norbit4/DiscordMc)](https://github.com/Norbit4/DiscordMc/tags/)
+  [![Github all releases](https://img.shields.io/github/downloads/Norbit4/DiscordMc/total.svg)](https://GitHub.com/Norbit4/DiscordMc/releases/)
+  [![ver](https://badgen.net/badge/version/1.8-1.19+/green?)](https://github.com/Norbit4/DiscordMc/)
+  [![support](https://badgen.net/badge/support/Spigot&PaperSpigot/blue?)](https://github.com/Norbit4/DiscordMc/)
+    
+</div> 
 
->support ver: 1.8-1.19+
->native ver: 1.8.8
->
-> support: Spigot/PaperSpigot
+<h6 align="center">Used Languages and Tools:</h6>
 
-#
-<h6 align="Left">Used Languages and Tools:</h6>
+<div align="center">
 
 <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="30" height="30"/> 
 </a> 
@@ -29,6 +34,8 @@ Have fun!
 <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> 
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="30" height="30"/> 
 </a> 
+  
+</div> 
 
 ## Modules
 🔗 ***Sync module*** - sync your minecraft account with discord account!
@@ -112,7 +119,7 @@ This plugin allows you to easily sync the ranks and nicknames of your minecraft 
 
 
 ## Links
-
+  
 ⛭ [Spigot](https://www.spigotmc.org/resources/discordmc-1-8-1-19-sync-your-minecraft-server-with-discord-server.103901/ "Click")
 
 📚 [Wiki](https://github.com/Norbit4/DiscordMc/wiki "Click")
