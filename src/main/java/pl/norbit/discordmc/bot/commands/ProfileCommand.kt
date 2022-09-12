@@ -1,8 +1,10 @@
 package pl.norbit.discordmc.bot.commands
 
+import me.clip.placeholderapi.PlaceholderAPI
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import org.bukkit.Bukkit
+import org.bukkit.OfflinePlayer
 import pl.norbit.discordmc.bot.embed.Embed
 import pl.norbit.discordmc.db.PluginDBManager
 import pl.norbit.discordmc.server.config.PluginConfig
@@ -44,7 +46,7 @@ class ProfileCommand: ListenerAdapter() {
 
                 val builder = Embed.getProfileMessage(userName, mcName);
                 val replacements: HashMap<String, String> = HashMap()
-                var status = ""
+                val status: String
                 val replacementsOnline = arrayOf("{X}", "{Y}", "{Z}", "{WORLD}")
 
                 //checks player online status
@@ -83,7 +85,22 @@ class ProfileCommand: ListenerAdapter() {
                     if(line == "{EMPTY_LINE}"){
                         builder?.addBlankField(false)
                     }else{
-                        val lineArgs = line.split("//")
+
+                        val formattedPlaceholder: String = if(PluginConfig.PLACEHOLDER_API_EXIST) {
+                            if (p != null) {
+
+                                PlaceholderAPI.setPlaceholders(p, line)
+                            } else {
+
+                                val offlineP: OfflinePlayer? = databaseRecord.player
+
+                                PlaceholderAPI.setPlaceholders(offlineP, line)
+                            }
+                        }else{
+                            line;
+                        }
+
+                        val lineArgs = formattedPlaceholder.split("//")
                         if (lineArgs.size > 1) {
                             var arg1 = lineArgs[0]
                             var arg2 = lineArgs[1]
