@@ -21,6 +21,7 @@ public class ConfigManager {
         }
 
         PluginConfig.MODULE_OFF_MESSAGE = "&cModule {MODULE} is disable! Enable module in config.yml";
+        PluginConfig.PLACEHOLDER_API_EXIST = false;
 
         //plugin options
         PluginConfig.SERVER_ID = config.getString("discord-server-id");

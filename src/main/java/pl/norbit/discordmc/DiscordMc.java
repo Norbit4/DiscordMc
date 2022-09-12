@@ -18,6 +18,7 @@ import pl.norbit.discordmc.server.config.ConfigManager;
 import pl.norbit.discordmc.server.events.EventManager;
 import pl.norbit.discordmc.serverinfo.InfoUpdater;
 import pl.norbit.discordmc.sync.SyncTimerTask;
+import pl.norbit.discordmc.utils.PlaceholderUtil;
 
 import static pl.norbit.discordmc.server.config.PluginConfig.CHAT_MODULE;
 
@@ -50,8 +51,12 @@ public final class DiscordMc extends JavaPlugin {
 
         ConfigManager.loadConfig(this, true);
 
+
         if(PluginConfig.PLUGIN_ENABLE) {
+
             BotBuilder.init(this);
+
+            PlaceholderUtil.start();
 
             discordBot = new DiscordBot(PluginConfig.TOKEN, this);
             discordBot.start();
@@ -181,5 +186,9 @@ public final class DiscordMc extends JavaPlugin {
     }
     public static void sendMessage(String message){
         commandSender.sendMessage(ChatUtil.format(message));
+    }
+
+    public static JavaPlugin getPlugin() {
+        return javaPlugin;
     }
 }
