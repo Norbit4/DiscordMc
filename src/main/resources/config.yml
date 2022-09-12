@@ -193,6 +193,8 @@ ignore-folders:
 # Placeholders:
 # {SERVER_ONLINE}, {SERVER_MAX_PLAYERS}, {SERVER_TIME}, {SERVER_ALL_PLAYERS}, {SERVER_WORLDS}, {SERVER_VERSION},
 # {SERVER_ALLOW_NETHER}, {SERVER_ALLOW_END}
+#
+# PlaceholderAPI support: https://github.com/Norbit4/DiscordMc/wiki/PlaceholderApi-support
 embed-tittle: ''
 embed-desc: ''
 embed-info:
