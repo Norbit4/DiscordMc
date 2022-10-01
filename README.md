@@ -42,8 +42,11 @@
 
 <details> 
   <summary> click for more! </summary>
-  
+
 **Discord profiles**
+
+![profile3](https://user-images.githubusercontent.com/46154743/193429530-c0521eb7-5957-48c8-a659-94809bf30a6a.gif)
+
 
 *player online:*
 
@@ -75,11 +78,12 @@ This plugin allows you to easily sync the ranks and nicknames of your minecraft 
   
   *console is ready:*
   
+  
   ![image](https://user-images.githubusercontent.com/46154743/187051121-ab2002fb-258d-4806-943e-5ff988b7fa79.png)
 
   *commands:*
   
-  ![image](https://user-images.githubusercontent.com/46154743/187051136-6fb992b8-cb23-438f-b398-23276d121259.png)
+  ![image](https://user-images.githubusercontent.com/46154743/193428784-dcf11dcc-4566-46d3-b183-dc400ed87b7f.gif)
 
   [More](https://github.com/Norbit4/DiscordMc/wiki/Cosole-module "Click")
   
@@ -91,6 +95,9 @@ This plugin allows you to easily sync the ranks and nicknames of your minecraft 
 
 <details> 
   <summary> click for more! </summary>
+  
+  ![chat1](https://user-images.githubusercontent.com/46154743/193429403-1cd67e45-bc40-4b06-94b5-6e9e16c4ffd6.gif)
+
   
   *mc chat:*
   
