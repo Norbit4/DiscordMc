@@ -2,6 +2,10 @@ name: DiscordMc
 version: '${version}'
 main: pl.norbit.discordmc.DiscordMc
 authors: [ Norbit ]
+website: https://norbit.fun/
 softdepend: [PlaceholderAPI]
 commands:
   discordmc:
+    aliases:
+      - dmc
+    description: DiscordMc plugin command

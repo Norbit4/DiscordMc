@@ -1,7 +1,11 @@
 #---------------------------------------#
 # DiscordMc by Norbit4
+#
 # github: https://github.com/Norbit4
-
+# website https://norbit.fun/
+#
+# If you like the plugin, support me with a positive opinion on spigot.org, thanks! <3
+#
 #---------------------------------------#
 #             [bot config]              #
 #---------------------------------------#
@@ -11,11 +15,13 @@ enable: false
 prefix-command: 'discordmc'
 sync-command-arg: 'sync'
 sync-command-clear-arg: 'syncclear'
+rank-reload-command-arg: 'rankreload'
 bot-token: ''
 bot-activity: ''
 discord-server-id: ''
 
 # types: local/mysql/mongodb
+# with a large number of players on the server (100+), I recommend not using a local database, use mysql or mongodb
 database-type: 'local'
 host: ''
 port: 3306
@@ -26,14 +32,21 @@ ssl: false
 
 embed-profile-title: 'Profile'
 
-embed-profile:
+# to use placeholders you need install PlaceholderAPI https://www.spigotmc.org/resources/placeholderapi.6245/
+# placeholders https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Placeholders#player
+# to download player placeholders: /papi ecloud download Player
+
+embed-profile-online:
   # 'TITLE//DESC'
-  - 'nick://{NICK}'
-  - 'user:// {USER}'
-  - 'status:// {STATUS}'
-  - 'world:// {WORLD}'
-  - 'loc:// X: {X} Y: {Y} Z: {Z}'
-  - 'namemc:// {NAME_MC}'
+  - 'nick:// %player_name%'
+  - 'status:// Online'
+  - 'world:// %player_world%'
+  - 'loc:// X: %player_x% Y: %player_y% Z: %player_z%'
+
+embed-profile-offline:
+  # 'TITLE//DESC'
+  - 'nick:// %player_name%'
+  - 'status:// Offline'
 
 # discord rank sync
 sync-rank-enable: false
@@ -46,9 +59,6 @@ sync-name: false
 sync-roles:
   - 'rank-permission:discord-rank-id'
 
-namemc-non-premium: 'Player is non-premium'
-player-offline-status: 'offline'
-player-online-status: 'online'
 user-in-not-sync: 'You are not synchronized! Use **/sync** to sync your accounts!'
 arg-user-in-not-sync: 'This user is not synchronized!'
 embed-profile-rgb:
@@ -95,6 +105,8 @@ sync-info-mc: '&7Type &8/&b{PREFIX} {ARG1} &7to connect your account with&a {DIS
 sync-success-mc: '&aSuccess! &7The account has been synchronized with &c{DISCORD}!'
 sync-clear-mc: '&aSuccess! &7The sync has been cleared!'
 sync-time-out: '&7You dont have sync pending!'
+player-is-not-sync: '&cYou are not sync!'
+rank-reload-message: '&aSuccess! &7The rank has been reloaded!'
 
 wrong-args-message: '&7Use: &8/&b{PREFIX} &a{ARG1} &8<&a{ARG2}&8>'
 
@@ -111,6 +123,7 @@ command-args-list:
 #---------------------------------------#
 #         [discord-chat-module]         #
 #---------------------------------------#
+
 # help: https://github.com/Norbit4/DiscordMc/wiki/Chat-module
 
 discord-chat-module: false
@@ -146,6 +159,7 @@ mc-user-rgb:
 #---------------------------------------#
 #        [discord-console-module]       #
 #---------------------------------------#
+
 # help: https://github:com/Norbit4/DiscordMc/wiki/Cosole-module
 
 discord-console-module: false
@@ -167,6 +181,7 @@ blocked-commands:
 #---------------------------------------#
 #         [discord-info-module]         #
 #---------------------------------------#
+
 # help: https://github.com/Norbit4/DiscordMc/wiki/Info-module
 
 discord-info-module: false
@@ -209,3 +224,4 @@ embed-info:
 
 false-info: 'false'
 true-info: 'true'
+# end
