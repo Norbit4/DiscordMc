@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import pl.norbit.discordmc.server.config.PluginConfig;
+import pl.norbit.discordmc.config.PluginConfig;
 
 public class CommandEvent implements Listener {
 

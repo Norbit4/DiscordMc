@@ -1,8 +1,10 @@
 package pl.norbit.discordmc.db;
 
+import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.norbit.discordmc.players.DiscordPlayerService;
 import pl.norbit.pluginutils.file.LocalDatabase;
 
 import java.io.IOException;
@@ -14,7 +16,8 @@ public class LocalDB {
     private static List<LocalRecord> databaseList;
     private static LocalDatabase<LocalRecord> localDatabase;
 
-    static class LocalRecord {
+    @Data
+    public static class LocalRecord {
         private final UUID playerUUID;
         private final String userID;
 
@@ -39,6 +42,7 @@ public class LocalDB {
 
         try {
             databaseList = localDatabase.getAllObjects();
+            DiscordPlayerService.loadPlayers();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -94,5 +98,9 @@ public class LocalDB {
             }
         }
         return null;
+    }
+
+    public static List<LocalRecord> getDatabaseList() {
+        return databaseList;
     }
 }

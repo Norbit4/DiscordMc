@@ -4,7 +4,7 @@ import me.clip.placeholderapi.PlaceholderAPI
 import net.dv8tion.jda.api.EmbedBuilder
 import org.bukkit.Bukkit
 import pl.norbit.discordmc.DiscordMc
-import pl.norbit.discordmc.server.config.PluginConfig
+import pl.norbit.discordmc.config.PluginConfig
 import pl.norbit.pluginutils.task.TaskBuilder
 import pl.norbit.pluginutils.task.TaskType
 import pl.norbit.pluginutils.task.TaskUnit
@@ -22,11 +22,9 @@ class PlaceholderUtil {
 
         @JvmStatic
         fun start(){
-
-            val javaPlugin = DiscordMc.getPlugin();
+            val javaPlugin = DiscordMc.getInstance();
 
             val excludeFolders = PluginConfig.IGNORE_FOLDERS;
-            //listOf("cache", "plugins", "logs", "crash-reports", "versions", "libraries", "config")
 
             //check PlaceholderAPI exist
             if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){

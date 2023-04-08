@@ -9,26 +9,28 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.DiscordBot;
 import pl.norbit.discordmc.bot.builder.BotBuilder;
 import pl.norbit.discordmc.bot.commands.CommandManager;
-import pl.norbit.discordmc.sync.SyncManager;
+import pl.norbit.discordmc.discord.DiscordUserUpdateTask;
+import pl.norbit.discordmc.placeholders.DiscordPlaceholderAPI;
+import pl.norbit.discordmc.players.DiscordPlayerService;
+import pl.norbit.discordmc.server.commands.ServerCommand;
+import pl.norbit.discordmc.discord.DiscordUserService;
 import pl.norbit.discordmc.utils.ChatUtil;
-import pl.norbit.discordmc.db.PluginDBManager;
-import pl.norbit.discordmc.server.config.PluginConfig;
+import pl.norbit.discordmc.db.DatabaseService;
+import pl.norbit.discordmc.config.PluginConfig;
 import pl.norbit.discordmc.server.commands.MainCMD;
-import pl.norbit.discordmc.server.config.ConfigManager;
+import pl.norbit.discordmc.config.ConfigManager;
 import pl.norbit.discordmc.server.events.EventManager;
 import pl.norbit.discordmc.serverinfo.InfoUpdater;
 import pl.norbit.discordmc.sync.SyncTimerTask;
 import pl.norbit.discordmc.utils.PlaceholderUtil;
 
-import static pl.norbit.discordmc.server.config.PluginConfig.CHAT_MODULE;
-
 public final class DiscordMc extends JavaPlugin {
     private DiscordBot discordBot;
     private static Long timeServer;
-    private static JavaPlugin javaPlugin;
+    private static DiscordMc instance;
 
     private static ConsoleCommandSender commandSender;
-
+    private static JDA jda;
 
     @Override
     public void onEnable() {
@@ -45,25 +47,26 @@ public final class DiscordMc extends JavaPlugin {
     }
     private boolean start() throws InterruptedException {
         commandSender = getServer().getConsoleSender();
-        javaPlugin = this;
+        instance = this;
 
         onStart();
 
-        ConfigManager.loadConfig(this, true);
-
+        ConfigManager.loadConfig(true);
 
         if(PluginConfig.PLUGIN_ENABLE) {
 
             BotBuilder.init(this);
 
-            PlaceholderUtil.start();
+            discordBot = new DiscordBot(PluginConfig.TOKEN);
 
-            discordBot = new DiscordBot(PluginConfig.TOKEN, this);
-            discordBot.start();
+            if(!discordBot.start()){
+                sendMessage("&c[ERROR] Wrong token!");
+                sendMessage("&cHow to get discord bot token?");
+                sendMessage("&chttps://github.com/Norbit4/DiscordMc/wiki/Configuration#bot-token");
+                return false;
+            }
 
-            JDA jda = discordBot.getJda();
-
-            if(discordBot.getJda() == null) return false;
+            jda = discordBot.getJda();
 
             if(jda.awaitReady().getGuildById(PluginConfig.SERVER_ID) == null) {
                 sendMessage("&c[ERROR] Wrong discord server ID");
@@ -74,12 +77,13 @@ public final class DiscordMc extends JavaPlugin {
             }
 
             timeServer = System.currentTimeMillis();
-            PluginDBManager.init(jda, this);
 
+            PlaceholderUtil.start();
+            ServerCommand.registerCommands();
+            DatabaseService.init();
 
-            if(PluginConfig.SYNC_RANK_ENABLE) {
-                SyncManager.init(jda);
-            }
+            DiscordUserService.init();
+            DiscordUserUpdateTask.start();
 
             //console module
             if(PluginConfig.CONSOLE_MODULE){
@@ -88,12 +92,12 @@ public final class DiscordMc extends JavaPlugin {
             }
 
             //chat module
-            if(CHAT_MODULE){
+            if(PluginConfig.CHAT_MODULE){
                 boolean b = checkDiscordChannel(PluginConfig.CHAT_CHANNEL_ID, "CHAT_MODULE");
                 if(!b) return false;
             }
 
-            new CommandManager(discordBot.getJda(), this);
+            new CommandManager();
 
             //logger
             if(PluginConfig.CONSOLE_MODULE) {
@@ -110,10 +114,10 @@ public final class DiscordMc extends JavaPlugin {
             }
 
             //events
-            EventManager.registerEvents(this, discordBot.getJda());
+            EventManager.registerEvents();
 
             //commands
-            getServer().getPluginCommand("discordmc").setExecutor(new MainCMD(this));
+            getServer().getPluginCommand("discordmc").setExecutor(new MainCMD());
 
             //info module
             if(PluginConfig.DISCORD_INFO_MODULE){
@@ -121,10 +125,14 @@ public final class DiscordMc extends JavaPlugin {
 
                 if(!b) return false;
 
-                InfoUpdater.start(jda, this);
+                InfoUpdater.start(jda);
             }
 
             SyncTimerTask.runTaskTimer(this);
+
+            if (PluginConfig.PLACEHOLDER_API_EXIST) {
+                new DiscordPlaceholderAPI().register();
+            }
 
         } else {
             sendMessage("&cEnable plugin in config.yml");
@@ -135,29 +143,42 @@ public final class DiscordMc extends JavaPlugin {
 
     private boolean checkDiscordChannel(String channelID, String module){
 
-        MessageChannel messageChannel = null;
+        MessageChannel messageChannel;
+        if(channelID.isEmpty()){
+            sendModuleDisable(module);
+            return false;
+        }
+
         try {
             messageChannel = discordBot.getJda().awaitReady().getTextChannelById(channelID);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            sendModuleDisable(module);
+            return false;
         }
 
         if(messageChannel == null){
-            sendMessage("&c[ERROR] Wrong discord channel ID -> " + module);
-            sendMessage("&cHow to get discord channel id?");
-            sendMessage("&chttps://github.com/Norbit4/DiscordMc/wiki/Configuration#id");
+            sendModuleDisable(module);
+            return false;
         }
 
-        return messageChannel != null;
+        return true;
+    }
+    private static void sendModuleDisable(String module){
+        sendMessage("&c[ERROR] Wrong discord channel ID -> " + module);
+        sendMessage("&cHow to get discord channel id?");
+        sendMessage("&chttps://github.com/Norbit4/DiscordMc/wiki/Configuration#id");
     }
 
     @Override
     public void onDisable() {
-        if(PluginConfig.PLUGIN_ENABLE) {
-            discordBot.close();
-            PluginDBManager.close();
-        }
+        try {
+            if(PluginConfig.PLUGIN_ENABLE) {
+                discordBot.close();
+                DatabaseService.close();
+            }
             onStop();
+        } catch (Exception ignored) {
+        }
     }
 
     private void onStart(){
@@ -182,13 +203,17 @@ public final class DiscordMc extends JavaPlugin {
     }
 
     public static void disablePlugin(){
-        javaPlugin.getServer().getPluginManager().disablePlugin(javaPlugin);
+        instance.getServer().getPluginManager().disablePlugin(instance);
     }
     public static void sendMessage(String message){
         commandSender.sendMessage(ChatUtil.format(message));
     }
 
-    public static JavaPlugin getPlugin() {
-        return javaPlugin;
+    public static DiscordMc getInstance() {
+        return instance;
+    }
+
+    public static JDA getJda() {
+        return jda;
     }
 }

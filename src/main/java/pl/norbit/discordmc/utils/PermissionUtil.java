@@ -17,17 +17,16 @@ public class PermissionUtil {
         });
     }
 
-    public boolean hasPermission(String [] perms){
+    public boolean hasPermission(String [] perms) {
 
         for (String perm : perms) {
 
-            if(permissionsSet.contains(perm)){
+            if (permissionsSet.contains(perm)) {
                 return true;
             }
         }
         return false;
     }
-
 
     public boolean hasPermission(List<String > perms){
 

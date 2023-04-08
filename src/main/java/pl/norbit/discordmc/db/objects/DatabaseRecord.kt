@@ -1,7 +1,6 @@
 package pl.norbit.discordmc.db.objects
 
-import net.dv8tion.jda.api.entities.User
-import org.bukkit.OfflinePlayer
+import java.util.UUID
 
-class DatabaseRecord constructor(val player: OfflinePlayer?,  val user: User?){
+class DatabaseRecord constructor(val playerUUID: UUID?,  val userId: String?){
 }

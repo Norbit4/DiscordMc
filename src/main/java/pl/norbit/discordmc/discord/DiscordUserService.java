@@ -1,33 +1,29 @@
-package pl.norbit.discordmc.sync;
+package pl.norbit.discordmc.discord;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import pl.norbit.discordmc.DiscordMc;
-import pl.norbit.discordmc.server.config.PluginConfig;
+import pl.norbit.discordmc.config.PluginConfig;
 import pl.norbit.discordmc.utils.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SyncManager {
-    public final static List<Rank> configRanks;
+public class DiscordUserService {
+    public final static List<Rank> configRanks= new ArrayList<>();
     private static JDA jda;
+    public static void init() {
+        DiscordUserService.jda = DiscordMc.getJda();
 
-    static {
-        configRanks = new ArrayList<>();
-    }
-
-    public static void init(JDA jda) {
+        if(!PluginConfig.SYNC_RANK_ENABLE) return;
 
         List<String> configList = PluginConfig.SYNC_ROLES;
-
-        SyncManager.jda = jda;
 
         for (String perm : configList) {
 
@@ -60,7 +56,7 @@ public class SyncManager {
             member.modifyNickname(minecraftNick).queue();
         }
     }
-    public static void clearName(String discordUUID){
+    private static void clearName(String discordUUID){
 
         Guild guild = jda.getGuildById(PluginConfig.SERVER_ID);
 
@@ -81,18 +77,17 @@ public class SyncManager {
         });
     }
 
-    public static boolean clearRanks(String userID){
+    private static void clearRanks(String userID){
 
         Member memberById =  jda.getGuildById(PluginConfig.SERVER_ID).retrieveMemberById(userID).complete();
 
-        if(memberById == null) return false;
+        if(memberById == null) return;
 
         List<Role> roles = memberById.getRoles();
 
         roles.forEach(role -> {
             roleDeleteFromUser(memberById, role);
         });
-        return true;
     }
 
     private static List<String> getPermissionRanks(){
@@ -125,18 +120,12 @@ public class SyncManager {
                         + " This User ID does not exist!");
             }
         }
-
-        public String getPermission() {
-            return permission;
-        }
-
-        public Role getRole() {
-            return role;
-        }
     }
 
-    public static boolean addPlayer(UUID playerUUID, String userID){
+    public static void updateDiscordUser(UUID playerUUID, String userID){
         Player player = Bukkit.getPlayer(playerUUID);
+
+        if(player == null) return;
 
         PermissionUtil permissionUtil = new PermissionUtil(player);
 
@@ -144,7 +133,7 @@ public class SyncManager {
 
         Member memberById =  jda.getGuildById(PluginConfig.SERVER_ID).retrieveMemberById(userID).complete();
 
-        if(memberById == null) return false;
+        if(memberById == null) return;
 
         List<Role> roles = memberById.getRoles();
 
@@ -152,12 +141,31 @@ public class SyncManager {
             roleDeleteFromUser(memberById, role);
         });
 
-        if(samePermissions == null) return false;
+        if(samePermissions == null) return;
 
-        Rank rank = getRankByPerm(samePermissions.get(0));
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Rank rank = getRankByPerm(samePermissions.get(0));
 
-        jda.getGuildById(PluginConfig.SERVER_ID).addRoleToMember(memberById.getUser(), rank.role).queue();
+                jda.getGuildById(PluginConfig.SERVER_ID).addRoleToMember(memberById.getUser(), rank.role).queue();;
+            }
+        }.runTaskLaterAsynchronously(DiscordMc.getInstance(),  4);
 
-        return true;
+        if(PluginConfig.SYNC_NAME){
+            DiscordUserService.changeToMinecraftName(player, userID);
+        }
+    }
+
+    public static void clear(String id){
+        if(!PluginConfig.SYNC_RANK_ENABLE) return;
+
+        if(id == null) return;
+
+        DiscordUserService.clearRanks(id);
+
+        if(!PluginConfig.SYNC_NAME) return;
+
+        DiscordUserService.clearName(id);
     }
 }

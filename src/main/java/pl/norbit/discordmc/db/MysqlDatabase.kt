@@ -1,9 +1,9 @@
-package pl.norbit.discordmc.db
+package pl.norbit.discordmc.db;
 
-import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 import pl.norbit.discordmc.DiscordMc
-import pl.norbit.discordmc.server.config.PluginConfig
+import pl.norbit.discordmc.config.PluginConfig
+import pl.norbit.discordmc.players.DiscordPlayerService
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
@@ -29,33 +29,32 @@ class MysqlDatabase {
                     "`${GameUser.DISCORD_ID.name}` VARCHAR(45) NOT NULL,  " +
                     "PRIMARY KEY (`ID`));"
 
-            javaPlugin.server.scheduler.runTaskLater(javaPlugin, {
-                //3306
-                val ulr =
-                    "jdbc:mysql://${PluginConfig.DATABASE_HOST}:${PluginConfig.DATABASE_PORT}/" +
-                            PluginConfig.DATABASE_NAME +
-                            "?useUnicode=yes&characterEncoding=UTF-8&useSSL=${PluginConfig.DATABASE_SSL}" +
-                            "&allowPublicKeyRetrieval=true"
-                connection = DriverManager.getConnection(ulr, PluginConfig.DATABASE_USER, PluginConfig.DATABASE_PASS)
+            //3306
+            val ulr =
+                "jdbc:mysql://${PluginConfig.DATABASE_HOST}:${PluginConfig.DATABASE_PORT}/" +
+                        PluginConfig.DATABASE_NAME +
+                        "?useUnicode=yes&characterEncoding=UTF-8&useSSL=${PluginConfig.DATABASE_SSL}" +
+                        "&allowPublicKeyRetrieval=true"
+            connection = DriverManager.getConnection(ulr, PluginConfig.DATABASE_USER, PluginConfig.DATABASE_PASS)
 
-                statement = connection?.createStatement()
+            statement = connection?.createStatement()
 
-                val resultSet = statement?.executeQuery("SHOW TABLES like '$tableName';")
+            val resultSet = statement?.executeQuery("SHOW TABLES like '$tableName';")
 
-                var i = 0
-                if (resultSet != null) {
-                    while (resultSet.next()) {
-                        i++
-                    }
+            var i = 0
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    i++
                 }
+            }
 
-                if (i == 0) {
-                    statement?.executeUpdate(cmd);
-                    DiscordMc.sendMessage("&a The table &e$tableName &ahas been created!")
-                } else {
-                    DiscordMc.sendMessage("&aThe table &e$tableName &ahas been loaded!")
-                }
-            }, 1)
+            if (i == 0) {
+                statement?.executeUpdate(cmd);
+                DiscordMc.sendMessage("&a The table &e$tableName &ahas been created!")
+            } else {
+                DiscordMc.sendMessage("&aThe table &e$tableName &ahas been loaded!")
+            }
+            DiscordPlayerService.loadPlayers()
         }
 
         @JvmStatic
@@ -119,6 +118,19 @@ class MysqlDatabase {
                     statement?.executeUpdate("DELETE FROM $tableName WHERE ${GameUser.UUID.name} = '$playerUUID';");
                 }
             }
+        }
+        @JvmStatic
+        fun getDatabaseList():List<ResultSet>{
+            val arrayList = ArrayList<ResultSet>()
+
+            val exist = statement?.executeQuery("SELECT * FROM $tableName;");
+
+            if (exist != null) {
+                if(exist.next()){
+                    arrayList.add(exist)
+                }
+            }
+            return arrayList;
         }
     }
 }

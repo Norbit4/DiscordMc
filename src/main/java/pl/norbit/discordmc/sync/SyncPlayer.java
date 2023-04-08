@@ -1,9 +1,11 @@
 package pl.norbit.discordmc.sync;
 
+import lombok.Data;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import org.bukkit.entity.Player;
 
+@Data
 public class SyncPlayer {
     private final Player player;
     private final User user;
@@ -16,19 +18,6 @@ public class SyncPlayer {
         this.time = 60;
         this.messageChannel = messageChannel;
     }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
     public int time() {
         this.time -= 1;
 
@@ -36,13 +25,5 @@ public class SyncPlayer {
             return 1;
         }
         return 0;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public MessageChannel getMessageChannel() {
-        return messageChannel;
     }
 }

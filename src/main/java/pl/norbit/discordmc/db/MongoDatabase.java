@@ -3,8 +3,12 @@ package pl.norbit.discordmc.db;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
-import pl.norbit.discordmc.server.config.PluginConfig;
+import pl.norbit.discordmc.config.PluginConfig;
+import pl.norbit.discordmc.players.DiscordPlayerService;
 import pl.norbit.pluginutils.database.MongoDB;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MongoDatabase {
 
@@ -25,6 +29,8 @@ public class MongoDatabase {
         mongoDB.openConnection();
 
         collection = mongoDB.getDatabase(PluginConfig.DATABASE_NAME).getCollection("players");
+
+        DiscordPlayerService.loadPlayers();
     }
 
     public static void deleteUser(String key, String value){
@@ -45,6 +51,9 @@ public class MongoDatabase {
 
     public static void close(){
         mongoDB.closeConnection();
+    }
+    public static List<Document> getDatabaseList() {
+        return collection.find().into(new ArrayList<>());
     }
 }
 

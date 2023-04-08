@@ -7,30 +7,29 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import pl.norbit.discordmc.DiscordMc;
 import pl.norbit.discordmc.bot.embed.Embed;
+import pl.norbit.discordmc.players.DiscordPlayer;
+import pl.norbit.discordmc.players.DiscordPlayerService;
 import pl.norbit.discordmc.utils.ChatUtil;
-import pl.norbit.discordmc.server.config.PluginConfig;
-import pl.norbit.discordmc.server.enums.Channel;
-import pl.norbit.discordmc.server.objects.GamePlayer;
+import pl.norbit.discordmc.config.PluginConfig;
+import pl.norbit.discordmc.server.Channel;
 
 import java.awt.*;
 
 public class OnMessageEvent implements Listener {
-    private final JDA jda;
-
-    public OnMessageEvent(JDA jda) {
-        this.jda = jda;
-    }
 
     @EventHandler
     public void onMessage(AsyncPlayerChatEvent e) {
+        JDA jda = DiscordMc.getJda();
+
         MessageChannel messageChannel = jda.getTextChannelById(PluginConfig.CHAT_CHANNEL_ID);
         String playerMessage = e.getMessage();
         Player sender = e.getPlayer();
-        GamePlayer gamePlayer = GamePlayer.getGamePLayer(sender);
+        DiscordPlayer gamePLayerByPlayerUUID = DiscordPlayerService.getGamePLayerByPlayerUUID(sender.getUniqueId());
 
-        if (gamePlayer.getChannel().equals(Channel.DISCORD)) {
-            String playerNick = gamePlayer.getPlayer().getDisplayName();
+        if (gamePLayerByPlayerUUID.getChannel().equals(Channel.DISCORD)) {
+            String playerNick = sender.getDisplayName();
 
             EmbedBuilder embedBuilder = Embed.getDiscordMessage(playerNick, playerMessage,
                     new Color(
@@ -42,10 +41,13 @@ public class OnMessageEvent implements Listener {
             messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 
             e.setCancelled(true);
+            String formatMessage = ChatUtil.format(PluginConfig.MC_PREFIX + PluginConfig.NICK_COLOR
+                    + playerNick + PluginConfig.MESSAGE_MARK + PluginConfig.MESSAGE_COLOR + playerMessage);
 
-            GamePlayer.getPlayersList(Channel.DISCORD).forEach(gamePlayer1 -> {
-                gamePlayer1.getPlayer().sendMessage(ChatUtil.format(PluginConfig.MC_PREFIX + PluginConfig.NICK_COLOR
-                        + playerNick + PluginConfig.MESSAGE_MARK + PluginConfig.MESSAGE_COLOR + playerMessage));
+            DiscordPlayerService.getPlayersList().forEach(discordPlayer -> {
+                if (discordPlayer.getChannel().equals(Channel.DISCORD)) {
+                    discordPlayer.sendMcMessage(formatMessage);
+                }
             });
         }
     }

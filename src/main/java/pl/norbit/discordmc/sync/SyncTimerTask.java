@@ -7,11 +7,7 @@ import java.util.*;
 
 public class SyncTimerTask {
 
-    private static final List<SyncPlayer> syncPlayerList;
-
-    static {
-        syncPlayerList = new LinkedList<>();
-    }
+    private static final List<SyncPlayer> syncPlayerList =  new LinkedList<>();
 
     public static void runTaskTimer(JavaPlugin javaPlugin) {
 
@@ -28,7 +24,7 @@ public class SyncTimerTask {
                     });
                 }
             }
-        }.runTaskTimer(javaPlugin, 0, 20);
+        }.runTaskTimerAsynchronously(javaPlugin, 0, 20);
     }
 
     public static void addSyncPlayer(SyncPlayer syncPlayer){

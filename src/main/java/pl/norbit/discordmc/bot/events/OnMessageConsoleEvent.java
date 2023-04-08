@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.embed.Embed;
-import pl.norbit.discordmc.server.config.PluginConfig;
+import pl.norbit.discordmc.config.PluginConfig;
 
 import java.awt.*;
 import java.util.List;

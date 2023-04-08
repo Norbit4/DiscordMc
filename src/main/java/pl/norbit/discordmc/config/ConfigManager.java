@@ -1,13 +1,16 @@
-package pl.norbit.discordmc.server.config;
+package pl.norbit.discordmc.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.norbit.discordmc.DiscordMc;
 
 import java.util.List;
 
 public class ConfigManager {
 
-    public static void loadConfig(JavaPlugin javaPlugin, boolean start){
+    public static void loadConfig(boolean start){
+
+        JavaPlugin javaPlugin = DiscordMc.getInstance();
 
         if(!start){
             javaPlugin.reloadConfig();
@@ -36,11 +39,11 @@ public class ConfigManager {
         PluginConfig.SYNC_COMMAND_CLEAR_ARG = config.getString("sync-command-clear-arg");
         PluginConfig.SYNC_CLEAR_MESSAGE = config.getString("sync-clear-mc");
         PluginConfig.PERMISSION_MESSAGE = config.getString("permission-message");
-        PluginConfig.EMBED_PROFILE = config.getStringList("embed-profile");
+
+        PluginConfig.EMBED_PROFILE_ONLINE = config.getStringList("embed-profile-online");
+        PluginConfig.EMBED_PROFILE_OFFLINE = config.getStringList("embed-profile-offline");
+
         PluginConfig.EMBED_PROFILE_TITLE = config.getString("embed-profile-title");
-        PluginConfig.NAME_MC_NON_PREMIUM = config.getString("namemc-non-premium");
-        PluginConfig.PLAYER_OFFLINE_STATUS = config.getString("player-offline-status");
-        PluginConfig.PLAYER_ONLINE_STATUS = config.getString("player-online-status");
         PluginConfig.USER_IS_NOT_SYNC = config.getString("user-in-not-sync");
         PluginConfig.ARG_USER_IS_NOT_SYNC = config.getString("arg-user-in-not-sync");
         PluginConfig.DISCORD_USER_IS_SYNC = config.getString("discord-user-is-sync");
@@ -143,5 +146,9 @@ public class ConfigManager {
         PluginConfig.FALSE_INFO = config.getString("false-info");
         PluginConfig.TRUE_INFO = config.getString("true-info");
         PluginConfig.MESSAGE_RELOAD_TIME = config.getInt("message-reload-time");
+
+        PluginConfig.RANK_RELOAD_COMMAND_ARG = config.getString("rank-reload-command-arg");
+        PluginConfig.PLAYER_IS_NOT_SYNC = config.getString("player-is-not-sync");
+        PluginConfig.RANK_RELOAD_MESSAGE = config.getString("rank-reload-message");
     }
 }

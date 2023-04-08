@@ -1,9 +1,7 @@
 package pl.norbit.discordmc.bot.embed;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import pl.norbit.discordmc.server.config.PluginConfig;
+import pl.norbit.discordmc.config.PluginConfig;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -14,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Embed {
-    private static SimpleDateFormat dateFormat, dateFormatConsole;
+    private static final SimpleDateFormat dateFormat, dateFormatConsole;
 
     static {
         dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -62,7 +60,7 @@ public class Embed {
         return getBuilder(tittle, message, color, true, "1");
     }
 
-    public static EmbedBuilder getProfileMessage(String discordMention, String mcName){
+    public static EmbedBuilder getProfileMessage(){
         EmbedBuilder embedBuilder = getBuilder(PluginConfig.EMBED_PROFILE_TITLE, "",
                 new Color(
                         PluginConfig.EMBED_PROFILE_R,

@@ -3,13 +3,12 @@ package pl.norbit.discordmc.bot.builder;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.norbit.discordmc.bot.commands.ProfileCommand;
 import pl.norbit.discordmc.bot.commands.SyncCommand;
 import pl.norbit.discordmc.bot.events.OnMessageChatEvent;
 import pl.norbit.discordmc.bot.events.OnMessageConsoleEvent;
-import pl.norbit.discordmc.server.config.PluginConfig;
+import pl.norbit.discordmc.config.PluginConfig;
 
 public class BotBuilder {
     private static JavaPlugin javaPlugin;

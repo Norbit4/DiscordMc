@@ -1,18 +1,17 @@
 package pl.norbit.discordmc.bot.commands;
 
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
-import org.bukkit.plugin.java.JavaPlugin;
-import pl.norbit.discordmc.server.config.PluginConfig;
+import pl.norbit.discordmc.DiscordMc;
+import pl.norbit.discordmc.config.PluginConfig;
 
 public class CommandManager {
 
-    public CommandManager(JDA jda, JavaPlugin javaPlugin) {
+    public CommandManager() {
         Guild guildById;
 
         try {
-            guildById = jda.awaitReady().getGuildById(PluginConfig.SERVER_ID);
+            guildById = DiscordMc.getJda().awaitReady().getGuildById(PluginConfig.SERVER_ID);
         } catch (InterruptedException e) {
             //javaPlugin.getPluginLoader().disablePlugin(javaPlugin);
             throw new RuntimeException(e);
@@ -29,7 +28,7 @@ public class CommandManager {
                 .addOption(OptionType.MENTIONABLE,
                         CmdOptions.MENTION.name().toLowerCase(), "o", false)
                 .queue();
-        jda.updateCommands().queue();
+        DiscordMc.getJda().updateCommands().queue();
     }
 
 }

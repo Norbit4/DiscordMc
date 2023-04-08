@@ -6,10 +6,10 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import pl.norbit.discordmc.bot.embed.Embed;
+import pl.norbit.discordmc.players.DiscordPlayerService;
 import pl.norbit.discordmc.utils.ChatUtil;
-import pl.norbit.discordmc.server.config.PluginConfig;
-import pl.norbit.discordmc.server.enums.Channel;
-import pl.norbit.discordmc.server.objects.GamePlayer;
+import pl.norbit.discordmc.config.PluginConfig;
+import pl.norbit.discordmc.server.Channel;
 
 import java.awt.*;
 
@@ -26,12 +26,12 @@ public class OnMessageChatEvent extends ListenerAdapter {
         }
     }
 
-    private void sendChatMessage(MessageReceivedEvent event){
+    private void sendChatMessage(MessageReceivedEvent event) {
         User author = event.getAuthor();
         Message message = event.getMessage();
         boolean isBot = event.getAuthor().isBot();
 
-        if(!isBot) {
+        if (!isBot) {
             event.getMessage().delete().queue();
             EmbedBuilder embedBuilder = Embed.getDiscordMessage(
                     author.getAsTag(),
@@ -48,8 +48,10 @@ public class OnMessageChatEvent extends ListenerAdapter {
                     + author.getAsTag() + PluginConfig.MESSAGE_MARK + PluginConfig.MESSAGE_COLOR
                     + message.getContentDisplay());
 
-            GamePlayer.getPlayersList(Channel.DISCORD).forEach(gamePlayer -> {
-                gamePlayer.getPlayer().sendMessage(formatMessage);
+            DiscordPlayerService.getPlayersList().forEach(discordPlayer -> {
+                if (discordPlayer.getChannel().equals(Channel.DISCORD)) {
+                    discordPlayer.sendMcMessage(formatMessage);
+                }
             });
         }
     }
