@@ -8,8 +8,9 @@
   [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-orange.svg)](https://github.com/Norbit4/DiscordMc/blob/master/LICENSE)
   [![Github tag](https://badgen.net/github/tag/Norbit4/DiscordMc)](https://github.com/Norbit4/DiscordMc/tags/)
   [![Github all releases](https://img.shields.io/github/downloads/Norbit4/DiscordMc/total.svg)](https://GitHub.com/Norbit4/DiscordMc/releases/)
-  [![ver](https://badgen.net/badge/version/1.8-1.19+/green?)](https://github.com/Norbit4/DiscordMc/)
   [![support](https://badgen.net/badge/support/Spigot|PaperSpigot|Purpur/blue?)](https://github.com/Norbit4/DiscordMc/)
+  [![ver](https://badgen.net/badge/version/1.8-1.19+/green?)](https://github.com/Norbit4/DiscordMc/) 
+  [![](https://jitpack.io/v/Norbit4/DiscordMc.svg)](https://jitpack.io/#Norbit4/DiscordMc)
     
 </div> 
 
