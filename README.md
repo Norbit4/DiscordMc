@@ -3,7 +3,7 @@
 <div align="center">
   
   <a href="https://github.com/Norbit4/DiscordMc/" target="_blank" rel="noreferrer"> 
-  <img src="https://user-images.githubusercontent.com/46154743/188979948-a4a971db-81f6-4738-a513-e84e1b4f1b91.png" width="750" alt="logo"/></a>
+  <img src="https://user-images.githubusercontent.com/46154743/231174299-5ca63ccd-2a82-445f-a114-9a06c9b1e3fe.png" width=950" alt="logo"/></a>
   
   [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-orange.svg)](https://github.com/Norbit4/DiscordMc/blob/master/LICENSE)
   [![Github tag](https://badgen.net/github/tag/Norbit4/DiscordMc)](https://github.com/Norbit4/DiscordMc/tags/)
