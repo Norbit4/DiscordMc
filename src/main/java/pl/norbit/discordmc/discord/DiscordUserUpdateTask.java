@@ -36,7 +36,7 @@ public class DiscordUserUpdateTask {
 
                     UUID playerUUID = queue.poll();
 
-                    DiscordPlayer gamePLayer= DiscordPlayerService.getGamePLayerByPlayerUUID(playerUUID);
+                    DiscordPlayer gamePLayer= DiscordPlayerService.getDiscordPlayerByPlayerUUID(playerUUID);
 
                     if(gamePLayer == null) continue;
 

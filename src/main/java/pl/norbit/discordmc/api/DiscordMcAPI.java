@@ -15,7 +15,7 @@ public class DiscordMcAPI {
      */
 
     public static boolean playerIsSync(UUID playerUUID){
-        DiscordPlayer discordPlayer = DiscordPlayerService.getGamePLayerByPlayerUUID(playerUUID);
+        DiscordPlayer discordPlayer = DiscordPlayerService.getDiscordPlayerByPlayerUUID(playerUUID);
         return discordPlayer != null && discordPlayer.isSync();
     }
 
@@ -24,7 +24,7 @@ public class DiscordMcAPI {
      * @return DiscordPlayer object
      */
     public static DiscordPlayer getDiscordPlayer(UUID playerUUID){
-        return DiscordPlayerService.getGamePLayerByPlayerUUID(playerUUID);
+        return DiscordPlayerService.getDiscordPlayerByPlayerUUID(playerUUID);
     }
 
     /**
@@ -32,7 +32,7 @@ public class DiscordMcAPI {
      * @return OfflinePlayer object
      */
     public static OfflinePlayer getPlayer(String discordID){
-        DiscordPlayer discordPlayer = DiscordPlayerService.getGamePLayerByDiscordID(discordID);
+        DiscordPlayer discordPlayer = DiscordPlayerService.getDiscordPlayerByDiscordID(discordID);
 
         if(discordPlayer == null) return null;
 

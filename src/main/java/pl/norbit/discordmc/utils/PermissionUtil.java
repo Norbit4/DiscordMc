@@ -21,9 +21,7 @@ public class PermissionUtil {
 
         for (String perm : perms) {
 
-            if (permissionsSet.contains(perm)) {
-                return true;
-            }
+            if (permissionsSet.contains(perm)) return true;
         }
         return false;
     }
@@ -32,9 +30,7 @@ public class PermissionUtil {
 
         for (String perm : perms) {
 
-            if(permissionsSet.contains(perm)){
-                return true;
-            }
+            if(permissionsSet.contains(perm)) return true;
         }
         return false;
     }
@@ -44,14 +40,11 @@ public class PermissionUtil {
 
         for (String perm : perms) {
 
-            if(permissionsSet.contains(perm)){
-                permList.add(perm);
-            }
+            if(permissionsSet.contains(perm)) permList.add(perm);
         }
 
-        if(permList.isEmpty()){
-            return null;
-        }
+        if(permList.isEmpty()) return null;
+
         return permList;
     }
 }

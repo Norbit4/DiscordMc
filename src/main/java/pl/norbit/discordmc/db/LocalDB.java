@@ -62,9 +62,7 @@ public class LocalDB {
             }
         }
 
-        if(index != -1){
-            databaseList.remove(index);
-        }
+        if(index != -1) databaseList.remove(index);
     }
     public static void addUser(String playerUUID, String userID){
         deleteUser(UUID.fromString(playerUUID));
@@ -83,9 +81,8 @@ public class LocalDB {
     public static LocalRecord getUser(UUID playerUUID){
 
         for (LocalRecord localRecord : databaseList) {
-            if(localRecord.playerUUID.equals(playerUUID)){
-                return localRecord;
-            }
+
+            if(localRecord.playerUUID.equals(playerUUID)) return localRecord;
         }
         return null;
     }
@@ -93,9 +90,8 @@ public class LocalDB {
     public static LocalRecord getUser(String discordID){
 
         for (LocalRecord localRecord : databaseList) {
-            if(localRecord.userID.equals(discordID)){
-                return localRecord;
-            }
+
+            if(localRecord.userID.equals(discordID)) return localRecord;
         }
         return null;
     }

@@ -32,25 +32,22 @@ public class DiscordPlaceholderAPI extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer player, String params) {
 
         if(params.equalsIgnoreCase("user_is_sync")){
-            DiscordPlayer gamePLayerByPlayerUUID = DiscordPlayerService.getGamePLayerByPlayerUUID(player.getUniqueId());
+            DiscordPlayer discordPlayer = DiscordPlayerService.getDiscordPlayerByPlayerUUID(player.getUniqueId());
 
-            if(gamePLayerByPlayerUUID.isSync()){
-                return PluginConfig.TRUE_INFO;
-            } else {
-                return PluginConfig.FALSE_INFO;
-            }
+            if(discordPlayer.isSync()) return PluginConfig.TRUE_INFO;
+
+            return PluginConfig.FALSE_INFO;
         } else if (params.equalsIgnoreCase("user_dc_name")){
-            DiscordPlayer gamePLayerByPlayerUUID = DiscordPlayerService.getGamePLayerByPlayerUUID(player.getUniqueId());
+            DiscordPlayer discordPlayer = DiscordPlayerService.getDiscordPlayerByPlayerUUID(player.getUniqueId());
 
-            if(gamePLayerByPlayerUUID.isSync()){
-                return gamePLayerByPlayerUUID.getDiscordName();
-            }
+            if(discordPlayer.isSync()) return discordPlayer.getDiscordName();
+
             return "";
         }else if (params.equalsIgnoreCase("user_full_dc_name")){
-            DiscordPlayer gamePLayerByPlayerUUID = DiscordPlayerService.getGamePLayerByPlayerUUID(player.getUniqueId());
-            if(gamePLayerByPlayerUUID.isSync()){
-                return gamePLayerByPlayerUUID.getDiscordFullName();
-            }
+            DiscordPlayer discordPlayer = DiscordPlayerService.getDiscordPlayerByPlayerUUID(player.getUniqueId());
+
+            if(discordPlayer.isSync()) return discordPlayer.getDiscordFullName();
+
             return "";
         }
         return null;

@@ -15,6 +15,6 @@ public class OnJoinServerEvent implements Listener {
             public void run() {
                 DiscordPlayerService.joinPlayer(e.getPlayer());
             }
-        }.runTaskLaterAsynchronously(DiscordMc.getInstance(), 4);
+        }.runTaskLaterAsynchronously(DiscordMc.getInstance(), 0);
     }
 }

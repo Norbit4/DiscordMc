@@ -20,39 +20,34 @@ public class OnMessageChatEvent extends ListenerAdapter {
         Message message = event.getMessage();
         String channelID = message.getChannel().getId();
 
-        if(channelID.equals(PluginConfig.CHAT_CHANNEL_ID)) {
-
-            sendChatMessage(event);
-        }
+        if(channelID.equals(PluginConfig.CHAT_CHANNEL_ID)) sendChatMessage(event);
     }
 
     private void sendChatMessage(MessageReceivedEvent event) {
         User author = event.getAuthor();
         Message message = event.getMessage();
-        boolean isBot = event.getAuthor().isBot();
 
-        if (!isBot) {
-            event.getMessage().delete().queue();
-            EmbedBuilder embedBuilder = Embed.getDiscordMessage(
-                    author.getAsTag(),
-                    message.getContentDisplay(),
-                    new Color(
-                            PluginConfig.EMBED_DISCORD_R,
-                            PluginConfig.EMBED_DISCORD_G,
-                            PluginConfig.EMBED_DISCORD_B),
-                    author.getAsMention());
+        if (event.getAuthor().isBot()) return;
 
-            event.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+        event.getMessage().delete().queue();
+        EmbedBuilder embedBuilder = Embed.getDiscordMessage(
+                author.getAsTag(),
+                message.getContentDisplay(),
+                new Color(
+                        PluginConfig.EMBED_DISCORD_R,
+                        PluginConfig.EMBED_DISCORD_G,
+                        PluginConfig.EMBED_DISCORD_B),
+                author.getAsMention());
 
-            String formatMessage = ChatUtil.format(PluginConfig.DISCORD_PREFIX + PluginConfig.NICK_COLOR
-                    + author.getAsTag() + PluginConfig.MESSAGE_MARK + PluginConfig.MESSAGE_COLOR
-                    + message.getContentDisplay());
+        event.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
-            DiscordPlayerService.getPlayersList().forEach(discordPlayer -> {
-                if (discordPlayer.getChannel().equals(Channel.DISCORD)) {
-                    discordPlayer.sendMcMessage(formatMessage);
-                }
-            });
-        }
+        String formatMessage = ChatUtil.format(PluginConfig.DISCORD_PREFIX + PluginConfig.NICK_COLOR
+                + author.getAsTag() + PluginConfig.MESSAGE_MARK + PluginConfig.MESSAGE_COLOR
+                + message.getContentDisplay());
+
+        DiscordPlayerService.getPlayersList().forEach(discordPlayer -> {
+
+            if (discordPlayer.getChannel().equals(Channel.DISCORD)) discordPlayer.sendMcMessage(formatMessage);
+        });
     }
 }

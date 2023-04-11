@@ -33,7 +33,7 @@ public class ChannelCommand extends ServerCommand {
                     channel = Channel.DISCORD;
                 }
 
-                DiscordPlayer discordPlayer = DiscordPlayerService.getGamePLayerByPlayerUUID(p.getUniqueId());
+                DiscordPlayer discordPlayer = DiscordPlayerService.getDiscordPlayerByPlayerUUID(p.getUniqueId());
 
                 discordPlayer.setChannel(channel);
 
@@ -42,11 +42,9 @@ public class ChannelCommand extends ServerCommand {
 
                 p.sendMessage(ChatUtil.format(message));
             } else {
-
                 sendArgWarnMessage(p);
             }
         } else {
-
             sendArgWarnMessage(p);
         }
     }

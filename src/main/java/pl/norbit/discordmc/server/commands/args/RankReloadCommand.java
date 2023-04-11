@@ -21,7 +21,7 @@ public class RankReloadCommand extends ServerCommand {
 
         if (!super.hasPermission(p)) return;
 
-        DiscordPlayer gamePLayerByPlayerUUID = DiscordPlayerService.getGamePLayerByPlayerUUID(p.getUniqueId());
+        DiscordPlayer gamePLayerByPlayerUUID = DiscordPlayerService.getDiscordPlayerByPlayerUUID(p.getUniqueId());
 
         if(gamePLayerByPlayerUUID.isSync()){
             new BukkitRunnable() {
@@ -33,7 +33,7 @@ public class RankReloadCommand extends ServerCommand {
 
                     p.sendMessage(ChatUtil.format(PluginConfig.RANK_RELOAD_MESSAGE));
                 }
-            }.runTaskLaterAsynchronously(DiscordMc.getInstance(),  2);
+            }.runTaskLaterAsynchronously(DiscordMc.getInstance(),  0);
         }else{
             p.sendMessage(ChatUtil.format(PluginConfig.PLAYER_IS_NOT_SYNC));
         }

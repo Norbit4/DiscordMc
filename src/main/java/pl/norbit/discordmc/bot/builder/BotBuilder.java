@@ -23,19 +23,16 @@ public class BotBuilder {
                 .addEventListeners(new SyncCommand())
                 .addEventListeners(new ProfileCommand());
 
-        if(!PluginConfig.BOT_ACTIVITY.equals("")){
-            builder.setActivity(Activity.playing(PluginConfig.BOT_ACTIVITY));
-        }
+        if(!PluginConfig.BOT_ACTIVITY.equals("")) builder.setActivity(Activity.playing(PluginConfig.BOT_ACTIVITY));
 
-        if(PluginConfig.CHAT_MODULE){
-            builder.addEventListeners(new OnMessageChatEvent());
-        }
+        if(PluginConfig.CHAT_MODULE) builder.addEventListeners(new OnMessageChatEvent());
 
-        if (PluginConfig.CONSOLE_MODULE){
-            if(PluginConfig.DISCORD_CONSOLE_COMMANDS) {
-                builder.addEventListeners(new OnMessageConsoleEvent(javaPlugin));
-            }
-        }
+        if (PluginConfig.CONSOLE_MODULE && PluginConfig.DISCORD_CONSOLE_COMMANDS)
+            builder.addEventListeners(new OnMessageConsoleEvent(javaPlugin));
+
+//            if(PluginConfig.DISCORD_CONSOLE_COMMANDS) {
+//                builder.addEventListeners(new OnMessageConsoleEvent(javaPlugin));
+//            }
         return builder;
     }
 }

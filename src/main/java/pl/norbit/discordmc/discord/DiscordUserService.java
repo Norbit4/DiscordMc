@@ -52,28 +52,23 @@ public class DiscordUserService {
 
         Member member  = guild.retrieveMemberById(discordUUID).complete();
 
-        if(!member.isOwner()) {
-            member.modifyNickname(minecraftNick).queue();
-        }
+        if(!member.isOwner()) member.modifyNickname(minecraftNick).queue();
     }
     private static void clearName(String discordUUID){
 
         Guild guild = jda.getGuildById(PluginConfig.SERVER_ID);
 
         Member member  = guild.retrieveMemberById(discordUUID).complete();
-        if(!member.isOwner()) {
-            member.modifyNickname(member.getUser().getName()).queue();
-        }
+
+        if(!member.isOwner()) member.modifyNickname(member.getUser().getName()).queue();
     }
 
     private static void roleDeleteFromUser(Member member, Role role){
 
         configRanks.forEach(rank -> {
 
-            if(rank.role.equals(role)){
-
+            if(rank.role.equals(role))
                 jda.getGuildById(PluginConfig.SERVER_ID).removeRoleFromMember(member.getUser(), role).queue();
-            }
         });
     }
 
@@ -85,9 +80,7 @@ public class DiscordUserService {
 
         List<Role> roles = memberById.getRoles();
 
-        roles.forEach(role -> {
-            roleDeleteFromUser(memberById, role);
-        });
+        roles.forEach(role -> roleDeleteFromUser(memberById, role));
     }
 
     private static List<String> getPermissionRanks(){

@@ -1,8 +1,6 @@
 package pl.norbit.discordmc.players;
 
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import pl.norbit.discordmc.DiscordMc;
 import pl.norbit.discordmc.db.DatabaseService;
 import pl.norbit.discordmc.db.objects.DatabaseRecord;
 import pl.norbit.discordmc.discord.DiscordUserService;
@@ -17,10 +15,10 @@ public class DiscordPlayerService {
     private static final HashMap<UUID, DiscordPlayer> playersList = new HashMap<>();
     private static final HashMap<String, UUID> playersListDiscord = new HashMap<>();
 
-    public static DiscordPlayer getGamePLayerByPlayerUUID(UUID uuid){
+    public static DiscordPlayer getDiscordPlayerByPlayerUUID(UUID uuid){
         return playersList.get(uuid);
     }
-    public static DiscordPlayer getGamePLayerByDiscordID(String id){
+    public static DiscordPlayer getDiscordPlayerByDiscordID(String id){
         if(!playersListDiscord.containsKey(id)) return null;
 
         return playersList.get(playersListDiscord.get(id));
@@ -54,7 +52,7 @@ public class DiscordPlayerService {
     }
 
     public static void joinPlayer(Player p){
-        DiscordPlayer gamePLayerByPlayerUUID = getGamePLayerByPlayerUUID(p.getUniqueId());
+        DiscordPlayer gamePLayerByPlayerUUID = getDiscordPlayerByPlayerUUID(p.getUniqueId());
 
         if(gamePLayerByPlayerUUID != null) return;
 

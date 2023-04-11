@@ -21,6 +21,7 @@ import java.util.List;
 public class ProfileCommand extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
+
         if (!event.getName().equals("profile")) return;
 
         String discordId;
@@ -38,7 +39,7 @@ public class ProfileCommand extends ListenerAdapter {
             message = PluginConfig.ARG_USER_IS_NOT_SYNC;
         }
 
-        DiscordPlayer discordPlayer = DiscordPlayerService.getGamePLayerByDiscordID(discordId);
+        DiscordPlayer discordPlayer = DiscordPlayerService.getDiscordPlayerByDiscordID(discordId);
 
         if (discordPlayer == null) {
             MessageEmbed embed = Embed.getInfoMessage(
@@ -55,9 +56,7 @@ public class ProfileCommand extends ListenerAdapter {
 
         List<String> lines = PluginConfig.EMBED_PROFILE_ONLINE;
 
-        if(player == null) {
-            lines = PluginConfig.EMBED_PROFILE_OFFLINE;
-        }
+        if(player == null) lines = PluginConfig.EMBED_PROFILE_OFFLINE;
 
         EmbedBuilder profileMessage = Embed.getProfileMessage();
 

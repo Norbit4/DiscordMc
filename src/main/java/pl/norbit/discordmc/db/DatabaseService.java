@@ -86,7 +86,6 @@ public class DatabaseService {
 
                     return new DatabaseRecord(playerUUID, discordID);
                 }
-
                 break;
             case "MYSQL":
                 ResultSet mysqlUser = MysqlDatabase.getUser(discordID);
@@ -104,10 +103,8 @@ public class DatabaseService {
                 break;
             case "LOCAL":
                 LocalDB.LocalRecord user = LocalDB.getUser(discordID);
-                if(user != null) {
 
-                    return new DatabaseRecord(user.getPlayerUUID(), discordID);
-                }
+                if(user != null) return new DatabaseRecord(user.getPlayerUUID(), discordID);
                 break;
         }
         return null;
@@ -175,9 +172,8 @@ public class DatabaseService {
                 break;
             case "LOCAL":
                 LocalDB.LocalRecord user = LocalDB.getUser(playerUUID);
-                if(user != null) {
-                    return new DatabaseRecord(playerUUID, user.getUserID());
-                }
+
+                if(user != null) return new DatabaseRecord(playerUUID, user.getUserID());
                 break;
         }
         return null;

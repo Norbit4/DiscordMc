@@ -2,7 +2,6 @@ package pl.norbit.discordmc.serverinfo
 
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.MessageHistory
-import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import pl.norbit.discordmc.DiscordMc
 import pl.norbit.discordmc.bot.embed.Embed
@@ -23,11 +22,11 @@ class InfoUpdater {
                 PluginConfig.MESSAGE_RELOAD_TIME
             }
 
-            val messageID: String
+            var messageID: String
             val textChannel = jda?.awaitReady()?.getTextChannelById(PluginConfig.CHANNEL_INFO_ID)
             val color = Color(PluginConfig.EMBED_INFO_R, PluginConfig.EMBED_INFO_G, PluginConfig.EMBED_INFO_B)
 
-            if (textChannel == null)  return
+            if(textChannel == null) return
 
             val complete = MessageHistory.getHistoryFromBeginning(textChannel).complete()
 
@@ -36,8 +35,7 @@ class InfoUpdater {
             messagesList?.forEach { message ->
                 textChannel.deleteMessageById(message.id).queue()
             }
-
-            val infoMessage = Embed.getInfoMessage("", "Loading...",color)
+            val infoMessage = Embed.getInfoMessage("", "Loading...", color)
 
             textChannel.sendMessage("*").setEmbeds(infoMessage.build()).complete()
             messageID = textChannel.latestMessageId
@@ -53,9 +51,11 @@ class InfoUpdater {
                         PluginConfig.EMBED_INFO_ARGS
                     )
 
+                    if(messageID == null) return
+
                     textChannel.editMessageById(messageID, "*").setEmbeds(message?.build()).queue()
                 }
-            }.runTaskTimerAsynchronously(DiscordMc.getInstance(), 20 * 5, reloadTime.toLong())
+            }.runTaskTimerAsynchronously(DiscordMc.getInstance(), 20 * 6, reloadTime.toLong() * 20)
         }
     }
 }

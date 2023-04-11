@@ -3,8 +3,11 @@ package pl.norbit.discordmc.utils
 import me.clip.placeholderapi.PlaceholderAPI
 import net.dv8tion.jda.api.EmbedBuilder
 import org.bukkit.Bukkit
+import org.bukkit.scheduler.BukkitRunnable
 import pl.norbit.discordmc.DiscordMc
 import pl.norbit.discordmc.config.PluginConfig
+import pl.norbit.discordmc.discord.DiscordUserUpdateTask
+import pl.norbit.discordmc.players.DiscordPlayerService
 import pl.norbit.pluginutils.task.TaskBuilder
 import pl.norbit.pluginutils.task.TaskType
 import pl.norbit.pluginutils.task.TaskUnit
@@ -18,37 +21,16 @@ class PlaceholderUtil {
         private var allowEndFormatted: String = ""
         private var allowNetherFormatted: String = ""
         private val allPlayer = Bukkit.getOfflinePlayers().size
-        private val stringWorldsList: ArrayList<String> = ArrayList()
 
         @JvmStatic
         fun start(){
             val javaPlugin = DiscordMc.getInstance();
 
-            val excludeFolders = PluginConfig.IGNORE_FOLDERS;
-
             //check PlaceholderAPI exist
-            if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+            if(javaPlugin.server.pluginManager.getPlugin("PlaceholderAPI") != null){
                 PluginConfig.PLACEHOLDER_API_EXIST = true
                 DiscordMc.sendMessage("&aHooked to PlaceholderAPI!")
             }
-
-            //update word list task
-            TaskBuilder
-                .builder()
-                .javaPlugin(javaPlugin)
-                .period(5)
-                .periodUnit(TaskUnit.MINUTES)
-                .taskType(TaskType.TIMER)
-                .runnable {
-                    stringWorldsList.clear()
-                    for (listFile in Bukkit.getServer().worldContainer.listFiles()!!) {
-                        if(listFile.isDirectory && !excludeFolders.contains(listFile.name)){
-                            stringWorldsList.add(listFile.name)
-                        }
-                    }
-                }
-                .build().start()
-
 
             val allowEnd = Bukkit.getAllowEnd()
             val allowNether = Bukkit.getAllowNether()
@@ -74,6 +56,7 @@ class PlaceholderUtil {
             val formatMinutes: Long
             val seconds = time / 1000
             val minutes = seconds / 60
+
             val hours = Integer.parseInt((minutes / 60).toString())
             formatMinutes = if (hours != 0) {
                 minutes - hours * 60
@@ -87,7 +70,6 @@ class PlaceholderUtil {
             replacements["{SERVER_TIME}"] = "$hours h $formatMinutes m"
             replacements["{SERVER_ALL_PLAYERS}"] = "$allPlayer"
             replacements["{SERVER_VERSION}"] = version
-            replacements["{SERVER_WORLDS}"] = stringWorldsList.toString()
             replacements["{SERVER_MAX_PLAYERS}"] = "$maxPlayers"
             replacements["{SERVER_ALLOW_NETHER}"] = allowNetherFormatted
             replacements["{SERVER_ALLOW_END}"] = allowEndFormatted
@@ -104,18 +86,18 @@ class PlaceholderUtil {
                     }
 
                     val lineArgs = placeholderFormat .split("//")
-                    if (lineArgs.size > 1) {
-                        var arg1 = lineArgs[0]
-                        var arg2 = lineArgs[1]
 
-                        for (replacement in replacements) {
+                    if (lineArgs.size < 2) continue
 
-                            arg1 = arg1.replace(replacement.key, replacement.value, true)
-                            arg2 = arg2.replace(replacement.key, replacement.value, true)
+                    var arg1 = lineArgs[0]
+                    var arg2 = lineArgs[1]
 
-                        }
-                        builder?.addField(arg1, arg2, false)
+                    for (replacement in replacements) {
+                        arg1 = arg1.replace(replacement.key, replacement.value, true)
+                        arg2 = arg2.replace(replacement.key, replacement.value, true)
+
                     }
+                    builder?.addField(arg1, arg2, false)
                 }
             }
             return builder;

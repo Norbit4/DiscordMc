@@ -2,6 +2,7 @@ package pl.norbit.discordmc.players;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import net.dv8tion.jda.api.entities.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -12,6 +13,7 @@ import pl.norbit.discordmc.utils.ChatUtil;
 import java.util.UUID;
 
 @Data
+@ToString
 @NoArgsConstructor
 public class DiscordPlayer {
     private Channel channel = Channel.GLOBAL;
@@ -47,7 +49,6 @@ public class DiscordPlayer {
     }
 
     public void sendMcMessage(String message) {
-
         Player player = Bukkit.getPlayer(playerUUID);
 
         if(player == null) return;

@@ -65,52 +65,38 @@ class MysqlDatabase {
 
         @JvmStatic
         fun addUser(playerUUID: String, userID: String){
-            //val statement = connection?.createStatement()
-
             deleteUser(playerUUID)
 
             statement?.executeUpdate(
                 "INSERT INTO $tableName(${GameUser.UUID.name}, ${GameUser.DISCORD_ID.name})" +
                         "VALUES('$playerUUID', '$userID');")
-
-            //statement?.close()
         }
 
         @JvmStatic
         fun getUser(discordID: String):ResultSet?{
-            //val statement = connection?.createStatement()
             val exist = statement?.executeQuery(
                 "SELECT * FROM $tableName WHERE ${GameUser.DISCORD_ID.name} = '$discordID';");
 
             if (exist != null) {
-                if(exist.next()){
-                    return exist
-                }
+                if (exist.next()) return exist
             }
             return null
         }
         @JvmStatic
         fun getUser(playerUUID: UUID):ResultSet?{
-
-            //javaPlugin?.server?.scheduler?.runTaskLater(javaPlugin, {
             val uuidString:String = playerUUID.toString()
-            //val statement = connection?.createStatement()
 
             val exist = statement?.executeQuery(
                 "SELECT * FROM $tableName WHERE ${GameUser.UUID.name} = '$uuidString';");
 
                 if (exist != null) {
-                    if(exist.next()) {
-                        return exist
-                    }
+                    if(exist.next()) return exist
                 }
             return null
         }
 
         @JvmStatic
         fun deleteUser(playerUUID: String){
-            //val statement = connection?.createStatement()
-
             val exist = statement?.executeQuery("SELECT * FROM $tableName WHERE ${GameUser.UUID.name} = '$playerUUID';");
 
             if (exist != null) {
@@ -126,9 +112,7 @@ class MysqlDatabase {
             val exist = statement?.executeQuery("SELECT * FROM $tableName;");
 
             if (exist != null) {
-                if(exist.next()){
-                    arrayList.add(exist)
-                }
+                if(exist.next()) arrayList.add(exist)
             }
             return arrayList;
         }

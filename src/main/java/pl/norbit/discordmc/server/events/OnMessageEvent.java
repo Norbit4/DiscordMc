@@ -26,29 +26,28 @@ public class OnMessageEvent implements Listener {
         MessageChannel messageChannel = jda.getTextChannelById(PluginConfig.CHAT_CHANNEL_ID);
         String playerMessage = e.getMessage();
         Player sender = e.getPlayer();
-        DiscordPlayer gamePLayerByPlayerUUID = DiscordPlayerService.getGamePLayerByPlayerUUID(sender.getUniqueId());
+        DiscordPlayer gamePLayerByPlayerUUID = DiscordPlayerService.getDiscordPlayerByPlayerUUID(sender.getUniqueId());
 
-        if (gamePLayerByPlayerUUID.getChannel().equals(Channel.DISCORD)) {
-            String playerNick = sender.getDisplayName();
+        if (!gamePLayerByPlayerUUID.getChannel().equals(Channel.DISCORD)) return;
 
-            EmbedBuilder embedBuilder = Embed.getDiscordMessage(playerNick, playerMessage,
-                    new Color(
-                            PluginConfig.EMBED_MC_R,
-                            PluginConfig.EMBED_MC_G,
-                            PluginConfig.EMBED_MC_B),
-                    "");
+        String playerNick = sender.getDisplayName();
 
-            messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+        EmbedBuilder embedBuilder = Embed.getDiscordMessage(playerNick, playerMessage,
+                new Color(
+                        PluginConfig.EMBED_MC_R,
+                        PluginConfig.EMBED_MC_G,
+                        PluginConfig.EMBED_MC_B),
+                "");
 
-            e.setCancelled(true);
-            String formatMessage = ChatUtil.format(PluginConfig.MC_PREFIX + PluginConfig.NICK_COLOR
-                    + playerNick + PluginConfig.MESSAGE_MARK + PluginConfig.MESSAGE_COLOR + playerMessage);
+        messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 
-            DiscordPlayerService.getPlayersList().forEach(discordPlayer -> {
-                if (discordPlayer.getChannel().equals(Channel.DISCORD)) {
-                    discordPlayer.sendMcMessage(formatMessage);
-                }
-            });
-        }
+        e.setCancelled(true);
+        String formatMessage = ChatUtil.format(PluginConfig.MC_PREFIX + PluginConfig.NICK_COLOR
+                + playerNick + PluginConfig.MESSAGE_MARK + PluginConfig.MESSAGE_COLOR + playerMessage);
+
+        DiscordPlayerService.getPlayersList().forEach(discordPlayer -> {
+
+            if (discordPlayer.getChannel().equals(Channel.DISCORD)) discordPlayer.sendMcMessage(formatMessage);
+        });
     }
 }

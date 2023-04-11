@@ -12,19 +12,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Embed {
-    private static final SimpleDateFormat dateFormat, dateFormatConsole;
-
-    static {
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        dateFormatConsole = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    }
+    private static final SimpleDateFormat
+            dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm") ,
+            dateFormatConsole = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     private static EmbedBuilder getBuilder(String tittle, String desc, Color color, boolean addDate, String module){
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
-        if(!tittle.isEmpty()) {
-            embedBuilder.setTitle(tittle);
-        }
+        if(!tittle.isEmpty()) embedBuilder.setTitle(tittle);
+
         embedBuilder.setDescription(desc);
         embedBuilder.setColor(color);
 
@@ -36,7 +32,6 @@ public class Embed {
                 embedBuilder.setFooter(dateFormatConsole.format(date));
             }
         }
-
         return embedBuilder;
     }
 
@@ -44,19 +39,16 @@ public class Embed {
 
         EmbedBuilder embedBuilder = getBuilder(nick, message, colorEmbed, true, "");
 
-        if(!field.isEmpty()) {
-            embedBuilder.addField("", field, true);
-        }
+        if(!field.isEmpty()) embedBuilder.addField("", field, true);
+
         return embedBuilder;
     }
 
     public static EmbedBuilder getInfoMessage(String tittle, String message, Color color){
-
         return getBuilder(tittle, message, color, false, "");
     }
 
     public static EmbedBuilder getConsoleMessage(String tittle, String message, Color color){
-
         return getBuilder(tittle, message, color, true, "1");
     }
 
@@ -74,9 +66,9 @@ public class Embed {
         BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
         String line;
         StringBuilder result = new StringBuilder();
-        while ((line = in.readLine())!=null){
-            result.append(line);
-        }
+
+        while ((line = in.readLine()) != null) result.append(line);
+
         return !result.toString().equals("");
     }
 }

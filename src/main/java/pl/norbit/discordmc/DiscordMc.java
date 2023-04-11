@@ -11,7 +11,6 @@ import pl.norbit.discordmc.bot.builder.BotBuilder;
 import pl.norbit.discordmc.bot.commands.CommandManager;
 import pl.norbit.discordmc.discord.DiscordUserUpdateTask;
 import pl.norbit.discordmc.placeholders.DiscordPlaceholderAPI;
-import pl.norbit.discordmc.players.DiscordPlayerService;
 import pl.norbit.discordmc.server.commands.ServerCommand;
 import pl.norbit.discordmc.discord.DiscordUserService;
 import pl.norbit.discordmc.utils.ChatUtil;
@@ -34,16 +33,14 @@ public final class DiscordMc extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        boolean start = false;
+        boolean start;
         try {
             start = start();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        if(!start){
-            disablePlugin();
-        }
+        if(!start) disablePlugin();
     }
     private boolean start() throws InterruptedException {
         commandSender = getServer().getConsoleSender();
@@ -53,91 +50,87 @@ public final class DiscordMc extends JavaPlugin {
 
         ConfigManager.loadConfig(true);
 
-        if(PluginConfig.PLUGIN_ENABLE) {
-
-            BotBuilder.init(this);
-
-            discordBot = new DiscordBot(PluginConfig.TOKEN);
-
-            if(!discordBot.start()){
-                sendMessage("&c[ERROR] Wrong token!");
-                sendMessage("&cHow to get discord bot token?");
-                sendMessage("&chttps://github.com/Norbit4/DiscordMc/wiki/Configuration#bot-token");
-                return false;
-            }
-
-            jda = discordBot.getJda();
-
-            if(jda.awaitReady().getGuildById(PluginConfig.SERVER_ID) == null) {
-                sendMessage("&c[ERROR] Wrong discord server ID");
-                sendMessage("&cHow to get discord server id?");
-                sendMessage("&chttps://github.com/Norbit4/DiscordMc/wiki/Configuration#id");
-
-                return false;
-            }
-
-            timeServer = System.currentTimeMillis();
-
-            PlaceholderUtil.start();
-            ServerCommand.registerCommands();
-            DatabaseService.init();
-
-            DiscordUserService.init();
-            DiscordUserUpdateTask.start();
-
-            //console module
-            if(PluginConfig.CONSOLE_MODULE){
-                boolean b = checkDiscordChannel(PluginConfig.CONSOLE_CHANNEL_ID, "CONSOLE_MODULE");
-                if(!b) return false;
-            }
-
-            //chat module
-            if(PluginConfig.CHAT_MODULE){
-                boolean b = checkDiscordChannel(PluginConfig.CHAT_CHANNEL_ID, "CHAT_MODULE");
-                if(!b) return false;
-            }
-
-            new CommandManager();
-
-            //logger
-            if(PluginConfig.CONSOLE_MODULE) {
-
-                if(PluginConfig.DISCORD_CONSOLE_DISPLAY) {
-                    LogAppender appender = new LogAppender(jda, this);
-                    appender.start();
-
-                    Logger logger = (Logger) LogManager.getRootLogger();
-                    logger.addAppender(appender);
-                }else {
-                    LogAppender.consoleStartMessage(jda);
-                }
-            }
-
-            //events
-            EventManager.registerEvents();
-
-            //commands
-            getServer().getPluginCommand("discordmc").setExecutor(new MainCMD());
-
-            //info module
-            if(PluginConfig.DISCORD_INFO_MODULE){
-                boolean b = checkDiscordChannel(PluginConfig.CHANNEL_INFO_ID, "INFO_MODULE");
-
-                if(!b) return false;
-
-                InfoUpdater.start(jda);
-            }
-
-            SyncTimerTask.runTaskTimer(this);
-
-            if (PluginConfig.PLACEHOLDER_API_EXIST) {
-                new DiscordPlaceholderAPI().register();
-            }
-
-        } else {
+        if(!PluginConfig.PLUGIN_ENABLE) {
             sendMessage("&cEnable plugin in config.yml");
-            disablePlugin();
+            return false;
         }
+
+        BotBuilder.init(this);
+
+        discordBot = new DiscordBot(PluginConfig.TOKEN);
+
+        if(!discordBot.start()){
+            sendMessage("&c[ERROR] Wrong token!");
+            sendMessage("&cHow to get discord bot token?");
+            sendMessage("&chttps://github.com/Norbit4/DiscordMc/wiki/Configuration#bot-token");
+            return false;
+        }
+
+        jda = discordBot.getJda();
+
+        if(jda.awaitReady().getGuildById(PluginConfig.SERVER_ID) == null) {
+            sendMessage("&c[ERROR] Wrong discord server ID");
+            sendMessage("&cHow to get discord server id?");
+            sendMessage("&chttps://github.com/Norbit4/DiscordMc/wiki/Configuration#id");
+
+            return false;
+        }
+
+        timeServer = System.currentTimeMillis();
+
+        PlaceholderUtil.start();
+        ServerCommand.registerCommands();
+        DatabaseService.init();
+
+        DiscordUserService.init();
+        DiscordUserUpdateTask.start();
+
+        //console module
+        if(PluginConfig.CONSOLE_MODULE){
+            boolean check = checkDiscordChannel(PluginConfig.CONSOLE_CHANNEL_ID, "CONSOLE_MODULE");
+            if(!check) return false;
+        }
+
+        //chat module
+        if(PluginConfig.CHAT_MODULE){
+            boolean check = checkDiscordChannel(PluginConfig.CHAT_CHANNEL_ID, "CHAT_MODULE");
+            if(!check) return false;
+        }
+
+        new CommandManager();
+
+        //logger
+        if(PluginConfig.CONSOLE_MODULE) {
+
+            if(PluginConfig.DISCORD_CONSOLE_DISPLAY) {
+                LogAppender appender = new LogAppender(jda, this);
+                appender.start();
+
+                Logger logger = (Logger) LogManager.getRootLogger();
+                logger.addAppender(appender);
+            }else {
+                LogAppender.consoleStartMessage(jda);
+            }
+        }
+
+        //events
+        EventManager.registerEvents();
+
+        //commands
+        getServer().getPluginCommand("discordmc").setExecutor(new MainCMD());
+
+        //info module
+        if(PluginConfig.DISCORD_INFO_MODULE){
+            boolean check = checkDiscordChannel(PluginConfig.CHANNEL_INFO_ID, "INFO_MODULE");
+
+            if(!check) return false;
+
+            InfoUpdater.start(jda);
+        }
+
+        SyncTimerTask.runTaskTimer(this);
+
+        if (PluginConfig.PLACEHOLDER_API_EXIST) new DiscordPlaceholderAPI().register();
         return true;
     }
 
@@ -160,7 +153,6 @@ public final class DiscordMc extends JavaPlugin {
             sendModuleDisable(module);
             return false;
         }
-
         return true;
     }
     private static void sendModuleDisable(String module){

@@ -32,8 +32,6 @@ public class DiscordBot {
     }
 
     public void close(){
-        if(jda != null) {
-            jda.shutdownNow();
-        }
+        if(jda != null) jda.shutdownNow();
     }
 }
