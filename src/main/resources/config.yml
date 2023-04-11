@@ -1,24 +1,35 @@
-#---------------------------------------#
+# ------------------------------------------------------------------------#
+#    _____    _                                   _   __  __    _____     #
+#   |  __ \  (_)                                 | | |  \/  |  / ____|    #
+#   | |  | |  _   ___    ___    ___    _ __    __| | | \  / | | |         #
+#   | |  | | | | / __|  / __|  / _ \  | '__|  / _` | | |\/| | | |         #
+#   | |__| | | | \__ \ | (__  | (_) | | |    | (_| | | |  | | | |____     #
+#   |_____/  |_| |___/  \___|  \___/  |_|     \__,_| |_|  |_|  \_____|    #
+#                                                                         #
+# ------------------------------------------------------------------------#
+
 # DiscordMc by Norbit4
-#
+
 # github: https://github.com/Norbit4
 # website https://norbit.fun/
-#
+
 # If you like the plugin, support me with a positive opinion on spigot.org, thanks! <3
-#
+
 #---------------------------------------#
 #             [bot config]              #
 #---------------------------------------#
 
 # configuration: https://github.com/Norbit4/DiscordMc/wiki/Configuration
 enable: false
+bot-token: ''
+bot-activity: ''
+discord-server-id: ''
+
+#commands prefix
 prefix-command: 'discordmc'
 sync-command-arg: 'sync'
 sync-command-clear-arg: 'syncclear'
 rank-reload-command-arg: 'rankreload'
-bot-token: ''
-bot-activity: ''
-discord-server-id: ''
 
 # types: local/mysql/mongodb
 # with a large number of players on the server (100+), I recommend not using a local database, use mysql or mongodb
@@ -47,6 +58,19 @@ embed-profile-offline:
   # 'TITLE//DESC'
   - 'nick:// %player_name%'
   - 'status:// Offline'
+
+# commands support PlaceholdersAPI
+# commands to execute when the player syncs
+execute-commands-on-sync: false
+commands-on-sync:
+  - 'lp user {PLAYER} perm set sync.true'
+  - 'say Synced!'
+
+# commands to execute when the player clears sync
+execute-commands-on-sync-clear: false
+commands-on-sync-clear:
+  - 'lp user {PLAYER} perm unset sync.true'
+  - 'say Synced clear!'
 
 # discord rank sync
 sync-rank-enable: false
@@ -195,20 +219,10 @@ discord-info-rgb:
   - 154
   - 74
 
-# folders ignored when creating worlds list
-ignore-folders:
-  - 'cache'
-  - 'plugins'
-  - 'logs'
-  - 'crash-reports'
-  - 'libraries'
-  - 'config'
-  - 'versions'
-
 # Placeholders:
-# {SERVER_ONLINE}, {SERVER_MAX_PLAYERS}, {SERVER_TIME}, {SERVER_ALL_PLAYERS}, {SERVER_WORLDS}, {SERVER_VERSION},
+# {SERVER_ONLINE}, {SERVER_MAX_PLAYERS}, {SERVER_TIME}, {SERVER_ALL_PLAYERS}, {SERVER_VERSION},
 # {SERVER_ALLOW_NETHER}, {SERVER_ALLOW_END}
-#
+
 # PlaceholderAPI support: https://github.com/Norbit4/DiscordMc/wiki/PlaceholderApi-support
 embed-tittle: ''
 embed-desc: ''
@@ -217,7 +231,6 @@ embed-info:
   - 'Online://{SERVER_ONLINE}/{SERVER_MAX_PLAYERS}'
   - 'Up Time:// {SERVER_TIME}'
   - 'All Players:// {SERVER_ALL_PLAYERS}'
-  - 'Worlds:// {SERVER_WORLDS}'
   - 'Ver:// {SERVER_VERSION}'
   - 'Nether:// {SERVER_ALLOW_NETHER}'
   - 'End:// {SERVER_ALLOW_END}'
