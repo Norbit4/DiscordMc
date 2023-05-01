@@ -131,3 +131,5 @@ This plugin allows you to easily sync the ranks and nicknames of your minecraft 
 * ⛭ [Spigot](https://www.spigotmc.org/resources/discordmc-1-8-1-19-sync-your-minecraft-server-with-discord-server.103901/ "Click")
 * 📚 [Wiki](https://github.com/Norbit4/DiscordMc/wiki "Click")
 * 📋 [API](https://github.com/Norbit4/DiscordMc/wiki/API "Click")
+* 💡 [Plans, suggestions, bugs...](https://github.com/Norbit4/DiscordMc/discussions "Click")
+
