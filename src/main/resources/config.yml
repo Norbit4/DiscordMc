@@ -16,7 +16,7 @@
 # If you like the plugin, support me with a positive opinion on spigot.org, thanks! <3
 
 #---------------------------------------#
-#             [bot config]              #
+#             [Bot config]              #
 #---------------------------------------#
 
 # configuration: https://github.com/Norbit4/DiscordMc/wiki/Configuration
@@ -41,7 +41,15 @@ password: ''
 database: ''
 ssl: false
 
+#---------------------------------------#
+#            [Sync profiles]            #
+#---------------------------------------#
+
 embed-profile-title: 'Profile'
+embed-profile-rgb:
+  - 154
+  - 199
+  - 50
 
 # to use placeholders you need install PlaceholderAPI https://www.spigotmc.org/resources/placeholderapi.6245/
 # placeholders https://github.com/PlaceholderAPI/PlaceholderAPI/wiki/Placeholders#player
@@ -59,6 +67,46 @@ embed-profile-offline:
   - 'nick:// %player_name%'
   - 'status:// Offline'
 
+#---------------------------------------#
+#          [Sync roles/perms]            #
+#---------------------------------------#
+
+# wiki sync: https://github.com/Norbit4/DiscordMc/wiki/Rank-sync
+
+#---------------------------------------#
+# [module-1] Sync minecraft perms to discord roles
+
+sync-mc-permissions-enable: false
+
+# discord name sync (set discord user mc name)
+# this option need enabled 'sync-mc-permissions-enable'
+# nick sync does not work for the discord server owner, it is specific to discord servers!
+sync-name: false
+
+# sync minecraft perms to discord roles
+# this option need enabled 'sync-mc-permissions-enable'
+# only top perm from minecraft will be synchronized with discord role (user can have only one role synced)
+sync-mc-permissions:
+  - 'rank-permission:discord-rank-id'
+
+#---------------------------------------#
+# [module-2] Sync discord roles to minecraft perms
+
+sync-discord-roles-enable: false
+
+# all roles from discord will be synchronized with minecraft perms
+# this can be used to synchronize the users boosting the server and give them permissions for it on the server
+# this option need enabled 'sync-discord-roles-enable'
+sync-discord-roles:
+  - 'rank-permission:discord-rank-id'
+
+command-to-sync-permission: 'lp user {PLAYER} perm set {PERM}'
+command-to-un-sync-permission: 'lp user {PLAYER} perm unset {PERM}'
+
+#---------------------------------------#
+#            [Sync commands]            #
+#---------------------------------------#
+
 # commands support PlaceholdersAPI
 # commands to execute when the player syncs
 execute-commands-on-sync: false
@@ -72,26 +120,8 @@ commands-on-sync-clear:
   - 'lp user {PLAYER} perm unset sync.true'
   - 'say Synced clear!'
 
-# discord rank sync
-sync-rank-enable: false
-# discord name sync (set discord user mc name)
-# this option need enabled 'sync-rank-enabled'
-# nick sync does not work for the discord server owner, it is specific to discord servers!
-sync-name: false
-
-# wiki sync roles: https://github.com/Norbit4/DiscordMc/wiki/Rank-sync
-sync-roles:
-  - 'rank-permission:discord-rank-id'
-
-user-in-not-sync: 'You are not synchronized! Use **/sync** to sync your accounts!'
-arg-user-in-not-sync: 'This user is not synchronized!'
-embed-profile-rgb:
-  - 154
-  - 199
-  - 50
-
 #---------------------------------------#
-#              [messages]               #
+#              [Messages]               #
 #---------------------------------------#
 
 # discord embeds colors
@@ -117,6 +147,8 @@ error-message-rgb:
   - 50
 
 #discord messages
+user-in-not-sync: 'You are not synchronized! Use **/sync** to sync your accounts!'
+arg-user-in-not-sync: 'This user is not synchronized!'
 player-is-sync: 'This player is synchronize!'
 discord-user-is-sync: 'You are synchronized!'
 offline-player: 'This player is offline!'
@@ -145,7 +177,7 @@ command-args-list:
   - ''
 
 #---------------------------------------#
-#         [discord-chat-module]         #
+#         [Discord-chat-module]         #
 #---------------------------------------#
 
 # help: https://github.com/Norbit4/DiscordMc/wiki/Chat-module
@@ -181,7 +213,7 @@ mc-user-rgb:
   - 99
 
 #---------------------------------------#
-#        [discord-console-module]       #
+#        [Discord-console-module]       #
 #---------------------------------------#
 
 # help: https://github:com/Norbit4/DiscordMc/wiki/Cosole-module
@@ -203,7 +235,7 @@ blocked-commands:
   - pl
 
 #---------------------------------------#
-#         [discord-info-module]         #
+#         [Discord-info-module]         #
 #---------------------------------------#
 
 # help: https://github.com/Norbit4/DiscordMc/wiki/Info-module

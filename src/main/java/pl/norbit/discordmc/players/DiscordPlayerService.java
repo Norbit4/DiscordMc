@@ -98,7 +98,7 @@ public class DiscordPlayerService {
         playersListDiscord.remove(discordPlayer.getDiscordId());
         DatabaseService.deleteUser(discordPlayer.getPlayerUUID());
 
-        DiscordUserService.clear(discordPlayer.getDiscordId());
+        DiscordUserService.clear(discordPlayer.getDiscordId(), discordPlayer.getPlayerUUID());
 
         discordPlayer.syncClear();
     }
@@ -115,7 +115,7 @@ public class DiscordPlayerService {
         playersListDiscord.remove(discordPlayer.getDiscordId());
         DatabaseService.deleteUser(discordPlayer.getPlayerUUID());
 
-        DiscordUserService.clear(discordPlayer.getDiscordId());
+        DiscordUserService.clear(discordPlayer.getDiscordId(), discordPlayer.getPlayerUUID());
 
         discordPlayer.syncClear();
     }

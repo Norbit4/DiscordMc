@@ -43,7 +43,7 @@ public class MainCMD implements CommandExecutor {
                 ServerCommand.execute(CommandType.RELOAD, p);
 
             }else if(args[0].equalsIgnoreCase(PluginConfig.RANK_RELOAD_COMMAND_ARG)){
-                if(PluginConfig.SYNC_RANK_ENABLE) {
+                if(PluginConfig.SYNC_PERM_ENABLE) {
 
                     ServerCommand.execute(CommandType.RANK_RELOAD, p);
                     return true;
