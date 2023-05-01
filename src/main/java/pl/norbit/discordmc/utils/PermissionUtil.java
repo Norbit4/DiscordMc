@@ -17,7 +17,7 @@ public class PermissionUtil {
         });
     }
 
-    public boolean hasPermission(String [] perms) {
+    public boolean hasPermission(String... perms) {
 
         for (String perm : perms) {
 

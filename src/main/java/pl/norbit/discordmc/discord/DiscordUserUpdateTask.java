@@ -15,7 +15,7 @@ public class DiscordUserUpdateTask {
     private static final Queue<UUID> queue = new LinkedList<>();
 
     public static void start(){
-        if(!PluginConfig.SYNC_RANK_ENABLE) return;
+        if(!PluginConfig.SYNC_PERM_ENABLE) return;
         new BukkitRunnable() {
             @Override
             public void run() {

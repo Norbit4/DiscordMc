@@ -14,15 +14,11 @@ public class SyncTimerTask {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if(!syncPlayerList.isEmpty()) {
+                if(syncPlayerList.isEmpty()) return;
 
-                    syncPlayerList.forEach(syncPlayer -> {
-
-                        if(syncPlayer.time() == 1){
-                            removeSyncPlayer(syncPlayer);
-                        }
-                    });
-                }
+                syncPlayerList.forEach(syncPlayer -> {
+                    if(syncPlayer.time() == 1) removeSyncPlayer(syncPlayer);
+                });
             }
         }.runTaskTimerAsynchronously(javaPlugin, 0, 20);
     }
@@ -32,10 +28,9 @@ public class SyncTimerTask {
     }
 
     public static SyncPlayer getSyncPlayer(UUID playerUUID){
-        Optional<SyncPlayer> optionalSyncPlayer = syncPlayerList.stream()
+        return syncPlayerList.stream()
                  .filter(syncPlayer1 -> syncPlayer1.getPlayer().getUniqueId().equals(playerUUID))
-                 .findFirst();
-        return optionalSyncPlayer.orElse(null);
+                 .findFirst().orElse(null);
     }
 
     public static void removeSyncPlayer(SyncPlayer syncPlayer){

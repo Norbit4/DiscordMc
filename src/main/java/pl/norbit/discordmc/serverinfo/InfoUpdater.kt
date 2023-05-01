@@ -22,7 +22,7 @@ class InfoUpdater {
                 PluginConfig.MESSAGE_RELOAD_TIME
             }
 
-            var messageID: String
+            val messageID: String
             val textChannel = jda?.awaitReady()?.getTextChannelById(PluginConfig.CHANNEL_INFO_ID)
             val color = Color(PluginConfig.EMBED_INFO_R, PluginConfig.EMBED_INFO_G, PluginConfig.EMBED_INFO_B)
 
@@ -50,8 +50,6 @@ class InfoUpdater {
                         ),
                         PluginConfig.EMBED_INFO_ARGS
                     )
-
-                    if(messageID == null) return
 
                     textChannel.editMessageById(messageID, "*").setEmbeds(message?.build()).queue()
                 }

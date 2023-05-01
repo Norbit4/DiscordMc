@@ -53,13 +53,12 @@ public class Embed {
     }
 
     public static EmbedBuilder getProfileMessage(){
-        EmbedBuilder embedBuilder = getBuilder(PluginConfig.EMBED_PROFILE_TITLE, "",
+        return getBuilder(PluginConfig.EMBED_PROFILE_TITLE, "",
                 new Color(
                         PluginConfig.EMBED_PROFILE_R,
                         PluginConfig.EMBED_PROFILE_G,
                         PluginConfig.EMBED_PROFILE_B),
                 false, "");
-        return embedBuilder;
     }
     public static boolean isUsernamePremium(String username) throws IOException {
         URL url = new URL("https://api.mojang.com/users/profiles/minecraft/"+ username);

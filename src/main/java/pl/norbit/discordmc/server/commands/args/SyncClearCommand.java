@@ -55,6 +55,7 @@ public class SyncClearCommand extends ServerCommand {
                             if (PluginConfig.EXECUTE_COMMAND_ON_SYNC_CLEAR)
                                 ConsoleUtil.executeCommand(p, PluginConfig.COMMANDS_ON_SYNC_CLEAR.toArray(new String[0]));
 
+
                             instance.getServer().getPluginManager().callEvent(new SyncClearEvent(playerUUID, discordId));
                         }
                     }.runTaskLater(DiscordMc.getInstance(), 4);

@@ -1,6 +1,7 @@
 package pl.norbit.discordmc;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -27,6 +28,8 @@ public final class DiscordMc extends JavaPlugin {
     private DiscordBot discordBot;
     private static Long timeServer;
     private static DiscordMc instance;
+
+    private static Guild guild;
 
     private static ConsoleCommandSender commandSender;
     private static JDA jda;
@@ -68,7 +71,9 @@ public final class DiscordMc extends JavaPlugin {
 
         jda = discordBot.getJda();
 
-        if(jda.awaitReady().getGuildById(PluginConfig.SERVER_ID) == null) {
+        guild = jda.awaitReady().getGuildById(PluginConfig.SERVER_ID);
+
+        if(guild == null) {
             sendMessage("&c[ERROR] Wrong discord server ID");
             sendMessage("&cHow to get discord server id?");
             sendMessage("&chttps://github.com/Norbit4/DiscordMc/wiki/Configuration#id");
@@ -207,5 +212,9 @@ public final class DiscordMc extends JavaPlugin {
 
     public static JDA getJda() {
         return jda;
+    }
+
+    public static Guild getGuild(){
+        return guild;
     }
 }
