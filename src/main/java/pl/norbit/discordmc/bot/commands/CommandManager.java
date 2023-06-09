@@ -18,15 +18,15 @@ public class CommandManager {
         }
 
         guildById
-                .upsertCommand("sync", "sync mc with dc")
+                .upsertCommand("sync", "Sync your account with minecraft")
                 .addOption(OptionType.STRING,
-                        CmdOptions.NICK.name().toLowerCase(), "o", true)
+                        CmdOptions.NICK.name().toLowerCase(), "Your minecraft nickname", true)
                 .queue();
 
         guildById
-                .upsertCommand("profile", "show your profile")
+                .upsertCommand("profile", "Show your profile")
                 .addOption(OptionType.MENTIONABLE,
-                        CmdOptions.MENTION.name().toLowerCase(), "o", false)
+                        CmdOptions.MENTION.name().toLowerCase(), "Discord tag", false)
                 .queue();
         DiscordMc.getJda().updateCommands().queue();
     }

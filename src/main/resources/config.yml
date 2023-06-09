@@ -227,6 +227,9 @@ discord-console-commands: true
 #allowed to display info discord console
 discord-console-display: true
 
+#allow bots to use commands in discord console
+discord-console-allow-bots: false
+
 block-error-messages: false
 
 # blocked commands in discord console

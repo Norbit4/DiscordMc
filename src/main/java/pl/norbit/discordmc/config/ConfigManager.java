@@ -135,6 +135,7 @@ public class ConfigManager {
         PluginConfig.BLOCK_WARN_MESSAGES = config.getBoolean("block-warn-messages");
         PluginConfig.BLOCK_ERROR_MESSAGES = config.getBoolean("block-error-messages");
         PluginConfig.DISCORD_CONSOLE_DISPLAY = config.getBoolean("discord-console-display");
+        PluginConfig.DISCORD_CONSOLE_ALLOW_BOTS = config.getBoolean("discord-console-allow-bots");
 
         //discord info module
         PluginConfig.DISCORD_INFO_MODULE = config.getBoolean("discord-info-module");
