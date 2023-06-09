@@ -12,7 +12,6 @@ import pl.norbit.discordmc.config.PluginConfig;
 
 import java.awt.*;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class OnMessageConsoleEvent extends ListenerAdapter {
     private final JavaPlugin javaPlugin;
