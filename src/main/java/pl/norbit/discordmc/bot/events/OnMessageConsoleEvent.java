@@ -27,7 +27,9 @@ public class OnMessageConsoleEvent extends ListenerAdapter {
 
         if(!channelID.equals(PluginConfig.CONSOLE_CHANNEL_ID)) return;
 
-        if(event.getAuthor().isBot()) return;
+        if(event.getAuthor().isBot() && !PluginConfig.DISCORD_CONSOLE_ALLOW_BOTS) return;
+
+        if(message.getContentDisplay().equalsIgnoreCase("")) return; //stops embeds
 
         List<String> blockedCommands = PluginConfig.BLOCKED_COMMANDS;
 
